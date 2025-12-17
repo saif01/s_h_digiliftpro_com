@@ -1,0 +1,356 @@
+import {
+    createRouter,
+    createWebHistory
+} from 'vue-router'
+
+
+// All Routes define
+const routes = [
+    // Public Routes
+    {
+        path: '/',
+        component: () => import('./components/public/PublicLayout.vue'),
+        children: [
+            {
+                path: '',
+                component: () => import('./components/public/pages/HomePage.vue'),
+                name: 'Home',
+                meta: { title: 'Home' }
+            },
+            {
+                path: 'about',
+                component: () => import('./components/public/pages/AboutPage.vue'),
+                name: 'About',
+                meta: { title: 'About Us' }
+            },
+            {
+                path: 'services',
+                component: () => import('./components/public/services/ServicesPage.vue'),
+                name: 'Services',
+                meta: { title: 'Services' }
+            },
+            {
+                path: 'services/:slug',
+                component: () => import('./components/public/services/ServiceDetailPage.vue'),
+                name: 'ServiceDetail',
+                meta: { title: 'Service Details' }
+            },
+            {
+                path: 'products',
+                component: () => import('./components/public/products/ProductsPage.vue'),
+                name: 'Products',
+                meta: { title: 'Products' }
+            },
+            {
+                path: 'products/:slug',
+                component: () => import('./components/public/products/ProductDetailPage.vue'),
+                name: 'ProductDetail',
+                meta: { title: 'Product Details' }
+            },
+            {
+                path: 'contact',
+                component: () => import('./components/public/pages/ContactPage.vue'),
+                name: 'Contact',
+                meta: { title: 'Contact' }
+            },
+            {
+                path: 'blog',
+                component: () => import('./components/public/blog/BlogPage.vue'),
+                name: 'Blog',
+                meta: { title: 'Blog' }
+            },
+            {
+                path: 'blog/:slug',
+                component: () => import('./components/public/blog/BlogDetailPage.vue'),
+                name: 'BlogDetail',
+                meta: { title: 'Blog Post' }
+            },
+            {
+                path: 'careers',
+                component: () => import('./components/public/career/CareerPage.vue'),
+                name: 'Careers',
+                meta: { title: 'Careers' }
+            },
+            {
+                path: 'careers/:slug',
+                component: () => import('./components/public/career/CareerDetailPage.vue'),
+                name: 'CareerDetail',
+                meta: { title: 'Career Details' }
+            },
+        ]
+    },
+
+    // Admin Routes
+    {
+        path: '/admin',
+        component: () => import('./components/admin/AdminLayout.vue'),
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: '',
+                redirect: { name: 'AdminDashboard' }
+            },
+            {
+                path: 'dashboard',
+                component: () => import('./components/admin/AdminDashboard.vue'),
+                name: 'AdminDashboard',
+                meta: { title: 'Admin Dashboard', permissions: ['access-dashboard'] }
+            },
+            {
+                path: 'services',
+                component: () => import('./components/admin/service/AdminServices.vue'),
+                name: 'AdminServices',
+                meta: { title: 'Services Management', permissions: ['manage-services'] }
+            },
+            {
+                path: 'about',
+                component: () => import('./components/admin/about/AdminAbout.vue'),
+                name: 'AdminAbout',
+                meta: { title: 'About Page Management', permissions: ['manage-about'] }
+            },
+            {
+                path: 'products',
+                component: () => import('./components/admin/products/AdminProducts.vue'),
+                name: 'AdminProducts',
+                meta: { title: 'Products Management', permissions: ['manage-products'] }
+            },
+            {
+                path: 'categories',
+                component: () => import('./components/admin/products/AdminCategories.vue'),
+                name: 'AdminCategories',
+                meta: { title: 'Categories Management', permissions: ['manage-products'] }
+            },
+            {
+                path: 'tags',
+                component: () => import('./components/admin/products/AdminTags.vue'),
+                name: 'AdminTags',
+                meta: { title: 'Tags Management', permissions: ['manage-products'] }
+            },
+            {
+                path: 'product-reviews',
+                component: () => import('./components/admin/products/AdminProductReviews.vue'),
+                name: 'AdminProductReviews',
+                meta: { title: 'Product Reviews', permissions: ['manage-products'] }
+            },
+            {
+                path: 'leads',
+                component: () => import('./components/admin/leads/AdminLeads.vue'),
+                name: 'AdminLeads',
+                meta: { title: 'Leads Management', permissions: ['view-leads', 'manage-leads', 'export-leads'] }
+            },
+            {
+                path: 'newsletters',
+                component: () => import('./components/admin/newsletters/AdminNewsletters.vue'),
+                name: 'AdminNewsletters',
+                meta: { title: 'Newsletter Subscriptions', permissions: ['manage-newsletters'] }
+            },
+            {
+                path: 'users',
+                component: () => import('./components/admin/users/AdminUsers.vue'),
+                name: 'AdminUsers',
+                meta: { title: 'User Management', permissions: ['manage-users'] }
+            },
+            {
+                path: 'roles',
+                component: () => import('./components/admin/users/AdminRoles.vue'),
+                name: 'AdminRoles',
+                meta: { title: 'Role Management', permissions: ['manage-roles'] }
+            },
+            {
+                path: 'permissions',
+                component: () => import('./components/admin/users/AdminPermissions.vue'),
+                name: 'AdminPermissions',
+                meta: { title: 'Permission Management', permissions: ['manage-roles'] }
+            },
+            {
+                path: 'settings',
+                component: () => import('./components/admin/settings/AdminSettings.vue'),
+                name: 'AdminSettings',
+                meta: { title: 'Settings', permissions: ['manage-settings'] }
+            },
+            {
+                path: 'login-logs',
+                component: () => import('./components/admin/logs/AdminLoginLogs.vue'),
+                name: 'AdminLoginLogs',
+                meta: { title: 'Login Logs Management', permissions: ['view-login-logs'] }
+            },
+            {
+                path: 'visitor-logs',
+                component: () => import('./components/admin/logs/AdminVisitorLogs.vue'),
+                name: 'AdminVisitorLogs',
+                meta: { title: 'Visitor Logs Management', permissions: ['view-visitor-logs'] }
+            },
+            {
+                path: 'blog',
+                component: () => import('./components/admin/blog/AdminBlog.vue'),
+                name: 'AdminBlog',
+                meta: { title: 'Blog Management', permissions: ['manage-blog'] }
+            },
+            {
+                path: 'blog/categories',
+                component: () => import('./components/admin/blog/AdminBlogCategories.vue'),
+                name: 'AdminBlogCategories',
+                meta: { title: 'Blog Categories Management', permissions: ['manage-blog'] }
+            },
+            {
+                path: 'announcements',
+                component: () => import('./components/admin/announcements/AdminAnnouncements.vue'),
+                name: 'AdminAnnouncements',
+                meta: { title: 'Announcements Management', permissions: ['manage-announcements'] }
+            },
+            {
+                path: 'careers',
+                component: () => import('./components/admin/career/AdminCareers.vue'),
+                name: 'AdminCareers',
+                meta: { title: 'Careers Management', permissions: ['manage-careers'] }
+            },
+            {
+                path: 'job-applications',
+                component: () => import('./components/admin/career/AdminJobApplications.vue'),
+                name: 'AdminJobApplications',
+                meta: { title: 'Job Applications Management', permissions: ['manage-applications'] }
+            },
+        ]
+    },
+
+    // Admin Login
+    {
+        path: '/admin/login',
+        component: () => import('./components/admin/auth/AdminLogin.vue'),
+        name: 'AdminLogin',
+        meta: { title: 'Admin Login' }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+        path: '/:pathMatch(.*)*',
+        component: () => import('./components/public/pages/HomePage.vue'),
+        name: 'NotFound',
+        meta: {
+            title: 'Page Not Found',
+        },
+    }
+
+
+
+];
+
+const router = createRouter({
+    history: createWebHistory(),
+    //history: createWebHistory(import.meta.env.BASE_URL),
+    routes,
+});
+
+
+// Helper to handle progress bar
+const progressBar = {
+    start: () => {
+        const bar = router.getProgressBar ? router.getProgressBar() : null;
+        if (bar && typeof bar.start === 'function') bar.start();
+    },
+    finish: () => {
+        const bar = router.getProgressBar ? router.getProgressBar() : null;
+        if (bar && typeof bar.finish === 'function') bar.finish();
+    },
+    fail: () => {
+        const bar = router.getProgressBar ? router.getProgressBar() : null;
+        if (bar && typeof bar.fail === 'function') bar.fail();
+    }
+};
+
+// Run before every route request
+router.beforeEach(async (to, from, next) => {
+    // Start progress bar on route change
+    progressBar.start();
+
+    const appName = import.meta.env.VITE_APP_NAME || 'digiliftpro';
+    const title = to.meta && to.meta.title ? to.meta.title : '';
+    document.title = `${title ? title + ' - ' : ''}${appName}`;
+
+    // Import auth store
+    const { useAuthStore } = await import('./stores/auth');
+    const authStore = useAuthStore();
+
+    // Check authentication for admin routes
+    if (to.meta.requiresAuth) {
+        if (!authStore.isAuthenticated || !authStore.token) {
+            // Try to fetch user if token exists
+            if (authStore.token) {
+                try {
+                    await authStore.fetchUser();
+                    if (!authStore.isAuthenticated) {
+                        progressBar.finish();
+                        next({ name: 'AdminLogin' });
+                        return;
+                    }
+                } catch (error) {
+                    progressBar.finish();
+                    next({ name: 'AdminLogin' });
+                    return;
+                }
+            } else {
+                progressBar.finish();
+                next({ name: 'AdminLogin' });
+                return;
+            }
+        }
+
+        // Permission check for admin routes
+        if (to.meta.permissions && authStore.isAuthenticated) {
+            const requiredPermissions = Array.isArray(to.meta.permissions) ? to.meta.permissions : [to.meta.permissions];
+
+            const hasPermission = requiredPermissions.some((permission) =>
+                authStore.hasPermission(permission)
+            );
+
+            const isAdministrator = authStore.hasRole && authStore.hasRole(['admin', 'administrator']);
+
+            if (!hasPermission && !isAdministrator) {
+                progressBar.finish();
+                next({ name: 'AdminDashboard' });
+                return;
+            }
+        }
+    }
+
+    // Redirect logged-in admin away from login page
+    if (to.name === 'AdminLogin') {
+        if (authStore.isAuthenticated && authStore.token) {
+            progressBar.finish();
+            next({ name: 'AdminDashboard' });
+            return;
+        }
+    }
+
+    next();
+});
+
+// Run after route is resolved
+router.afterEach((to, from) => {
+    // Finish progress bar after route change
+    setTimeout(() => {
+        progressBar.finish();
+    }, 100);
+});
+
+// Handle route errors
+router.onError((error) => {
+    progressBar.fail();
+    console.error('Router error:', error);
+});
+
+
+
+export default router;

@@ -1,0 +1,93 @@
+/**
+ * Default settings configuration
+ * This file contains all default values for application settings
+ */
+
+export const defaultSettings = {
+    home_page: {
+        home_hero_title: { value: 'Uninterrupted Power for Your Business & Home', type: 'text', group: 'home_page' },
+        home_hero_subtitle: { value: 'Reliable technical power support solutions, including UPS systems, industrial backup, batteries, and professional maintenance services.', type: 'textarea', group: 'home_page' },
+        stat_1_value: { value: '500+', type: 'text', group: 'home_page' },
+        stat_1_label: { value: 'Systems Installed', type: 'text', group: 'home_page' },
+        stat_2_value: { value: '99.9%', type: 'text', group: 'home_page' },
+        stat_2_label: { value: 'Power Uptime', type: 'text', group: 'home_page' },
+        stat_3_value: { value: '24/7', type: 'text', group: 'home_page' },
+        stat_3_label: { value: 'Support', type: 'text', group: 'home_page' },
+        stat_4_value: { value: '15+', type: 'text', group: 'home_page' },
+        stat_4_label: { value: 'Years Experience', type: 'text', group: 'home_page' },
+        // Section visibility settings
+        hero_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        stats_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        trusted_by_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        services_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        why_choose_us_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        testimonials_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        featured_products_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        cta_section_enabled: { value: '1', type: 'boolean', group: 'home_page' },
+        // Dynamic section content
+        trusted_by_title: { value: 'TRUSTED BY INDUSTRY LEADERS', type: 'text', group: 'home_page' },
+        trusted_by_clients: { value: '', type: 'textarea', group: 'home_page' },
+        services_overline: { value: 'WHAT WE DO', type: 'text', group: 'home_page' },
+        services_title: { value: 'Power Support Solutions', type: 'text', group: 'home_page' },
+        services_subtitle: { value: 'We ensure uninterrupted operations for businesses and households with high-quality power products and services.', type: 'textarea', group: 'home_page' },
+        services_data: { value: '', type: 'textarea', group: 'home_page' },
+        why_choose_us_overline: { value: 'WHY CHOOSE US', type: 'text', group: 'home_page' },
+        why_choose_us_title: { value: 'Reliable Power, Guaranteed', type: 'text', group: 'home_page' },
+        why_choose_us_image: { value: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', type: 'text', group: 'home_page' },
+        why_choose_us_features: { value: '', type: 'textarea', group: 'home_page' },
+        testimonials_overline: { value: 'TESTIMONIALS', type: 'text', group: 'home_page' },
+        testimonials_title: { value: 'Client Success Stories', type: 'text', group: 'home_page' },
+        testimonials_subtitle: { value: "See how we've helped businesses and households stay powered up and protected.", type: 'textarea', group: 'home_page' },
+        testimonials_data: { value: '', type: 'textarea', group: 'home_page' },
+        products_overline: { value: 'OUR PRODUCTS', type: 'text', group: 'home_page' },
+        products_title: { value: 'Featured Power Systems', type: 'text', group: 'home_page' },
+        products_button_text: { value: 'View All Products', type: 'text', group: 'home_page' },
+        products_button_link: { value: '/products', type: 'text', group: 'home_page' },
+        cta_title: { value: 'Secure Your Power Today', type: 'text', group: 'home_page' },
+        cta_subtitle: { value: "Don't let power outages disrupt your life or business. Contact us for reliable backup solutions.", type: 'textarea', group: 'home_page' },
+        cta_primary_button_text: { value: 'Get Started', type: 'text', group: 'home_page' },
+        cta_primary_button_link: { value: '{"name": "Contact"}', type: 'text', group: 'home_page' },
+        cta_secondary_button_text: { value: 'Contact Support', type: 'text', group: 'home_page' },
+        cta_secondary_button_link: { value: '{"name": "Contact"}', type: 'text', group: 'home_page' },
+    },
+    general: {
+        site_name: { value: '', type: 'text', group: 'general' },
+        site_tagline: { value: '', type: 'text', group: 'general' },
+        contact_email: { value: '', type: 'email', group: 'general' },
+        contact_phone: { value: '', type: 'text', group: 'general' },
+        whatsapp_number: { value: '', type: 'text', group: 'general' },
+        address: { value: '', type: 'textarea', group: 'general' },
+    },
+    contact_page: {
+        contact_email: { value: '', type: 'email', group: 'contact_page' },
+        contact_phone: { value: '', type: 'text', group: 'contact_page' },
+        contact_address: { value: '', type: 'textarea', group: 'contact_page' },
+        contact_hero_title: { value: 'Contact Us', type: 'text', group: 'contact_page' },
+        contact_hero_subtitle: { value: 'We are here to help.', type: 'textarea', group: 'contact_page' },
+        contact_map_url: { value: '', type: 'textarea', group: 'contact_page' },
+    },
+    social: {
+        facebook_url: { value: '', type: 'url', group: 'social' },
+        twitter_url: { value: '', type: 'url', group: 'social' },
+        linkedin_url: { value: '', type: 'url', group: 'social' },
+        instagram_url: { value: '', type: 'url', group: 'social' },
+    },
+    seo: {
+        meta_title: { value: '', type: 'text', group: 'seo' },
+        meta_description: { value: '', type: 'textarea', group: 'seo' },
+        meta_keywords: { value: '', type: 'text', group: 'seo' },
+    },
+    email: {
+        smtp_host: { value: '', type: 'text', group: 'email' },
+        smtp_port: { value: '', type: 'text', group: 'email' },
+        smtp_username: { value: '', type: 'text', group: 'email' },
+        smtp_password: { value: '', type: 'password', group: 'email' },
+        smtp_encryption: { value: 'tls', type: 'text', group: 'email' },
+    },
+    branding: {
+        logo: { value: '', type: 'image', group: 'branding' },
+        favicon: { value: '', type: 'image', group: 'branding' },
+        primary_color: { value: '#1976D2', type: 'color', group: 'branding' },
+    },
+};
+

@@ -1,0 +1,47 @@
+<template>
+    <v-dialog :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" max-width="400">
+        <v-card>
+            <v-card-title class="text-h6">Confirm Delete</v-card-title>
+            <v-card-text>
+                Are you sure you want to delete the subscription for
+                <strong>{{ subscription?.email }}</strong>? This action cannot be undone.
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="grey" variant="text" @click="close" :disabled="loading">Cancel</v-btn>
+                <v-btn color="error" @click="handleDelete" :loading="loading">Delete</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</template>
+
+<script>
+export default {
+    name: 'DeleteSubscriptionDialog',
+    props: {
+        modelValue: {
+            type: Boolean,
+            default: false
+        },
+        subscription: {
+            type: Object,
+            default: null
+        },
+        loading: {
+            type: Boolean,
+            default: false
+        }
+    },
+    emits: ['update:modelValue', 'delete', 'close'],
+    methods: {
+        close() {
+            this.$emit('update:modelValue', false);
+            this.$emit('close');
+        },
+        handleDelete() {
+            this.$emit('delete', this.subscription);
+        }
+    }
+};
+</script>
+
