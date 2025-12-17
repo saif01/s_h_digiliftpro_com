@@ -48,6 +48,18 @@ const routes = [
                 meta: { title: 'Product Details' }
             },
             {
+                path: 'case-studies',
+                component: () => import('./components/public/pages/CaseStudiesPage.vue'),
+                name: 'CaseStudies',
+                meta: { title: 'Case Studies' }
+            },
+            {
+                path: 'pricing',
+                component: () => import('./components/public/pages/PricingPage.vue'),
+                name: 'Pricing',
+                meta: { title: 'Pricing' }
+            },
+            {
                 path: 'contact',
                 component: () => import('./components/public/pages/ContactPage.vue'),
                 name: 'Contact',

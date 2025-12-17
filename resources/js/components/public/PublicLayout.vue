@@ -49,7 +49,7 @@ export default {
             drawer: false,
             isScrolled: false,
             siteName: 'digiliftpro',
-            siteTagline: 'Digital Business Services',
+            siteTagline: 'Build, Manage, and Grow Your Digital Business',
             footerDescription: 'Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.',
             newsletterDescription: 'Get practical growth tips, updates, and launch notes—no spam.',
             brandingLogo: null,
@@ -71,8 +71,10 @@ export default {
                 { id: 1, label: 'Home', url: '/' },
                 { id: 2, label: 'Services', url: '/services' },
                 { id: 3, label: 'Products & Projects', url: '/products' },
-                { id: 4, label: 'About', url: '/about' },
-                { id: 5, label: 'Contact', url: '/contact' },
+                { id: 4, label: 'Case Studies', url: '/case-studies' },
+                { id: 5, label: 'Pricing', url: '/pricing' },
+                { id: 6, label: 'About', url: '/about' },
+                { id: 7, label: 'Contact', url: '/contact' },
             ]
         };
     },
