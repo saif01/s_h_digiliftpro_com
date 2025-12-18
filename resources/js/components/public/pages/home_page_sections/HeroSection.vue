@@ -1,81 +1,179 @@
 <template>
-    <section class="hero-section position-relative overflow-hidden">
-        <div class="animated-gradient-bg"></div>
-        <div class="hero-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
+    <section class="hero-section">
+        <!-- Animated Grid Background -->
+        <div class="grid-background"></div>
+        <div class="gradient-overlay"></div>
+
+        <!-- Floating Particles -->
+        <div class="particles-container">
+            <div v-for="i in 20" :key="i" class="particle-dot" :style="getParticleStyle(i)"></div>
         </div>
-        <v-container class="h-100 position-relative z-index-2">
-            <v-row class="h-100 align-center">
-                <v-col cols="12" md="7" class="text-white">
-                    <v-fade-transition appear>
-                        <div class="hero-content">
-                            <div
-                                class="glass-pill d-inline-flex align-center px-3 px-md-4 py-2 rounded-pill mb-4 mb-md-6">
-                                <v-icon icon="mdi-rocket-launch" color="purple-accent-2" size="small"
-                                    class="mr-2"></v-icon>
-                                <span class="text-caption text-md-subtitle-2 font-weight-bold tracking-wide">DIGITAL
-                                    EXCELLENCE</span>
+
+        <!-- Gradient Orbs -->
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+
+        <v-container class="hero-container">
+            <v-row class="align-center min-vh-80">
+                <!-- Content Column -->
+                <v-col cols="12" lg="6" class="hero-content-col">
+                    <div class="hero-content">
+                        <!-- Badge -->
+                        <div class="hero-badge mb-6">
+                            <div class="badge-glow"></div>
+                            <v-icon icon="mdi-lightning-bolt" size="16" class="mr-2"></v-icon>
+                            <span>Transforming Ideas into Digital Reality</span>
+                        </div>
+
+                        <!-- Main Heading -->
+                        <h1 class="hero-title mb-6">
+                            {{ heroTitle }}
+                        </h1>
+
+                        <!-- Subtitle -->
+                        <p class="hero-subtitle mb-8">
+                            {{ heroSubtitle }}
+                        </p>
+
+                        <!-- Feature Pills -->
+                        <div class="feature-pills mb-8">
+                            <div class="feature-pill">
+                                <v-icon icon="mdi-check-circle" size="18" color="success"></v-icon>
+                                <span>Fast Delivery</span>
                             </div>
-                            <h1
-                                class="text-h5 text-md-h4 text-lg-h3 font-weight-black mb-4 mb-md-6 lh-tight text-shadow-sm">
-                                {{ heroTitle }}
-                            </h1>
-                            <p
-                                class="text-body-1 text-md-h6 text-lg-h5 font-weight-light mb-6 mb-md-8 opacity-90 mw-600 lh-relaxed">
-                                {{ heroSubtitle }}
-                            </p>
-                            <div class="hero-actions d-flex flex-column flex-sm-row gap-3 gap-md-4 flex-wrap">
-                                <v-btn size="large" color="purple-accent-3" variant="flat" rounded="pill"
-                                    class="px-6 px-md-8 text-white font-weight-bold elevation-4 hero-btn hero-btn-primary"
-                                    :to="{ name: 'Contact' }">
-                                    <span class="btn-text">Request a Quote</span>
-                                    <span class="btn-shine"></span>
-                                    <span class="btn-particles">
-                                        <span class="particle"></span>
-                                        <span class="particle"></span>
-                                        <span class="particle"></span>
-                                    </span>
-                                    <v-icon end icon="mdi-arrow-right" class="ml-2 arrow-icon"></v-icon>
-                                </v-btn>
-                                <v-btn size="large" variant="outlined" color="white" rounded="pill"
-                                    class="px-6 px-md-8 font-weight-bold border-2 hero-btn hero-btn-secondary"
-                                    to="/projects">
-                                    <span class="btn-text">View Our Projects</span>
-                                    <span class="btn-glow"></span>
-                                </v-btn>
+                            <div class="feature-pill">
+                                <v-icon icon="mdi-shield-check" size="18" color="purple-accent-2"></v-icon>
+                                <span>Secure & Scalable</span>
+                            </div>
+                            <div class="feature-pill">
+                                <v-icon icon="mdi-chart-line-variant" size="18" color="blue-accent-2"></v-icon>
+                                <span>SEO Optimized</span>
                             </div>
                         </div>
-                    </v-fade-transition>
+
+                        <!-- CTA Buttons -->
+                        <div class="hero-actions mb-10">
+                            <v-btn size="x-large" class="cta-primary" elevation="0" :to="{ name: 'Contact' }">
+                                <v-icon icon="mdi-rocket-launch" class="mr-2"></v-icon>
+                                Request a Quote
+                                <div class="btn-glow-effect"></div>
+                            </v-btn>
+                            <v-btn size="x-large" variant="outlined" class="cta-secondary" to="/projects">
+                                View Our Projects
+                                <v-icon icon="mdi-arrow-right" class="ml-2 arrow-animate"></v-icon>
+                            </v-btn>
+                        </div>
+
+                    </div>
                 </v-col>
 
-                <v-col cols="12" md="5" class="d-flex justify-center align-center hero-visual-col">
-                    <div class="hero-visual-3d">
-                        <div class="glass-card card-main">
-                            <v-icon icon="mdi-web" size="48" color="purple-accent-2" class="mb-4 icon-pulse"></v-icon>
-                            <div class="text-h5 font-weight-bold text-white mb-2">Web Solutions</div>
-                            <div class="text-body-2 text-white opacity-80">Custom websites & apps built for your
-                                business growth.</div>
+                <!-- Visual Column -->
+                <v-col cols="12" lg="6" class="hero-visual-col">
+                    <div class="hero-visual-wrapper">
+                        <!-- Main Dashboard Card -->
+                        <div class="dashboard-card main-dashboard">
+                            <div class="card-header">
+                                <div class="card-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div class="card-title">Development Dashboard</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="metric-row">
+                                    <div class="metric">
+                                        <v-icon icon="mdi-web" color="purple-accent-2" size="32"></v-icon>
+                                        <div class="metric-info">
+                                            <div class="metric-label">Websites</div>
+                                            <div class="metric-value">35+</div>
+                                        </div>
+                                    </div>
+                                    <div class="chart-mini">
+                                        <div class="chart-bar" style="height: 60%"></div>
+                                        <div class="chart-bar" style="height: 80%"></div>
+                                        <div class="chart-bar" style="height: 100%"></div>
+                                        <div class="chart-bar" style="height: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-row">
+                                    <div class="metric">
+                                        <v-icon icon="mdi-application" color="blue-accent-2" size="32"></v-icon>
+                                        <div class="metric-info">
+                                            <div class="metric-label">Web Apps</div>
+                                            <div class="metric-value">20+</div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-ring">
+                                        <svg viewBox="0 0 36 36">
+                                            <path
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3" />
+                                            <path class="circle-progress"
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="#7c3aed" stroke-width="3"
+                                                stroke-dasharray="85, 100" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="glass-card card-float-1">
-                            <v-icon icon="mdi-chart-line" size="32" color="success" class="icon-bounce"></v-icon>
-                            <div class="text-subtitle-2 font-weight-bold text-white mt-2">SEO Growth</div>
+
+                        <!-- Floating Cards -->
+                        <div class="floating-card card-1">
+                            <v-icon icon="mdi-chart-line" size="32" color="success"></v-icon>
+                            <div class="floating-card-content">
+                                <div class="floating-card-title">SEO Growth</div>
+                                <div class="floating-card-value">+245%</div>
+                            </div>
                         </div>
-                        <div class="glass-card card-float-2">
-                            <v-icon icon="mdi-shield-check-outline" size="32" color="blue-accent-2"
-                                class="icon-shake"></v-icon>
-                            <div class="text-subtitle-2 font-weight-bold text-white mt-2">Secure & Fast</div>
+
+                        <div class="floating-card card-2">
+                            <v-icon icon="mdi-rocket-launch-outline" size="32" color="purple-accent-2"></v-icon>
+                            <div class="floating-card-content">
+                                <div class="floating-card-title">Fast Deploy</div>
+                                <div class="floating-card-value">&lt; 2 days</div>
+                            </div>
+                        </div>
+
+                        <div class="floating-card card-3">
+                            <v-icon icon="mdi-shield-check" size="32" color="blue-accent-2"></v-icon>
+                            <div class="floating-card-content">
+                                <div class="floating-card-title">Secure</div>
+                                <div class="floating-card-value">100%</div>
+                            </div>
+                        </div>
+
+                        <!-- Code Window -->
+                        <div class="code-window">
+                            <div class="code-header">
+                                <div class="code-dots">
+                                    <span style="background: #ff5f57"></span>
+                                    <span style="background: #febc2e"></span>
+                                    <span style="background: #28c840"></span>
+                                </div>
+                                <span class="code-title">app.vue</span>
+                            </div>
+                            <div class="code-content">
+                                <div class="code-line"><span class="code-keyword">const</span> <span
+                                        class="code-variable">deploy</span> = <span
+                                        class="code-string">'production'</span></div>
+                                <div class="code-line"><span class="code-keyword">await</span> <span
+                                        class="code-function">build</span>()</div>
+                                <div class="code-line"><span class="code-comment">// Success! 🚀</span></div>
+                            </div>
                         </div>
                     </div>
                 </v-col>
             </v-row>
         </v-container>
 
-        <!-- Wave Divider -->
-        <div class="wave-divider">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                preserveAspectRatio="none">
+        <!-- Modern Wave Divider -->
+        <div class="wave-divider-modern">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path
                     d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
                     class="shape-fill"></path>
@@ -96,462 +194,179 @@ export default {
             type: String,
             default: 'Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.'
         }
+    },
+    methods: {
+        getParticleStyle(index) {
+            const size = Math.random() * 4 + 2;
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const delay = Math.random() * 20;
+            const duration = Math.random() * 20 + 20;
+
+            return {
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${x}%`,
+                top: `${y}%`,
+                animationDelay: `${delay}s`,
+                animationDuration: `${duration}s`
+            };
+        }
     }
 };
 </script>
 
 <style scoped>
+/* ===== BASE STYLES ===== */
 .hero-section {
-    min-height: 800px;
+    position: relative;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    position: relative;
-    padding-top: 96px;
-    padding-bottom: 120px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%);
+    padding: 120px 0 140px;
 }
 
-/* Ensure wave divider is always visible */
-.hero-section::after {
-    content: '';
+.min-vh-80 {
+    min-height: 80vh;
+}
+
+/* ===== ANIMATED GRID BACKGROUND ===== */
+.grid-background {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    pointer-events: none;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
     z-index: 1;
 }
 
-.animated-gradient-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(-45deg, #1e3a8a, #7c3aed, #2563eb, #06b6d4);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-}
-
-@keyframes gradientBG {
+@keyframes gridMove {
     0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
+        transform: translate(0, 0);
     }
 
     100% {
-        background-position: 0% 50%;
+        transform: translate(50px, 50px);
     }
 }
 
-.hero-shapes .shape {
+.gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+    z-index: 2;
+}
+
+/* ===== PARTICLES ===== */
+.particles-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.particle-dot {
+    position: absolute;
+    background: rgba(124, 58, 237, 0.6);
+    border-radius: 50%;
+    animation: floatParticle 30s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes floatParticle {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(100px, -100px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* ===== GRADIENT ORBS ===== */
+.gradient-orbs {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.6;
-    animation: floatShape 20s infinite alternate;
+    opacity: 0.4;
+    animation: moveOrb 20s ease-in-out infinite;
 }
 
-.shape-1 {
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(45deg, #7c3aed, #a855f7);
+    top: -250px;
+    left: -200px;
+}
+
+.orb-2 {
     width: 400px;
     height: 400px;
-    background: #7c3aed;
-    top: -100px;
-    left: -100px;
+    background: linear-gradient(45deg, #3b82f6, #06b6d4);
+    bottom: -200px;
+    right: -150px;
+    animation-delay: -10s;
 }
 
-.shape-2 {
+.orb-3 {
     width: 300px;
     height: 300px;
-    background: #06b6d4;
-    bottom: 10%;
+    background: linear-gradient(45deg, #8b5cf6, #6366f1);
+    top: 50%;
     right: 10%;
     animation-delay: -5s;
 }
 
-.shape-3 {
-    width: 200px;
-    height: 200px;
-    background: #8b5cf6;
-    top: 20%;
-    right: 30%;
-    animation-delay: -10s;
+@keyframes moveOrb {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
 }
 
-.glass-pill {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+/* ===== CONTAINER ===== */
+.hero-container {
+    position: relative;
+    z-index: 10;
 }
 
+/* ===== HERO CONTENT ===== */
 .hero-content {
-    width: 100%;
-    max-width: 680px;
-}
-
-.hero-btn {
-    min-width: 140px;
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hero-actions {
-    width: 100%;
-    max-width: 520px;
-    animation: slideInUp 0.8s ease-out 0.6s both;
-}
-
-/* Primary Button Animations */
-.hero-btn-primary {
-    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s both;
-    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4) !important;
-}
-
-.hero-btn-primary:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6) !important;
-}
-
-.hero-btn-primary:active {
-    transform: translateY(-2px) scale(1.02);
-}
-
-/* Secondary Button Animations */
-.hero-btn-secondary {
-    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1s both;
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.5) !important;
-}
-
-.hero-btn-secondary:hover {
-    transform: translateY(-4px) scale(1.05);
-    background: rgba(255, 255, 255, 0.2) !important;
-    border-color: white !important;
-    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
-}
-
-.hero-btn-secondary:active {
-    transform: translateY(-2px) scale(1.02);
-}
-
-/* Button Text Animation */
-.btn-text {
-    position: relative;
-    z-index: 2;
-    display: inline-block;
-}
-
-.hero-btn:hover .btn-text {
-    animation: textBounce 0.6s ease;
-}
-
-/* Shine Effect */
-.btn-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.6s ease;
-    z-index: 1;
-}
-
-.hero-btn-primary:hover .btn-shine {
-    left: 100%;
-}
-
-/* Glow Effect for Secondary Button */
-.btn-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    transition: width 0.4s ease, height 0.4s ease;
-    z-index: 0;
-}
-
-.hero-btn-secondary:hover .btn-glow {
-    width: 300px;
-    height: 300px;
-}
-
-/* Arrow Icon Animation */
-.arrow-icon {
-    transition: transform 0.3s ease;
-    display: inline-block;
-}
-
-.hero-btn-primary:hover .arrow-icon {
-    animation: arrowSlide 0.8s ease infinite;
-}
-
-/* Particles */
-.btn-particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.btn-particles .particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0;
-}
-
-.btn-particles .particle:nth-child(1) {
-    top: 20%;
-    left: 30%;
-}
-
-.btn-particles .particle:nth-child(2) {
-    top: 60%;
-    left: 70%;
-}
-
-.btn-particles .particle:nth-child(3) {
-    top: 40%;
-    right: 20%;
-}
-
-.hero-btn-primary:hover .particle {
-    animation: particleFloat 1.5s ease-out;
-}
-
-.hero-btn-primary:hover .particle:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.hero-btn-primary:hover .particle:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-/* Keyframe Animations */
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3) translateY(20px);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.05) translateY(0);
-    }
-
-    70% {
-        transform: scale(0.95);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes textBounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3px);
-    }
-}
-
-@keyframes arrowSlide {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(5px);
-    }
-}
-
-@keyframes particleFloat {
-    0% {
-        opacity: 0;
-        transform: translate(0, 0) scale(0);
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate(var(--x, 20px), var(--y, -30px)) scale(1);
-    }
-}
-
-@keyframes floatShape {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(50px, 50px) rotate(20deg);
-    }
-}
-
-.hero-visual-3d {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    perspective: 1000px;
-}
-
-.glass-card {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-    padding: 24px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: cardFadeIn 0.8s ease-out both;
-}
-
-.card-main {
-    width: 280px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    animation-delay: 0.3s;
-}
-
-.card-main:hover {
-    transform: translate(-50%, -50%) scale(1.05);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
-}
-
-.card-float-1 {
-    top: 20%;
-    right: 0;
-    width: 140px;
-    animation: float 6s ease-in-out infinite, cardFadeIn 0.8s ease-out 0.5s both;
-    z-index: 1;
-}
-
-.card-float-1:hover {
-    transform: scale(1.08);
-}
-
-.card-float-2 {
-    bottom: 20%;
-    left: 0;
-    width: 140px;
-    animation: float 6s ease-in-out infinite 2s, cardFadeIn 0.8s ease-out 0.7s both;
-    z-index: 3;
-}
-
-.card-float-2:hover {
-    transform: scale(1.08);
-}
-
-/* Icon animations */
-.icon-pulse {
-    animation: iconPulse 3s ease-in-out infinite;
-}
-
-.icon-bounce {
-    animation: iconBounce 2s ease-in-out infinite;
-}
-
-.icon-shake {
-    animation: iconShake 2.5s ease-in-out infinite;
-}
-
-/* Animation keyframes for icons */
-@keyframes iconPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-}
-
-@keyframes iconBounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes iconShake {
-
-    0%,
-    100% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(-10deg);
-    }
-
-    75% {
-        transform: rotate(10deg);
-    }
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    color: white;
+    animation: fadeInUp 1s ease-out;
 }
 
 @keyframes fadeInUp {
@@ -566,17 +381,366 @@ export default {
     }
 }
 
-@keyframes cardFadeIn {
+/* Badge */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    background: rgba(124, 58, 237, 0.2);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInScale 0.6s ease-out 0.2s both;
+}
+
+@keyframes fadeInScale {
     from {
         opacity: 0;
+        transform: scale(0.8);
     }
 
     to {
         opacity: 1;
+        transform: scale(1);
     }
 }
 
+.badge-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent);
+    animation: badgeGlow 3s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+
+    0%,
+    100% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(100%);
+    }
+}
+
+/* Title */
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+/* Subtitle */
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+/* Feature Pills */
+.feature-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.feature-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(124, 58, 237, 0.5);
+    transform: translateY(-2px);
+}
+
+/* CTA Buttons */
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 1s both;
+}
+
+.cta-primary {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+    padding: 14px 32px !important;
+    border-radius: 50px !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4) !important;
+}
+
+.btn-glow-effect {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-100%);
+}
+
+.cta-primary:hover .btn-glow-effect {
+    animation: buttonGlow 0.8s ease-out;
+}
+
+@keyframes buttonGlow {
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.cta-secondary {
+    background: transparent !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+    padding: 14px 32px !important;
+    border-radius: 50px !important;
+    transition: all 0.3s ease !important;
+}
+
+.cta-secondary:hover {
+    border-color: rgba(124, 58, 237, 0.8) !important;
+    background: rgba(124, 58, 237, 0.1) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+}
+
+.arrow-animate {
+    transition: transform 0.3s ease;
+}
+
+.cta-secondary:hover .arrow-animate {
+    transform: translateX(5px);
+}
+
+/* ===== HERO VISUAL ===== */
+.hero-visual-col {
+    position: relative;
+}
+
+.hero-visual-wrapper {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    animation: fadeInRight 1s ease-out 0.4s both;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Main Dashboard Card */
+.dashboard-card {
+    position: absolute;
+    width: 100%;
+    max-width: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    animation: float 6s ease-in-out infinite;
+    z-index: 2;
+}
+
 @keyframes float {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-20px);
+    }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.card-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.card-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.card-title {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.metric {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.metric-info {
+    color: white;
+}
+
+.metric-label {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.chart-mini {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 40px;
+}
+
+.chart-bar {
+    width: 8px;
+    background: linear-gradient(to top, #7c3aed, #a855f7);
+    border-radius: 4px;
+    animation: growBar 1.5s ease-out infinite alternate;
+}
+
+.chart-bar:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.chart-bar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chart-bar:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.chart-bar:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+@keyframes growBar {
+    0% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.progress-ring {
+    width: 40px;
+    height: 40px;
+}
+
+.circle-progress {
+    stroke-linecap: round;
+    animation: progressRotate 2s ease-in-out infinite;
+}
+
+@keyframes progressRotate {
+    0% {
+        stroke-dasharray: 0, 100;
+    }
+
+    50% {
+        stroke-dasharray: 85, 100;
+    }
+
+    100% {
+        stroke-dasharray: 85, 100;
+        transform: rotate(360deg);
+    }
+}
+
+/* Floating Cards */
+.floating-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard {
 
     0%,
     100% {
@@ -584,343 +748,292 @@ export default {
     }
 
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-15px);
     }
 }
 
-.wave-divider {
+.card-1 {
+    top: 10%;
+    right: -20px;
+    animation-delay: 0s;
+    z-index: 3;
+}
+
+.card-2 {
+    top: 50%;
+    left: -30px;
+    animation-delay: 1s;
+    z-index: 3;
+}
+
+.card-3 {
+    bottom: 15%;
+    right: -10px;
+    animation-delay: 2s;
+    z-index: 3;
+}
+
+.floating-card-content {
+    color: white;
+}
+
+.floating-card-title {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.floating-card-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Code Window */
+.code-window {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 280px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    animation: fadeInUp 1.5s ease-out 1s both;
+    z-index: 4;
+}
+
+.code-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.code-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.code-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.code-title {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+.code-content {
+    padding: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+.code-line {
+    color: #e2e8f0;
+    margin-bottom: 8px;
+}
+
+.code-keyword {
+    color: #c792ea;
+}
+
+.code-variable {
+    color: #82aaff;
+}
+
+.code-string {
+    color: #c3e88d;
+}
+
+.code-function {
+    color: #ffcb6b;
+}
+
+.code-comment {
+    color: #546e7a;
+}
+
+/* ===== WAVE DIVIDER ===== */
+.wave-divider-modern {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    overflow: hidden;
     line-height: 0;
     transform: rotate(180deg);
-    z-index: 2;
+    z-index: 5;
 }
 
-.wave-divider svg {
-    position: relative;
+.wave-divider-modern svg {
     display: block;
-    width: calc(100% + 1.3px);
+    width: 100%;
     height: 100px;
-    filter: drop-shadow(0 -4px 8px rgba(0, 0, 0, 0.1));
 }
 
-.wave-divider .shape-fill {
+.wave-divider-modern .shape-fill {
     fill: rgb(var(--v-theme-surface));
 }
 
-/* Mobile wave divider enhancements */
-@media (max-width: 960px) {
-    .wave-divider {
-        z-index: 10;
-        bottom: -2px;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1280px) {
+    .floating-card {
+        padding: 12px 16px;
     }
 
-    .wave-divider svg {
-        height: 90px;
-    }
-}
-
-@media (max-width: 600px) {
-    .wave-divider {
-        bottom: -2px;
-        z-index: 10;
+    .card-1,
+    .card-3 {
+        right: 0;
     }
 
-    .wave-divider svg {
-        height: 80px;
-        filter: drop-shadow(0 -3px 8px rgba(0, 0, 0, 0.2));
-    }
-
-    /* Ensure wave is visible on mobile with solid white */
-    .wave-divider .shape-fill {
-        fill: #f5f5f5;
+    .card-2 {
+        left: -10px;
     }
 }
 
-@media (max-width: 400px) {
-    .wave-divider svg {
-        height: 60px;
-    }
-}
-
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
     .hero-section {
-        min-height: auto;
-        padding-top: 72px;
-        padding-bottom: 120px;
+        padding: 100px 0 120px;
     }
 
     .hero-content {
-        margin: 0 auto;
         text-align: center;
+        max-width: 100%;
     }
 
-    .hero-shapes .shape {
-        filter: blur(60px);
-        opacity: 0.4;
-    }
-
-    .shape-1 {
-        width: 250px;
-        height: 250px;
-        top: -50px;
-        left: -50px;
-    }
-
-    .shape-2 {
-        width: 200px;
-        height: 200px;
-    }
-
-    .shape-3 {
-        width: 150px;
-        height: 150px;
-    }
-
-    /* Tablet visual cards */
-    .hero-visual-col {
-        margin-top: 40px;
-        order: 2;
-    }
-
-    .hero-visual-3d {
-        width: 320px;
-        height: 320px;
-    }
-
-    .card-main {
-        width: 240px;
-    }
-
-    .card-float-1,
-    .card-float-2 {
-        width: 130px;
-    }
-
-    .hero-actions {
-        justify-content: center;
-    }
-
-    .hero-btn {
-        min-width: 0;
-    }
-
-    .hero-btn-primary:hover,
-    .hero-btn-secondary:hover {
-        transform: translateY(-2px) scale(1.02);
-    }
-
-    .mw-600 {
-        max-width: 100% !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .hero-section {
-        min-height: auto;
-        padding-top: 56px;
-        padding-bottom: 120px;
-        overflow: visible;
-    }
-
-    .hero-shapes .shape {
-        filter: blur(30px);
-        opacity: 0.22;
-    }
-
-    .shape-1 {
-        width: 200px;
-        height: 200px;
-        top: -30px;
-        left: -30px;
-    }
-
-    .shape-2 {
-        width: 150px;
-        height: 150px;
-        bottom: 5%;
-        right: 5%;
-    }
-
-    .shape-3 {
-        width: 100px;
-        height: 100px;
-        top: 15%;
-        right: 20%;
-    }
-
-    /* Mobile visual cards - horizontal layout */
-    .hero-visual-col {
-        margin-top: 32px;
-        margin-bottom: 0;
-        order: 2;
-        padding: 0 12px;
-    }
-
-    .hero-visual-3d {
-        width: 100%;
-        max-width: 380px;
-        height: 140px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        perspective: none;
-    }
-
-    /* Mobile cards - side by side layout */
-    .glass-card {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        transform: none !important;
-        flex: 1;
-        min-width: 0;
-        animation: fadeInUp 0.8s ease-out both;
-        border-radius: 16px;
-        padding: 16px;
-    }
-
-    .card-main {
-        width: auto !important;
-        flex: 2;
-        animation-delay: 0.2s;
-    }
-
-    .card-main .text-h5 {
-        font-size: 1rem !important;
-    }
-
-    .card-main .text-body-2 {
-        font-size: 0.7rem !important;
-        line-height: 1.3;
-    }
-
-    .card-main .mb-4 {
-        margin-bottom: 8px !important;
-    }
-
-    .card-main .mb-2 {
-        margin-bottom: 4px !important;
-    }
-
-    .card-main v-icon,
-    .card-main .icon-pulse {
-        font-size: 32px !important;
-    }
-
-    .card-float-1,
-    .card-float-2 {
-        width: auto !important;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 8px;
-        animation: none;
-    }
-
-    .card-float-1 {
-        animation: fadeInUp 0.8s ease-out 0.4s both;
-    }
-
-    .card-float-2 {
-        animation: fadeInUp 0.8s ease-out 0.6s both;
-    }
-
-    .card-float-1 .text-subtitle-2,
-    .card-float-2 .text-subtitle-2 {
-        font-size: 0.7rem !important;
-        margin-top: 4px !important;
-    }
-
-    .card-float-1 v-icon,
-    .card-float-2 v-icon {
-        font-size: 24px !important;
-    }
-
-    /* Disable hover effects on mobile */
-    .card-main:hover,
-    .card-float-1:hover,
-    .card-float-2:hover {
-        transform: none !important;
-    }
-
-    /* Mobile icon animations */
-    .icon-pulse,
-    .icon-bounce,
-    .icon-shake {
-        animation-duration: 2s;
-    }
-
-    .hero-content {
-        padding: 0 8px;
-        text-align: center;
-    }
-
-    .glass-pill {
-        padding: 6px 12px !important;
-        font-size: 0.7rem !important;
+    .hero-subtitle {
         margin-left: auto;
         margin-right: auto;
     }
 
-    .hero-btn {
-        width: 100%;
-        min-width: auto;
+    .feature-pills {
         justify-content: center;
     }
 
-    .hero-btn-primary:hover,
-    .hero-btn-secondary:hover {
-        transform: scale(1.02);
-    }
-
-    .text-shadow-sm {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
     .hero-actions {
-        align-items: stretch;
+        justify-content: center;
     }
 
-    .btn-particles,
-    .btn-shine {
-        display: none;
+    .hero-visual-wrapper {
+        height: 500px;
+        margin-top: 60px;
+    }
+
+    .dashboard-card {
+        max-width: 380px;
+    }
+
+    .floating-card {
+        font-size: 14px;
+    }
+
+    .code-window {
+        width: 240px;
+        left: 5%;
+        bottom: 5%;
     }
 }
 
-/* Extra small mobile optimization */
-@media (max-width: 380px) {
-    .hero-visual-3d {
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 80px 0 100px;
+        min-height: auto;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-actions {
         flex-direction: column;
-        height: auto;
-        gap: 8px;
+        width: 100%;
     }
 
-    .card-main,
-    .card-float-1,
-    .card-float-2 {
-        flex: none;
-        width: 100% !important;
+    .cta-primary,
+    .cta-secondary {
+        width: 100%;
+        justify-content: center;
     }
 
-    .card-main {
-        order: 1;
+    .hero-visual-wrapper {
+        height: 400px;
+        margin-top: 40px;
     }
 
-    .card-float-1 {
-        order: 2;
+    .dashboard-card {
+        max-width: 320px;
+        padding: 16px;
     }
 
-    .card-float-2 {
-        order: 3;
+    .metric-row {
+        padding: 12px;
+    }
+
+    .metric-value {
+        font-size: 20px;
+    }
+
+    .floating-card {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .floating-card-value {
+        font-size: 16px;
+    }
+
+    .code-window {
+        width: 200px;
+        left: 0;
+        bottom: 0;
+    }
+
+    .code-content {
+        padding: 12px;
+        font-size: 11px;
+    }
+
+    .wave-divider-modern svg {
+        height: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-badge {
+        font-size: 11px;
+        padding: 6px 16px;
+    }
+
+    .hero-actions {
+        margin-bottom: 32px;
+    }
+
+    .orb {
+        filter: blur(60px);
+        opacity: 0.3;
+    }
+
+    .orb-1 {
+        width: 300px;
+        height: 300px;
+    }
+
+    .orb-2 {
+        width: 250px;
+        height: 250px;
+    }
+
+    .orb-3 {
+        width: 200px;
+        height: 200px;
     }
 }
 </style>
