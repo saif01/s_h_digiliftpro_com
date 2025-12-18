@@ -1,6 +1,28 @@
-# Business Website Platform
+# DigiLiftPro - Digital Business Services Platform
 
-A comprehensive, generic business website platform built according to SRS specifications. This platform can represent almost any type of business with configurable modules.
+**Website:** [digiliftpro.com](http://digiliftpro.com)
+
+A comprehensive digital services platform for building, managing, and growing digital businesses. DigiLiftPro provides websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.
+
+## 🎯 About DigiLiftPro
+
+DigiLiftPro is a professional digital services company specializing in:
+
+- **Website & Web App Development** - Fast, secure, modern websites and applications
+- **SEO & Growth Optimization** - SEO that increases visibility and brings real traffic
+- **Web Assets Management** - Domain, hosting, SSL, and infrastructure management
+- **Email Service Management** - Business email setup and deliverability optimization
+- **Maintenance & Support** - Ongoing updates, security, and performance monitoring
+
+### Value Proposition
+
+**"Build, Manage, and Grow Your Digital Business"**
+
+We deliver digital solutions with:
+- ✅ Transparent scope & timelines
+- ✅ Production-ready code & secure setup
+- ✅ Documentation + handover training
+- ✅ Dedicated support plans
 
 ## 🛠️ Technical Specifications
 
@@ -159,6 +181,18 @@ npm run build
 - **Mobile Browsers**: iOS Safari, Chrome Mobile
 - **Responsive Design**: Mobile-first approach with Vuetify
 
+## 📋 Site Navigation
+
+The public website includes the following main navigation:
+
+- **Home** - Homepage with hero section, featured projects, services, testimonials, and CTA
+- **Services** - Complete listing of all services (Website Development, SEO, Web Assets Management, Email Services, Maintenance & Support)
+- **Products & Projects** - Portfolio of completed projects with detailed specifications and case studies
+- **Case Studies** - Detailed case studies showcasing problem-solving approach and results
+- **Pricing** - Transparent pricing packages (Starter, Business, Pro, Custom)
+- **About** - Company story, mission, values, team, and development process
+- **Contact** - Contact form with service selection, budget, and inquiry details
+
 ## 🚀 Features
 
 ### Core Features
@@ -175,16 +209,17 @@ npm run build
 - **Visitor Logging**: Comprehensive visitor tracking with device, browser, OS, and bot detection
 
 #### Settings Management
-- **General Settings**: Site name, tagline, contact information, address
+- **General Settings**: Site name (digiliftpro), tagline ("Build, Manage, and Grow Your Digital Business"), contact information, address
 - **Home Page Settings**: Modular section management with tabbed interface:
-  - Hero section with customizable title, subtitle, and CTA buttons
+  - Hero section with title ("Build, Manage, and Grow Your Digital Business"), subtitle, and CTA buttons ("Request a Quote", "View Our Projects")
+  - Quick Highlights section with 3-6 feature cards (Website Development, SEO, Email Services, Asset Management, Maintenance, Analytics)
   - Statistics section with up to 4 customizable stat cards
+  - Featured Projects section ("Our Recent Work") with 3-6 project cards
+  - Why Choose Us section with features (Transparent scope, Production-ready code, Documentation, Support plans)
   - Trusted By section with dynamic client logo management
   - Services section (WHAT WE DO) with dynamic service cards
-  - Why Choose Us section with features management
-  - Testimonials section with testimonial cards
-  - Featured Products section
-  - CTA (Call-to-Action) section with primary and secondary buttons
+  - Testimonials section with testimonial cards (optional)
+  - CTA (Call-to-Action) section with text ("Have a project in mind? Let's turn your idea into a fast, secure, and scalable solution.") and button ("Book a Free Consultation")
   - Section visibility toggles for each section
 - **Contact Page Settings**: Contact form configuration and page content
 - **Branding Settings**: Logo, favicon, and color scheme customization
@@ -452,18 +487,45 @@ npm run build
 
 #### Homepage
 - **Dynamic Homepage**: Fully configurable homepage with:
-  - Hero section with customizable content
-  - Statistics section with animated counters
-  - Trusted By section with client logos
-  - Services showcase section
-  - Why Choose Us section with features
-  - Testimonials carousel
-  - Featured Products section
-  - Call-to-Action section
-  - All sections can be toggled on/off from admin
+  - **Hero Section**: 
+    - Title: "Build, Manage, and Grow Your Digital Business"
+    - Subtitle: "Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support."
+    - CTAs: "Request a Quote" and "View Our Projects"
+  - **Quick Highlights** (3-6 feature cards):
+    - ✅ Custom Website & Web App Development
+    - ✅ SEO & Performance Optimization
+    - ✅ Email Service Setup & Monitoring
+    - ✅ Domain / Hosting / SSL Management
+    - ✅ Ongoing Maintenance & Support
+    - ✅ Analytics, Tracking & Reporting
+  - **Featured Projects Section** ("Our Recent Work"):
+    - 3-6 project cards with images, titles, summaries, tech stack tags, and "View Details" buttons
+  - **Why Choose Us Section**:
+    - Transparent scope & timelines
+    - Production-ready code & secure setup
+    - Documentation + handover training
+    - Dedicated support plans
+  - **Testimonials Section** (optional): Client feedback cards
+  - **Statistics Section**: Animated counters for key metrics
+  - **CTA Section**: 
+    - Text: "Have a project in mind? Let's turn your idea into a fast, secure, and scalable solution."
+    - Button: "Book a Free Consultation"
+  - All sections can be toggled on/off from admin panel
 
-#### Products Display
-- **Product Listing Page**:
+#### Products & Projects Display
+- **Products & Projects Listing Page**:
+  - **Introduction**: "Products & Projects - Explore our developed software, websites, and platforms. Each project page includes full specifications, screenshots, features, and technology details."
+  - **Advanced Filtering System**:
+    - Category: Website / Web App / SEO / Email / Asset Management
+    - Industry: Education / Retail / Manufacturing / Healthcare / NGO
+    - Technology: Laravel / Vue / React / WordPress / Node
+    - Status: Live / In Progress / Private Deployment
+  - **Project Card Template**:
+    - Project thumbnail image
+    - Project name
+    - Short description (1-2 lines)
+    - Tags: Industry + Tech + Year
+    - Action buttons: "View Details" | "Request Similar"
   - Category-based filtering with icon buttons
   - Real-time search across titles, descriptions, SKU, and specifications
   - Multiple sorting options (newest, price, name, featured)
@@ -478,7 +540,38 @@ npm run build
   - Responsive grid layout
   - Sticky filter bar on scroll
 
-- **Product Detail Page**:
+- **Product/Project Detail Page** (Full Specifications):
+  - **Project Title** with name
+  - **Gallery Section**: Image slider showing:
+    - Homepage screenshots
+    - Dashboard views
+    - Reports and analytics
+    - Mobile responsive views
+  - **Project Summary**: Business goal + delivered solution + results
+  - **Project Specifications**:
+    - Client/Company (optional)
+    - Industry classification
+    - Type: Website / Web App / System
+    - Platform: Web / Mobile Responsive
+    - Technology Stack (Frontend, Backend, Database)
+    - Hosting: Shared/VPS/Cloud + environment details
+    - Security: SSL, roles/permissions, backups
+    - Integrations: Payment/SMS/API/Email
+    - Pages/Modules list
+    - Timeline information
+    - Support plan details
+  - **Key Features** (bullet list):
+    - Role-based access control
+    - Dynamic reports & export (PDF/Excel)
+    - Admin dashboard with KPI charts
+    - SEO-ready structure and performance optimization
+    - Automated backups & uptime monitoring
+  - **Screenshots + Notes**: Each screenshot with captions ("Booking module", "Analytics view", etc.)
+  - **Results** (if available):
+    - Load time improvements (from X to Y)
+    - SEO improvements / traffic growth metrics
+    - Automation reduces manual work
+  - **CTA Section**: "Want a similar system?" with "Get a Proposal" button
   - Hero section with product overview
   - Product gallery with:
     - Main image with zoom functionality
@@ -531,8 +624,48 @@ npm run build
     - Real-time updates after admin approval
 
 #### Services Display
-- **Services Listing**: Grid view of all published services
-- **Service Detail Page**: Complete service information with features and benefits
+- **Services Listing Page**: Grid view of all published services organized by category
+- **Service Detail Pages**: Complete service information with:
+  
+  **A) Website & Web App Development**
+  - Description: "We build fast, secure, modern websites and applications."
+  - Features:
+    - Business websites, landing pages, portfolio sites
+    - Admin panels, dashboards, CRM modules
+    - E-commerce & custom order systems
+    - API integration (payment, SMS, ERP/CRM, etc.)
+  
+  **B) SEO & Growth Optimization**
+  - Description: "SEO that increases visibility and brings real traffic."
+  - Features:
+    - Technical SEO audit & fixes
+    - On-page SEO (structure, content, schema)
+    - Speed optimization (Core Web Vitals)
+    - Keyword plan + monthly reporting
+  
+  **C) Web Assets Management**
+  - Description: "We manage the critical assets that keep your business online."
+  - Features:
+    - Domain renewals & DNS configuration
+    - Hosting/VPS monitoring and backups
+    - SSL certificate setup and renewal
+    - Security hardening + uptime monitoring
+  
+  **D) Email Service Management**
+  - Description: "Reliable email delivery for your business."
+  - Features:
+    - Business email setup (Google Workspace / Microsoft 365 / cPanel)
+    - SPF/DKIM/DMARC configuration
+    - Deliverability monitoring & troubleshooting
+    - Mailing list and transactional email setup (if needed)
+  
+  **E) Maintenance & Support**
+  - Description: "Stay updated, secure, and stable."
+  - Features:
+    - Monthly maintenance packages
+    - Bug fixes, version upgrades
+    - Security patches & logs review
+    - Performance monitoring
 
 #### Blog System
 - **Blog Listing Page**:
@@ -647,12 +780,56 @@ npm run build
     - Smooth transitions between announcements
     - Auto-opens 500ms after page load for better UX
 
-#### Contact & Communication
-- **Contact Form**: 
-  - Name, email, phone, subject, message fields
-  - Automatic lead creation
-  - Email notifications
-- **Newsletter Subscription**: Footer subscription form with email verification
+#### Case Studies Page
+- **Case Study Structure**: Each case study includes:
+  - Problem statement
+  - Solution approach
+  - Screenshots and visual documentation
+  - Measurable results and metrics
+  - Technology stack used
+  - Client testimonials (if available)
+
+#### Pricing Page
+- **Simple & Clear Pricing Structure**:
+  - **Starter Package** (Website): Basic website development package
+  - **Business Package** (Website + SEO Basics): Includes website and SEO fundamentals
+  - **Pro Package** (Web App + Assets + Support): Comprehensive package with web apps, asset management, and ongoing support
+  - **Custom Quote Available**: For CRM/ERP/automation systems and enterprise solutions
+- Each package displays features, pricing, and clear call-to-action buttons
+
+#### About Page
+- **Company Story**: Background and history of DigiLiftPro
+- **Mission & Values**: Core mission and company values
+- **Team Skills**: Expertise and capabilities of the team
+- **Development Process**: Step-by-step process:
+  - Discovery: Understanding client needs and requirements
+  - Design: UI/UX design and wireframing
+  - Build: Development and implementation
+  - Test: Quality assurance and testing
+  - Deploy: Launch and deployment
+  - Support: Ongoing maintenance and support
+
+#### Contact Page
+- **Contact Form Fields**:
+  - Name (required)
+  - Company (optional)
+  - Phone (required)
+  - Email (required)
+  - Service Needed (dropdown selection)
+  - Budget (optional)
+  - Details/Message (required)
+- **Contact Information**:
+  - WhatsApp integration (floating button)
+  - Phone number display
+  - Email address
+  - Office location (optional)
+- **Automatic Lead Creation**: Contact form submissions create leads in admin panel
+- **Email Notifications**: Admin receives notification of new contact form submissions
+
+#### Newsletter Subscription
+- Footer subscription form with email verification
+- Email collection for marketing campaigns
+- Subscription status tracking in admin panel
 
 #### SEO & Performance
 - **SEO Optimization**:
@@ -1027,17 +1204,19 @@ public/
 
 ## 📝 Notes
 
-- This is a foundational structure that can be expanded
-- All core models and relationships are set up
+- **DigiLiftPro Platform**: This platform is specifically designed for DigiLiftPro digital services business
+- **Focus Areas**: Website development, SEO optimization, web asset management, email services, and ongoing support
+- All core models and relationships are set up and configured
 - Additional features can be added incrementally
 - The platform is designed to be modular and configurable
-- Product management includes comprehensive features for industrial/tech product websites
+- Products & Projects management includes comprehensive project showcase features
 - File uploads are stored in `public/uploads/{folder}/` for easy access
 - Dashboard includes AI-powered insights and real-time analytics
 - All charts use Chart.js for modern, interactive visualizations
-- Product reviews support guest submissions with automatic spam protection
-- Product ratings are automatically calculated from approved reviews
-- Review moderation system with approve/reject workflow
+- Project showcase supports detailed specifications, technology stacks, and case studies
+- Services are organized into 5 main categories (Website Development, SEO, Asset Management, Email Services, Maintenance)
+- Contact form creates leads automatically for business inquiries
+- Newsletter subscription for marketing campaigns and updates
 
 ## 🛠️ Development
 
