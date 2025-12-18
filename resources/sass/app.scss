@@ -23,6 +23,9 @@
 // Users can customize these colors from here
 
 :root {
+    // ============================================
+    // Admin Panel Colors
+    // ============================================
     // Gradient Colors - Primary Theme
     --admin-gradient-start: #2c73d2;
     --admin-gradient-end: #008f7a;
@@ -50,6 +53,62 @@
     --admin-text-primary: #ffffff;
     --admin-text-secondary: rgba(255, 255, 255, 0.9);
     --admin-text-muted: rgba(255, 255, 255, 0.85);
+
+    // ============================================
+    // Brand Colors - DigiLiftPro (Public Frontend)
+    // ============================================
+
+    // Primary Brand Colors (Purple)
+    --brand-primary: #7c3aed;
+    --brand-primary-light: #a855f7;
+    --brand-primary-dark: #6d28d9;
+    --brand-secondary: #8b5cf6;
+
+    // Accent Colors
+    --brand-accent-blue: #3b82f6;
+    --brand-accent-cyan: #06b6d4;
+    --brand-accent-light-blue: #60a5fa;
+
+    // Dark Theme Colors
+    --brand-dark-primary: #0f172a;
+    --brand-dark-secondary: #1e1b4b;
+    --brand-dark-tertiary: #1e293b;
+
+    // Success & Status Colors
+    --brand-success: #10b981;
+    --brand-warning: #f59e0b;
+    --brand-error: #ef4444;
+    --brand-info: #3b82f6;
+
+    // Neutral Colors
+    --brand-white: #ffffff;
+    --brand-gray-light: #f8fafc;
+    --brand-gray: #94a3b8;
+    --brand-gray-dark: #475569;
+
+    // Gradients
+    --brand-gradient-primary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 100%);
+    --brand-gradient-hero: linear-gradient(135deg, var(--brand-dark-primary) 0%, var(--brand-dark-secondary) 50%, var(--brand-dark-tertiary) 100%);
+    --brand-gradient-purple-glow: linear-gradient(45deg, var(--brand-primary), var(--brand-primary-light));
+    --brand-gradient-blue-cyan: linear-gradient(45deg, var(--brand-accent-blue), var(--brand-accent-cyan));
+
+    // RGB Values for rgba() usage
+    --brand-primary-rgb: 124, 58, 237;
+    --brand-primary-light-rgb: 168, 85, 247;
+    --brand-accent-blue-rgb: 59, 130, 246;
+
+    // Shadows & Glows
+    --brand-shadow-primary: 0 10px 30px rgba(124, 58, 237, 0.4);
+    --brand-shadow-hover: 0 20px 40px rgba(124, 58, 237, 0.6);
+    --brand-glow-primary: 0 0 20px rgba(124, 58, 237, 0.5);
+
+    // Overlays & Glassmorphism
+    --brand-overlay-light: rgba(255, 255, 255, 0.05);
+    --brand-overlay-medium: rgba(255, 255, 255, 0.1);
+    --brand-overlay-strong: rgba(255, 255, 255, 0.15);
+    --brand-backdrop-blur: rgba(255, 255, 255, 0.08);
+    --brand-glass-bg: rgba(255, 255, 255, 0.1);
+    --brand-glass-border: rgba(255, 255, 255, 0.2);
 }
 
 // ============================================

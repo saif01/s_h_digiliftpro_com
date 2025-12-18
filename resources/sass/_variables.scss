@@ -1,3 +1,21 @@
+/**
+ * ============================================
+ * DigiLiftPro Brand Variables
+ * ============================================
+ * 
+ * This file contains all SCSS variables and brand colors.
+ * These are compiled to CSS custom properties in app.scss
+ * and can be used throughout the application.
+ * 
+ * Usage in Vue components:
+ *   background: var(--brand-primary);
+ *   color: var(--brand-accent-blue);
+ *   box-shadow: var(--brand-shadow-primary);
+ * 
+ * To change brand colors, modify the values here and
+ * recompile SASS: npm run dev or npm run build
+ */
+
 // Body
 $body-bg: #f8fafc;
 
@@ -5,3 +23,52 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// ===================================
+// Brand Colors - DigiLiftPro
+// ===================================
+
+// Primary Brand Colors (Purple Gradient)
+$brand-primary: #7c3aed; // Primary Purple
+$brand-primary-light: #a855f7; // Light Purple
+$brand-primary-dark: #6d28d9; // Dark Purple
+$brand-secondary: #8b5cf6; // Secondary Purple
+
+// Accent Colors
+$brand-accent-blue: #3b82f6; // Bright Blue
+$brand-accent-cyan: #06b6d4; // Cyan
+$brand-accent-light-blue: #60a5fa; // Light Blue
+
+// Dark Theme Colors
+$brand-dark-primary: #0f172a; // Deep Navy
+$brand-dark-secondary: #1e1b4b; // Dark Purple Blue
+$brand-dark-tertiary: #1e293b; // Slate Dark
+
+// Success & Status Colors
+$brand-success: #10b981; // Green
+$brand-warning: #f59e0b; // Amber
+$brand-error: #ef4444; // Red
+$brand-info: #3b82f6; // Blue
+
+// Neutral Colors
+$brand-white: #ffffff;
+$brand-gray-light: #f8fafc;
+$brand-gray: #94a3b8;
+$brand-gray-dark: #475569;
+
+// Gradient Definitions
+$gradient-primary: linear-gradient(135deg, $brand-primary 0%, $brand-primary-light 100%);
+$gradient-hero: linear-gradient(135deg, $brand-dark-primary 0%, $brand-dark-secondary 50%, $brand-dark-tertiary 100%);
+$gradient-purple-glow: linear-gradient(45deg, $brand-primary, $brand-primary-light);
+$gradient-blue-cyan: linear-gradient(45deg, $brand-accent-blue, $brand-accent-cyan);
+
+// Shadow & Effects
+$brand-shadow-primary: 0 10px 30px rgba(124, 58, 237, 0.4);
+$brand-shadow-hover: 0 20px 40px rgba(124, 58, 237, 0.6);
+$brand-glow-primary: 0 0 20px rgba(124, 58, 237, 0.5);
+
+// Opacity Levels
+$brand-overlay-light: rgba(255, 255, 255, 0.05);
+$brand-overlay-medium: rgba(255, 255, 255, 0.1);
+$brand-overlay-strong: rgba(255, 255, 255, 0.15);
+$brand-backdrop-blur: rgba(255, 255, 255, 0.08);

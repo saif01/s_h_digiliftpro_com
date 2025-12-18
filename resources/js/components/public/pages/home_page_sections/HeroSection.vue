@@ -114,8 +114,7 @@
                                                 fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3" />
                                             <path class="circle-progress"
                                                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="#7c3aed" stroke-width="3"
-                                                stroke-dasharray="85, 100" />
+                                                fill="none" stroke-width="3" stroke-dasharray="85, 100" />
                                         </svg>
                                     </div>
                                 </div>
@@ -224,7 +223,7 @@ export default {
     display: flex;
     align-items: center;
     overflow: hidden;
-    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%);
+    background: var(--brand-gradient-hero);
     padding: 120px 0 140px;
 }
 
@@ -237,8 +236,8 @@ export default {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px);
+        linear-gradient(rgba(var(--brand-primary-rgb), 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--brand-primary-rgb), 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
     animation: gridMove 20s linear infinite;
     z-index: 1;
@@ -257,8 +256,8 @@ export default {
 .gradient-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 20%, rgba(var(--brand-primary-rgb), 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(var(--brand-accent-blue-rgb), 0.15) 0%, transparent 50%);
     z-index: 2;
 }
 
@@ -272,7 +271,7 @@ export default {
 
 .particle-dot {
     position: absolute;
-    background: rgba(124, 58, 237, 0.6);
+    background: rgba(var(--brand-primary-rgb), 0.6);
     border-radius: 50%;
     animation: floatParticle 30s infinite ease-in-out;
     pointer-events: none;
@@ -318,7 +317,7 @@ export default {
 .orb-1 {
     width: 500px;
     height: 500px;
-    background: linear-gradient(45deg, #7c3aed, #a855f7);
+    background: var(--brand-gradient-purple-glow);
     top: -250px;
     left: -200px;
 }
@@ -326,7 +325,7 @@ export default {
 .orb-2 {
     width: 400px;
     height: 400px;
-    background: linear-gradient(45deg, #3b82f6, #06b6d4);
+    background: var(--brand-gradient-blue-cyan);
     bottom: -200px;
     right: -150px;
     animation-delay: -10s;
@@ -335,7 +334,7 @@ export default {
 .orb-3 {
     width: 300px;
     height: 300px;
-    background: linear-gradient(45deg, #8b5cf6, #6366f1);
+    background: linear-gradient(45deg, var(--brand-secondary), var(--brand-accent-blue));
     top: 50%;
     right: 10%;
     animation-delay: -5s;
@@ -386,8 +385,8 @@ export default {
     display: inline-flex;
     align-items: center;
     padding: 8px 20px;
-    background: rgba(124, 58, 237, 0.2);
-    border: 1px solid rgba(124, 58, 237, 0.4);
+    background: rgba(var(--brand-primary-rgb), 0.2);
+    border: 1px solid rgba(var(--brand-primary-rgb), 0.4);
     border-radius: 50px;
     font-size: 13px;
     font-weight: 600;
@@ -412,7 +411,7 @@ export default {
 .badge-glow {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(var(--brand-primary-rgb), 0.5), transparent);
     animation: badgeGlow 3s ease-in-out infinite;
 }
 
@@ -472,8 +471,8 @@ export default {
 }
 
 .feature-pill:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(124, 58, 237, 0.5);
+    background: var(--brand-overlay-medium);
+    border-color: rgba(var(--brand-primary-rgb), 0.5);
     transform: translateY(-2px);
 }
 
@@ -486,7 +485,7 @@ export default {
 }
 
 .cta-primary {
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
+    background: var(--brand-gradient-primary) !important;
     color: white !important;
     font-weight: 600 !important;
     letter-spacing: 0.3px;
@@ -499,7 +498,7 @@ export default {
 
 .cta-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4) !important;
+    box-shadow: var(--brand-shadow-hover) !important;
 }
 
 .btn-glow-effect {
@@ -531,10 +530,10 @@ export default {
 }
 
 .cta-secondary:hover {
-    border-color: rgba(124, 58, 237, 0.8) !important;
-    background: rgba(124, 58, 237, 0.1) !important;
+    border-color: rgba(var(--brand-primary-rgb), 0.8) !important;
+    background: rgba(var(--brand-primary-rgb), 0.1) !important;
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+    box-shadow: 0 10px 30px rgba(var(--brand-primary-rgb), 0.2);
 }
 
 .arrow-animate {
@@ -577,9 +576,9 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--brand-overlay-light);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--brand-overlay-medium);
     border-radius: 24px;
     padding: 24px;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
@@ -669,7 +668,7 @@ export default {
 
 .chart-bar {
     width: 8px;
-    background: linear-gradient(to top, #7c3aed, #a855f7);
+    background: var(--brand-gradient-primary);
     border-radius: 4px;
     animation: growBar 1.5s ease-out infinite alternate;
 }
@@ -706,6 +705,7 @@ export default {
 }
 
 .circle-progress {
+    stroke: var(--brand-primary);
     stroke-linecap: round;
     animation: progressRotate 2s ease-in-out infinite;
 }
@@ -732,9 +732,9 @@ export default {
     align-items: center;
     gap: 12px;
     padding: 16px 20px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--brand-backdrop-blur);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--brand-overlay-strong);
     border-radius: 16px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     animation: floatCard 4s ease-in-out infinite;
@@ -793,8 +793,8 @@ export default {
     bottom: 10%;
     left: 10%;
     width: 280px;
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(var(--brand-dark-primary), 0.95);
+    border: 1px solid var(--brand-overlay-medium);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
