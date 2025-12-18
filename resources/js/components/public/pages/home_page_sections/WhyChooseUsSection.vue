@@ -36,7 +36,8 @@
                     <div class="features-grid">
                         <div v-for="(feature, i) in features" :key="i" class="feature-card"
                             :style="{ '--delay': i * 0.15 + 's' }">
-                            <div class="feature-card-inner pa-7">
+                            <div class="feature-card-inner pa-7" @mousemove="handleMouseMove"
+                                @mouseleave="handleMouseLeave">
                                 <div class="d-flex align-start">
                                     <div class="feature-icon-wrapper mr-4">
                                         <div class="icon-glow"></div>
@@ -169,6 +170,20 @@ export default {
     methods: {
         resolveImageUrl(url) {
             return resolveUploadUrl(url);
+        },
+        handleMouseMove(event) {
+            const card = event.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 100;
+            const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        },
+        handleMouseLeave(event) {
+            const card = event.currentTarget;
+            card.style.setProperty('--mouse-x', '50%');
+            card.style.setProperty('--mouse-y', '50%');
         }
     }
 };
