@@ -1,578 +1,519 @@
 <template>
-    <div class="product-detail-page bg-grey-lighten-5 min-vh-100 pb-16">
-        <!-- Hero Section -->
-        <section class="product-hero position-relative d-flex align-center overflow-hidden">
-            <div class="hero-background"></div>
-            <div class="hero-overlay"></div>
+    <div class="product-detail-page">
+        <!-- Modern Hero Section with Gradient -->
+        <section class="software-hero">
+            <div class="hero-gradient"></div>
+            <div class="hero-pattern"></div>
 
-            <v-container class="position-relative z-index-2">
-                <v-row align="center">
-                    <v-col cols="12" md="8">
-                        <v-breadcrumbs :items="breadcrumbs" class="px-0 mb-4">
+            <v-container class="hero-content">
+                <v-row>
+                    <v-col cols="12">
+                        <!-- Breadcrumbs -->
+                        <v-breadcrumbs :items="breadcrumbs" class="px-0 mb-6 breadcrumb-modern">
                             <template v-slot:divider>
-                                <v-icon icon="mdi-chevron-right" size="small" color="white"></v-icon>
-                            </template>
-                            <template v-slot:title="{ item }">
-                                <span :class="item.disabled ? 'text-grey-lighten-2' : 'text-white'">
-                                    {{ item.title }}
-                                </span>
+                                <v-icon icon="mdi-chevron-right" size="small"></v-icon>
                             </template>
                         </v-breadcrumbs>
+                    </v-col>
+                </v-row>
 
-                        <div class="d-flex align-center gap-3 mb-4 flex-wrap">
-                            <v-chip v-if="product.featured" color="amber-accent-4" variant="flat" size="small"
-                                class="font-weight-bold">
+                <v-row align="center" class="hero-main">
+                    <v-col cols="12" lg="6" class="hero-text">
+                        <!-- Product Badges -->
+                        <div class="d-flex align-center gap-2 mb-6 flex-wrap">
+                            <v-chip v-if="product.featured" color="gradient-primary" variant="flat" size="small"
+                                prepend-icon="mdi-star" class="chip-modern">
                                 FEATURED
                             </v-chip>
                             <v-chip v-if="product.discount_percent > 0" color="error" variant="flat" size="small"
-                                class="font-weight-bold">
-                                -{{ Math.round(parseFloat(product.discount_percent)) }}% OFF
+                                prepend-icon="mdi-tag-outline" class="chip-modern">
+                                {{ Math.round(parseFloat(product.discount_percent)) }}% OFF
                             </v-chip>
-                            <v-chip color="white" variant="flat" size="small" class="font-weight-bold text-primary">
+                            <v-chip color="primary" variant="outlined" size="small" class="chip-modern">
                                 {{ getCategoryName(product) }}
                             </v-chip>
-                            <v-chip v-if="product.availability && product.availability !== 'in_stock'"
-                                :color="getAvailabilityColorDetail(product.availability)" variant="flat" size="small"
-                                class="font-weight-bold">
-                                {{ getAvailabilityLabelDetail(product.availability) }}
+                            <v-chip v-if="product.version" color="success" variant="tonal" size="small"
+                                prepend-icon="mdi-information-outline" class="chip-modern">
+                                v{{ product.version || '1.0.0' }}
                             </v-chip>
                         </div>
 
-                        <h1 class="text-h4 text-lg-h3 font-weight-black text-white mb-6 lh-tight text-shadow-sm">
+                        <!-- Product Title -->
+                        <h1 class="product-title mb-4">
                             {{ product.title }}
                         </h1>
 
-                        <p class="text-h6 text-grey-lighten-1 opacity-90 mb-6">
+                        <!-- Product Description -->
+                        <p class="product-description mb-6">
                             {{ product.short_description || product.description }}
                         </p>
 
-                        <div class="d-flex align-center gap-6 flex-wrap">
-                            <div v-if="product.brand" class="d-flex align-center text-white">
-                                <v-icon icon="mdi-tag" size="small" class="mr-2"></v-icon>
-                                <span class="text-body-2 font-weight-bold">{{ product.brand }}</span>
-                            </div>
-                            <div v-if="product.rating && product.rating > 0" class="d-flex align-center">
-                                <v-rating :model-value="parseFloat(product.rating)" color="amber" density="compact" half-increments
-                                    readonly size="small"></v-rating>
-                                <span class="text-body-2 text-white ml-2">
-                                    {{ parseFloat(product.rating).toFixed(1) }} ({{ product.rating_count || 0 }} ratings)
+                        <!-- Quick Info -->
+                        <div class="quick-info mb-8">
+                            <div class="info-item" v-if="product.rating && product.rating > 0">
+                                <v-rating :model-value="parseFloat(product.rating)" color="amber-darken-1"
+                                    density="compact" half-increments readonly size="small">
+                                </v-rating>
+                                <span class="info-text ml-2">
+                                    {{ parseFloat(product.rating).toFixed(1) }}
+                                    <span class="text-medium-emphasis">({{ product.rating_count || 0 }})</span>
                                 </span>
                             </div>
-                            <div class="d-flex align-center text-white">
-                                <v-icon icon="mdi-barcode" size="small" class="mr-2"></v-icon>
-                                <span class="text-body-2">SKU: {{ product.sku || 'N/A' }}</span>
+                            <div class="info-item" v-if="product.brand">
+                                <v-icon icon="mdi-domain" size="18"></v-icon>
+                                <span class="info-text">{{ product.brand }}</span>
                             </div>
-                            <div v-if="product.availability" class="d-flex align-center text-white">
-                                <v-icon :icon="getAvailabilityIconDetail(product.availability)" size="small" class="mr-2"></v-icon>
-                                <span class="text-body-2">{{ getAvailabilityLabelDetail(product.availability) }}</span>
+                            <div class="info-item">
+                                <v-icon icon="mdi-code-tags" size="18"></v-icon>
+                                <span class="info-text">SKU: {{ product.sku || 'N/A' }}</span>
                             </div>
-                            <v-tooltip text="Share Product" location="top">
-                                <template v-slot:activator="{ props: tooltipProps }">
-                                    <v-btn icon="mdi-share-variant" variant="text" color="white" size="small"
-                                        class="ml-2" v-bind="tooltipProps" @click="openShareMenu">
-                                        <v-icon icon="mdi-share-variant"></v-icon>
-                                    </v-btn>
-                                </template>
-                            </v-tooltip>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="cta-buttons">
+                            <v-btn color="primary" size="x-large" rounded="lg" elevation="0"
+                                class="px-8 btn-modern btn-primary-gradient" prepend-icon="mdi-download">
+                                Download Free Trial
+                            </v-btn>
+                            <v-btn variant="outlined" color="primary" size="x-large" rounded="lg"
+                                class="px-8 btn-modern" prepend-icon="mdi-play-circle-outline">
+                                Watch Demo
+                            </v-btn>
+                            <v-btn variant="text" color="primary" size="large" icon class="btn-icon-modern"
+                                @click="openShareMenu">
+                                <v-icon>mdi-share-variant</v-icon>
+                            </v-btn>
                         </div>
                     </v-col>
-                    <v-col cols="12" md="4" class="text-center">
-                        <div class="hero-price-card pa-6 rounded-xl bg-white elevation-8">
-                            <div class="text-caption text-medium-emphasis mb-2">Starting From</div>
-                            <div class="text-h3 font-weight-black text-primary mb-4">
-                                {{ formatPrice(product) }}
+
+                    <v-col cols="12" lg="6" class="hero-visual">
+                        <!-- Floating Card with 3D Effect -->
+                        <div class="floating-card">
+                            <div class="card-glow"></div>
+                            <div class="software-preview-card">
+                                <img :src="activeImage" alt="Software Preview" class="preview-image" />
+                                <div class="preview-overlay">
+                                    <v-btn icon variant="flat" color="white" size="large" class="zoom-btn"
+                                        @click="showImageZoom = true">
+                                        <v-icon color="primary">mdi-magnify-plus</v-icon>
+                                    </v-btn>
+                                </div>
                             </div>
-                            <v-tooltip text="Request a custom quote for this product" location="top">
-                                <template v-slot:activator="{ props: tooltipProps }">
-                                    <v-btn color="primary" size="large" rounded="lg"
-                                        class="w-100 font-weight-bold elevation-2"
-                                        prepend-icon="mdi-file-document-edit-outline" v-bind="tooltipProps">
-                                        Request Quote
-                                    </v-btn>
-                                </template>
-                            </v-tooltip>
-                            <v-tooltip text="Download product datasheet and specifications" location="top">
-                                <template v-slot:activator="{ props: tooltipProps }">
-                                    <v-btn variant="text" color="primary" class="w-100 mt-2" prepend-icon="mdi-download"
-                                        v-bind="tooltipProps">
-                                        Download Datasheet
-                                    </v-btn>
-                                </template>
-                            </v-tooltip>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <v-icon color="primary" size="32">mdi-download</v-icon>
+                                <div class="stat-value">10K+</div>
+                                <div class="stat-label">Downloads</div>
+                            </div>
+                            <div class="stat-card">
+                                <v-icon color="success" size="32">mdi-account-group</v-icon>
+                                <div class="stat-value">5K+</div>
+                                <div class="stat-label">Active Users</div>
+                            </div>
+                            <div class="stat-card">
+                                <v-icon color="amber-darken-1" size="32">mdi-star</v-icon>
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
                         </div>
                     </v-col>
                 </v-row>
             </v-container>
         </section>
 
-        <v-container class="mt-8">
-            <v-row>
-                <!-- Product Gallery -->
-                <v-col cols="12" md="6">
-                    <div class="gallery-container position-sticky top-20">
-                        <v-card
-                            class="main-image-card rounded-xl overflow-hidden elevation-2 mb-4 bg-white position-relative">
-                            <v-chip v-if="product.featured" color="amber-accent-4" variant="flat"
-                                class="position-absolute top-0 left-0 ma-4 z-index-2 font-weight-bold">
-                                NEW
+        <!-- Main Content -->
+        <v-container class="content-container">
+            <!-- Screenshot Gallery -->
+            <section class="gallery-section mb-12">
+                <div class="section-header mb-8">
+                    <h2 class="section-title">Product Screenshots</h2>
+                    <p class="section-subtitle">Explore the interface and key features</p>
+                </div>
+
+                <v-row>
+                    <v-col cols="12" lg="8">
+                        <!-- Main Preview -->
+                        <div class="main-preview-wrapper">
+                            <div class="preview-card-modern">
+                                <img :src="activeImage" alt="Product Screenshot" class="main-preview-img" />
+                                <v-btn icon variant="flat" color="white" size="small" class="fullscreen-btn"
+                                    @click="showImageZoom = true">
+                                    <v-icon size="20" color="primary">mdi-fullscreen</v-icon>
+                                </v-btn>
+                            </div>
+
+                            <!-- Thumbnail Navigation -->
+                            <div class="thumbnails-wrapper">
+                                <div v-for="(img, i) in productImages" :key="i" class="thumbnail-item"
+                                    :class="{ 'thumbnail-active': activeImage === img }" @click="activeImage = img">
+                                    <img :src="img" alt="Thumbnail" />
+                                    <div class="thumbnail-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
+
+                    <v-col cols="12" lg="4">
+                        <!-- Pricing Card -->
+                        <div class="pricing-card-modern mb-6">
+                            <div class="pricing-header">
+                                <div class="pricing-label">Starting at</div>
+                                <div class="pricing-amount">
+                                    <span v-if="product.discount_percent > 0 && product.discounted_price"
+                                        class="price-current">
+                                        Tk {{ formatNumber(product.discounted_price) }}
+                                    </span>
+                                    <span v-else class="price-current">
+                                        {{ formatPrice(product) }}
+                                    </span>
+                                    <span v-if="product.discount_percent > 0 && product.price" class="price-old">
+                                        Tk {{ formatNumber(product.price) }}
+                                    </span>
+                                </div>
+                                <div v-if="product.discount_percent > 0" class="savings-badge">
+                                    Save {{ Math.round(parseFloat(product.discount_percent)) }}%
+                                </div>
+                            </div>
+
+                            <div class="pricing-actions">
+                                <v-btn color="primary" size="large" block rounded="lg" elevation="0"
+                                    class="mb-3 btn-primary-gradient" prepend-icon="mdi-download">
+                                    Get Started Free
+                                </v-btn>
+                                <v-btn variant="outlined" color="primary" size="large" block rounded="lg"
+                                    prepend-icon="mdi-cart-outline">
+                                    Purchase License
+                                </v-btn>
+                            </div>
+
+                            <v-divider class="my-6"></v-divider>
+
+                            <!-- What's Included -->
+                            <div class="includes-section">
+                                <h4 class="includes-title">What's Included</h4>
+                                <div class="includes-list">
+                                    <div class="include-item">
+                                        <v-icon color="success" size="18">mdi-check-circle</v-icon>
+                                        <span>Lifetime Updates</span>
+                                    </div>
+                                    <div class="include-item">
+                                        <v-icon color="success" size="18">mdi-check-circle</v-icon>
+                                        <span>Technical Support</span>
+                                    </div>
+                                    <div class="include-item">
+                                        <v-icon color="success" size="18">mdi-check-circle</v-icon>
+                                        <span>Documentation</span>
+                                    </div>
+                                    <div class="include-item">
+                                        <v-icon color="success" size="18">mdi-check-circle</v-icon>
+                                        <span>API Access</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <v-divider class="my-6"></v-divider>
+
+                            <!-- Trust Icons -->
+                            <div class="trust-icons">
+                                <div class="trust-item">
+                                    <v-icon color="primary" size="24">mdi-shield-check</v-icon>
+                                    <span>Secure</span>
+                                </div>
+                                <div class="trust-item">
+                                    <v-icon color="primary" size="24">mdi-update</v-icon>
+                                    <span>Updates</span>
+                                </div>
+                                <div class="trust-item">
+                                    <v-icon color="primary" size="24">mdi-headset</v-icon>
+                                    <span>Support</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Requirements Card -->
+                        <div class="system-card-modern">
+                            <div class="system-header">
+                                <v-icon color="primary">mdi-laptop</v-icon>
+                                <h4>System Requirements</h4>
+                            </div>
+                            <div class="system-list">
+                                <div class="system-item">
+                                    <div class="system-label">OS</div>
+                                    <div class="system-value">Windows 10+, macOS 10.14+, Linux</div>
+                                </div>
+                                <div class="system-item">
+                                    <div class="system-label">Memory</div>
+                                    <div class="system-value">4 GB RAM minimum</div>
+                                </div>
+                                <div class="system-item">
+                                    <div class="system-label">Storage</div>
+                                    <div class="system-value">500 MB available space</div>
+                                </div>
+                                <div class="system-item">
+                                    <div class="system-label">Browser</div>
+                                    <div class="system-value">Chrome, Firefox, Safari, Edge</div>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
+                </v-row>
+            </section>
+
+            <!-- Key Features Grid -->
+            <section class="features-grid-section mb-12">
+                <div class="section-header mb-8 text-center">
+                    <h2 class="section-title">Key Features</h2>
+                    <p class="section-subtitle">Everything you need to succeed</p>
+                </div>
+
+                <v-row>
+                    <v-col v-for="(feature, i) in keyFeatures" :key="i" cols="12" sm="6" md="4">
+                        <div class="feature-card-modern">
+                            <div class="feature-icon-wrapper">
+                                <v-icon size="32" color="primary">mdi-check-circle</v-icon>
+                            </div>
+                            <h4 class="feature-title">{{ feature }}</h4>
+                            <p class="feature-description">
+                                Advanced functionality that enhances your workflow
+                            </p>
+                        </div>
+                    </v-col>
+                </v-row>
+            </section>
+
+            <!-- Modern Tabs Section -->
+            <section class="tabs-section">
+                <div class="tabs-card-modern">
+                    <v-tabs v-model="tab" color="primary" align-tabs="center" class="modern-tabs">
+                        <v-tab value="overview" class="modern-tab">
+                            <v-icon class="mr-2">mdi-information-outline</v-icon>
+                            Overview
+                        </v-tab>
+                        <v-tab value="features" class="modern-tab">
+                            <v-icon class="mr-2">mdi-star-outline</v-icon>
+                            Features
+                        </v-tab>
+                        <v-tab value="specs" class="modern-tab">
+                            <v-icon class="mr-2">mdi-cog-outline</v-icon>
+                            Specifications
+                        </v-tab>
+                        <v-tab value="downloads" class="modern-tab">
+                            <v-icon class="mr-2">mdi-download-outline</v-icon>
+                            Downloads
+                        </v-tab>
+                        <v-tab value="faq" class="modern-tab">
+                            <v-icon class="mr-2">mdi-help-circle-outline</v-icon>
+                            FAQ
+                        </v-tab>
+                        <v-tab value="reviews" class="modern-tab">
+                            <v-icon class="mr-2">mdi-star-outline</v-icon>
+                            Reviews
+                            <v-chip v-if="product.rating_count" size="x-small" color="primary" class="ml-2">
+                                {{ product.rating_count }}
                             </v-chip>
-                            <v-img :src="activeImage" height="100%" cover class="product-main-img"></v-img>
-                            <v-tooltip text="Zoom image" location="top">
-                                <template v-slot:activator="{ props: tooltipProps }">
-                                    <v-btn icon="mdi-magnify-plus-outline" variant="text" color="grey-darken-2"
-                                        class="position-absolute bottom-0 right-0 ma-4 bg-white elevation-2"
-                                        v-bind="tooltipProps" @click="showImageZoom = true"></v-btn>
-                                </template>
-                            </v-tooltip>
-                        </v-card>
+                        </v-tab>
+                    </v-tabs>
 
-                        <div class="d-flex gap-3 overflow-x-auto py-2 hide-scrollbar">
-                            <div v-for="(img, i) in productImages" :key="i"
-                                class="thumbnail-card rounded-lg overflow-hidden cursor-pointer transition-all"
-                                :class="{ 'active-thumb': activeImage === img }" @click="activeImage = img">
-                                <v-img :src="img" width="80" height="80" cover></v-img>
-                            </div>
-                        </div>
-                    </div>
-                </v-col>
+                    <div class="tab-content-wrapper">
+                        <v-window v-model="tab">
+                            <!-- Overview Tab -->
+                            <v-window-item value="overview">
+                                <div class="tab-content-inner">
+                                    <div class="overview-content">
+                                        <div class="content-block mb-8">
+                                            <h3 class="content-title">About This Software</h3>
+                                            <div class="content-text" v-html="formattedDescription"></div>
+                                        </div>
 
-                <!-- Product Info -->
-                <v-col cols="12" md="6" class="pl-md-6">
-                    <div class="product-info">
-                        <!-- Price Block -->
-                        <div class="price-block mb-6 pa-5 bg-white rounded-xl border-thin elevation-1">
-                            <div class="d-flex align-end lh-1 mb-2">
-                                <!-- Show discounted price in red if there's a discount -->
-                                <span v-if="product.discount_percent > 0 && product.discounted_price"
-                                    class="text-h3 font-weight-black text-error">
-                                    Tk {{ formatNumber(product.discounted_price) }}
-                                </span>
-                                <span v-else class="text-h3 font-weight-black text-primary">
-                                    {{ formatPrice(product) }}
-                                </span>
-                                <!-- Show original price crossed out if there's a discount -->
-                                <span v-if="product.discount_percent > 0 && product.price"
-                                    class="text-h6 text-medium-emphasis text-decoration-line-through ml-3 mb-1">
-                                    Tk {{ formatNumber(product.price) }}
-                                </span>
-                            </div>
-                            <!-- Show savings message -->
-                            <div v-if="product.discount_percent > 0" class="text-success text-body-2 font-weight-bold mb-2">
-                                You save: Tk {{ formatNumber((product.price - product.discounted_price)) }} 
-                                ({{ Math.round(parseFloat(product.discount_percent)) }}% off)
-                            </div>
-                            <div class="d-flex align-center gap-4 flex-wrap mt-4">
-                                <v-tooltip text="Request a custom quote for this product" location="top">
-                                    <template v-slot:activator="{ props: tooltipProps }">
-                                        <v-btn color="primary" size="large" rounded="lg"
-                                            class="flex-grow-1 font-weight-bold elevation-2"
-                                            prepend-icon="mdi-file-document-edit-outline" v-bind="tooltipProps">
-                                            Request Quote
-                                        </v-btn>
-                                    </template>
-                                </v-tooltip>
-                                <v-tooltip text="Add to favorites" location="top">
-                                    <template v-slot:activator="{ props: tooltipProps }">
-                                        <v-btn variant="outlined" color="grey-darken-1" size="large" rounded="lg"
-                                            icon="mdi-heart-outline" v-bind="tooltipProps"></v-btn>
-                                    </template>
-                                </v-tooltip>
-                                <v-tooltip text="Share product on social media" location="top">
-                                    <template v-slot:activator="{ props: tooltipProps }">
-                                        <v-btn variant="outlined" color="success" size="large" rounded="lg"
-                                            icon="mdi-share-variant" v-bind="tooltipProps"
-                                            @click="openShareMenu"></v-btn>
-                                    </template>
-                                </v-tooltip>
-                            </div>
-                        </div>
-
-                        <!-- Key Features -->
-                        <v-card class="mb-6 rounded-xl elevation-1">
-                            <v-card-title class="bg-primary text-white">
-                                <v-icon icon="mdi-star-circle" class="mr-2"></v-icon>
-                                Key Features
-                            </v-card-title>
-                            <v-card-text class="pa-4">
-                                <div v-if="keyFeatures.length > 0">
-                                    <div v-for="(feature, i) in keyFeatures" :key="i" class="d-flex align-center mb-3">
-                                        <v-icon icon="mdi-check-circle" color="success" size="small"
-                                            class="mr-3"></v-icon>
-                                        <span class="text-body-1 font-weight-medium text-grey-darken-2">{{ feature
-                                        }}</span>
-                                    </div>
-                                </div>
-                                <div v-else class="text-body-2 text-medium-emphasis">
-                                    No features listed.
-                                </div>
-                            </v-card-text>
-                        </v-card>
-
-                        <!-- Quick Specs -->
-                        <v-card class="mb-6 rounded-xl elevation-1">
-                            <v-card-title class="bg-grey-lighten-4">
-                                <v-icon icon="mdi-information" class="mr-2"></v-icon>
-                                Quick Specifications
-                            </v-card-title>
-                            <v-card-text class="pa-0">
-                                <v-list lines="two" density="compact">
-                                    <v-list-item v-for="(value, key) in quickSpecs" :key="key" class="border-bottom">
-                                        <v-list-item-title class="text-caption text-medium-emphasis">
-                                            {{ formatSpecLabel(key) }}
-                                        </v-list-item-title>
-                                        <v-list-item-subtitle class="font-weight-bold">
-                                            {{ value }}
-                                        </v-list-item-subtitle>
-                                    </v-list-item>
-                                </v-list>
-                            </v-card-text>
-                        </v-card>
-
-                        <!-- Trust Badges -->
-                        <div class="trust-badges d-flex gap-4 flex-wrap">
-                            <div
-                                class="trust-badge d-flex align-center pa-3 bg-white rounded-lg border-thin flex-grow-1">
-                                <v-icon icon="mdi-shield-check-outline" color="primary" size="large"
-                                    class="mr-3"></v-icon>
-                                <div>
-                                    <div class="text-caption font-weight-bold text-grey-darken-3">Warranty</div>
-                                    <div class="text-caption text-medium-emphasis">
-                                        {{ productWarrantyInfo?.period || productWarrantyInfo?.warranty_period ||
-                                            warrantyInfo.period }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="trust-badge d-flex align-center pa-3 bg-white rounded-lg border-thin flex-grow-1">
-                                <v-icon icon="mdi-truck-fast-outline" color="primary" size="large"
-                                    class="mr-3"></v-icon>
-                                <div>
-                                    <div class="text-caption font-weight-bold text-grey-darken-3">Delivery</div>
-                                    <div class="text-caption text-medium-emphasis">Fast Shipping</div>
-                                </div>
-                            </div>
-                            <div
-                                class="trust-badge d-flex align-center pa-3 bg-white rounded-lg border-thin flex-grow-1">
-                                <v-icon icon="mdi-headset" color="primary" size="large" class="mr-3"></v-icon>
-                                <div>
-                                    <div class="text-caption font-weight-bold text-grey-darken-3">Support</div>
-                                    <div class="text-caption text-medium-emphasis">24/7 Available</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-
-            <!-- Detailed Content Tabs -->
-            <v-row class="mt-8">
-                <v-col cols="12">
-                    <v-card class="rounded-xl elevation-2 overflow-hidden">
-                        <v-tabs v-model="tab" color="primary" align-tabs="start" bg-color="grey-lighten-4">
-                            <v-tab value="overview" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-information-outline" class="mr-2"></v-icon>
-                                Overview
-                            </v-tab>
-                            <v-tab value="specs" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-cog-outline" class="mr-2"></v-icon>
-                                Technical Specs
-                            </v-tab>
-                            <v-tab value="features" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-star-outline" class="mr-2"></v-icon>
-                                Features
-                            </v-tab>
-                            <v-tab value="downloads" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-download-outline" class="mr-2"></v-icon>
-                                Downloads
-                            </v-tab>
-                            <v-tab value="faq" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-help-circle-outline" class="mr-2"></v-icon>
-                                FAQs
-                            </v-tab>
-                            <v-tab value="warranty" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-shield-check-outline" class="mr-2"></v-icon>
-                                Warranty & Service
-                            </v-tab>
-                            <v-tab value="reviews" class="font-weight-bold text-capitalize">
-                                <v-icon icon="mdi-star-outline" class="mr-2"></v-icon>
-                                Reviews
-                                <v-chip v-if="product.rating_count" size="small" color="primary" class="ml-2">
-                                    {{ product.rating_count }}
-                                </v-chip>
-                            </v-tab>
-                        </v-tabs>
-                        <v-divider></v-divider>
-                        <v-card-text class="pa-8 bg-white">
-                            <v-window v-model="tab">
-                                <!-- Overview Tab -->
-                                <v-window-item value="overview">
-                                    <div class="mw-900">
-                                        <h3 class="text-h5 font-weight-bold mb-4 text-grey-darken-3">Product Overview
-                                        </h3>
-                                        <div class="text-body-1 text-grey-darken-1 lh-relaxed mb-6"
-                                            v-html="formattedDescription"></div>
-
-                                        <h4 class="text-h6 font-weight-bold mb-4 text-grey-darken-3">Why Choose This
-                                            Product?
-                                        </h4>
-                                        <v-row>
-                                            <v-col cols="12" md="6" v-for="(benefit, i) in productBenefits" :key="i">
-                                                <div class="d-flex align-start mb-3">
-                                                    <v-icon icon="mdi-check-circle" color="success"
-                                                        class="mr-3 mt-1"></v-icon>
-                                                    <div>
-                                                        <div class="font-weight-bold text-grey-darken-2 mb-1">{{
-                                                            benefit.title
-                                                        }}</div>
-                                                        <div class="text-body-2 text-medium-emphasis">{{
-                                                            benefit.description }}
+                                        <div class="benefits-grid">
+                                            <h3 class="content-title mb-6">Why Choose This Product?</h3>
+                                            <v-row>
+                                                <v-col cols="12" md="6" v-for="(benefit, i) in productBenefits"
+                                                    :key="i">
+                                                    <div class="benefit-card-modern">
+                                                        <div class="benefit-icon">
+                                                            <v-icon color="primary" size="28">mdi-check-circle</v-icon>
                                                         </div>
+                                                        <div class="benefit-content">
+                                                            <h4 class="benefit-title">{{ benefit.title }}</h4>
+                                                            <p class="benefit-description">{{ benefit.description }}</p>
+                                                        </div>
+                                                    </div>
+                                                </v-col>
+                                            </v-row>
+                                        </div>
+
+                                        <!-- Integration Section -->
+                                        <div class="integration-section mt-8">
+                                            <h3 class="content-title mb-6">Integrations & Compatibility</h3>
+                                            <div class="integration-grid">
+                                                <div class="integration-item">
+                                                    <v-icon size="48" color="primary">mdi-api</v-icon>
+                                                    <span>REST API</span>
+                                                </div>
+                                                <div class="integration-item">
+                                                    <v-icon size="48" color="primary">mdi-database</v-icon>
+                                                    <span>Database</span>
+                                                </div>
+                                                <div class="integration-item">
+                                                    <v-icon size="48" color="primary">mdi-cloud</v-icon>
+                                                    <span>Cloud Ready</span>
+                                                </div>
+                                                <div class="integration-item">
+                                                    <v-icon size="48" color="primary">mdi-webhook</v-icon>
+                                                    <span>Webhooks</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-window-item>
+
+                            <!-- Features Tab -->
+                            <v-window-item value="features">
+                                <div class="tab-content-inner">
+                                    <h3 class="content-title mb-6">Detailed Features</h3>
+                                    <v-row>
+                                        <v-col cols="12" md="6" lg="4" v-for="(feature, i) in detailedFeatures"
+                                            :key="i">
+                                            <div class="feature-detail-card">
+                                                <div class="feature-detail-icon">
+                                                    <v-icon :icon="feature.icon || 'mdi-check-circle'"
+                                                        size="36"></v-icon>
+                                                </div>
+                                                <h4 class="feature-detail-title">{{ feature.title }}</h4>
+                                                <p class="feature-detail-description">{{ feature.description }}</p>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </div>
+                            </v-window-item>
+
+                            <!-- Technical Specs Tab -->
+                            <v-window-item value="specs">
+                                <div class="tab-content-inner">
+                                    <h3 class="content-title mb-6">Technical Specifications</h3>
+                                    <div class="specs-modern-grid">
+                                        <div v-for="spec in flattenedSpecifications" :key="spec.key"
+                                            class="spec-item-modern">
+                                            <div class="spec-label">{{ spec.label }}</div>
+                                            <div class="spec-value" v-html="formatSpecValue(spec.value)"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-window-item>
+
+                            <!-- Downloads Tab -->
+                            <v-window-item value="downloads">
+                                <div class="tab-content-inner">
+                                    <h3 class="content-title mb-6">Downloads & Resources</h3>
+                                    <v-row>
+                                        <v-col cols="12" md="6" lg="4" v-for="(doc, idx) in downloadableFiles"
+                                            :key="idx">
+                                            <div class="download-card-modern">
+                                                <div class="download-icon">
+                                                    <v-icon :icon="getFileIcon(doc.type)" size="48"></v-icon>
+                                                </div>
+                                                <div class="download-info">
+                                                    <h4 class="download-title">{{ doc.title }}</h4>
+                                                    <div class="download-meta">
+                                                        <span>{{ doc.size || 'N/A' }}</span>
+                                                        <span>•</span>
+                                                        <span>{{ doc.type || 'Document' }}</span>
                                                     </div>
                                                 </div>
-                                            </v-col>
-                                        </v-row>
-                                    </div>
-                                </v-window-item>
+                                                <v-btn variant="flat" color="primary" size="small" rounded="lg"
+                                                    class="download-btn" @click="downloadFile(doc)">
+                                                    <v-icon start>mdi-download</v-icon>
+                                                    Download
+                                                </v-btn>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </div>
+                            </v-window-item>
 
-                                <!-- Technical Specs Tab -->
-                                <v-window-item value="specs">
-                                    <div>
-                                        <h3 class="text-h5 font-weight-bold mb-6 text-grey-darken-3">Technical
-                                            Specifications
-                                        </h3>
-                                        <v-table density="comfortable" class="specs-table">
-                                            <tbody>
-                                                <tr v-for="spec in flattenedSpecifications" :key="spec.key">
-                                                    <td class="font-weight-bold text-grey-darken-2 bg-grey-lighten-5"
-                                                        width="300">
-                                                        {{ spec.label }}
-                                                    </td>
-                                                    <td class="text-grey-darken-3">
-                                                        <div class="pa-2">
-                                                            <span v-html="formatSpecValue(spec.value)"></span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </v-table>
-                                    </div>
-                                </v-window-item>
-
-                                <!-- Features Tab -->
-                                <v-window-item value="features">
-                                    <div>
-                                        <h3 class="text-h5 font-weight-bold mb-6 text-grey-darken-3">Product Features
-                                        </h3>
-                                        <v-row>
-                                            <v-col cols="12" md="6" v-for="(feature, i) in detailedFeatures" :key="i">
-                                                <v-card class="feature-card pa-4 rounded-lg border-thin mb-4">
-                                                    <div class="d-flex align-start">
-                                                        <v-icon :icon="feature.icon || 'mdi-check-circle'"
-                                                            color="primary" class="mr-3 mt-1"></v-icon>
-                                                        <div>
-                                                            <div class="font-weight-bold text-grey-darken-2 mb-2">{{
-                                                                feature.title }}</div>
-                                                            <div class="text-body-2 text-medium-emphasis">{{
-                                                                feature.description
-                                                            }}</div>
-                                                        </div>
-                                                    </div>
-                                                </v-card>
-                                            </v-col>
-                                        </v-row>
-                                    </div>
-                                </v-window-item>
-
-                                <!-- Downloads Tab -->
-                                <v-window-item value="downloads">
-                                    <div>
-                                        <h3 class="text-h5 font-weight-bold mb-6 text-grey-darken-3">Product Downloads
-                                        </h3>
-                                        <v-list lines="two" class="bg-transparent">
-                                            <v-list-item v-for="(doc, idx) in downloadableFiles" :key="idx" rounded="lg"
-                                                class="mb-3 border-thin bg-grey-lighten-5">
-                                                <template v-slot:prepend>
-                                                    <v-avatar color="primary-lighten-5" size="48" class="text-primary">
-                                                        <v-icon :icon="getFileIcon(doc.type)" size="large"></v-icon>
-                                                    </v-avatar>
-                                                </template>
-                                                <v-list-item-title class="font-weight-bold">{{ doc.title
-                                                }}</v-list-item-title>
-                                                <v-list-item-subtitle>
-                                                    {{ doc.size || 'N/A' }} • {{ doc.type || 'Document' }}
-                                                </v-list-item-subtitle>
-                                                <template v-slot:append>
-                                                    <v-tooltip text="Download file" location="left">
-                                                        <template v-slot:activator="{ props: tooltipProps }">
-                                                            <v-btn variant="text" color="primary" icon="mdi-download"
-                                                                v-bind="tooltipProps"
-                                                                @click="downloadFile(doc)"></v-btn>
-                                                        </template>
-                                                    </v-tooltip>
-                                                </template>
-                                            </v-list-item>
-                                        </v-list>
-                                    </div>
-                                </v-window-item>
-
-                                <!-- FAQs Tab -->
-                                <v-window-item value="faq">
-                                    <div>
-                                        <h3 class="text-h5 font-weight-bold mb-6 text-grey-darken-3">Frequently Asked
-                                            Questions
-                                        </h3>
-                                        <v-expansion-panels variant="accordion" class="faq-panels">
-                                            <v-expansion-panel v-for="(faq, i) in productFAQs" :key="i" class="mb-2">
-                                                <v-expansion-panel-title class="font-weight-bold">
+                            <!-- FAQs Tab -->
+                            <v-window-item value="faq">
+                                <div class="tab-content-inner">
+                                    <h3 class="content-title mb-6">Frequently Asked Questions</h3>
+                                    <div class="faq-modern-wrapper">
+                                        <v-expansion-panels variant="accordion" class="faq-panels-modern">
+                                            <v-expansion-panel v-for="(faq, i) in productFAQs" :key="i"
+                                                class="faq-panel-modern">
+                                                <v-expansion-panel-title class="faq-question">
+                                                    <v-icon class="mr-3"
+                                                        color="primary">mdi-help-circle-outline</v-icon>
                                                     {{ faq.question }}
                                                 </v-expansion-panel-title>
-                                                <v-expansion-panel-text class="text-body-1 text-medium-emphasis">
+                                                <v-expansion-panel-text class="faq-answer">
                                                     {{ faq.answer }}
                                                 </v-expansion-panel-text>
                                             </v-expansion-panel>
                                         </v-expansion-panels>
                                     </div>
-                                </v-window-item>
+                                </div>
+                            </v-window-item>
 
-                                <!-- Warranty & Service Tab -->
-                                <v-window-item value="warranty">
-                                    <div>
-                                        <h3 class="text-h5 font-weight-bold mb-6 text-grey-darken-3">Warranty & Service
-                                            Information</h3>
-
-                                        <v-card class="mb-6 rounded-lg border-thin">
-                                            <v-card-title class="bg-primary text-white">
-                                                <v-icon icon="mdi-shield-check" class="mr-2"></v-icon>
-                                                Warranty Coverage
-                                            </v-card-title>
-                                            <v-card-text class="pa-6">
-                                                <div v-if="productWarrantyInfo">
-                                                    <div v-for="(value, key) in productWarrantyInfo" :key="key"
-                                                        class="mb-4">
-                                                        <div class="text-h6 font-weight-bold mb-2">{{
-                                                            formatSpecLabel(key) }}
-                                                        </div>
-                                                        <div v-if="Array.isArray(value)" class="text-body-1">
-                                                            <ul class="pl-4">
-                                                                <li v-for="(item, i) in value" :key="i" class="mb-2">
-                                                                    {{ item }}
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div v-else class="text-body-1">{{ value }}</div>
-                                                    </div>
-                                                </div>
-                                                <div v-else>
-                                                    <div class="mb-4">
-                                                        <div class="text-h6 font-weight-bold mb-2">Warranty Period</div>
-                                                        <div class="text-body-1">{{ warrantyInfo.period }}</div>
-                                                    </div>
-                                                    <div class="mb-4">
-                                                        <div class="text-h6 font-weight-bold mb-2">What's Covered</div>
-                                                        <ul class="pl-4">
-                                                            <li v-for="(item, i) in warrantyInfo.coverage" :key="i"
-                                                                class="mb-2">
-                                                                {{ item }}
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div>
-                                                        <div class="text-h6 font-weight-bold mb-2">Terms & Conditions
-                                                        </div>
-                                                        <div class="text-body-2 text-medium-emphasis">{{
-                                                            warrantyInfo.terms
-                                                        }}</div>
-                                                    </div>
-                                                </div>
-                                            </v-card-text>
-                                        </v-card>
-
-                                        <v-card class="rounded-lg border-thin">
-                                            <v-card-title class="bg-grey-lighten-4">
-                                                <v-icon icon="mdi-tools" class="mr-2"></v-icon>
-                                                Service & Support
-                                            </v-card-title>
-                                            <v-card-text class="pa-6">
-                                                <v-row>
-                                                    <v-col cols="12" md="6" v-for="(service, i) in serviceInfo"
-                                                        :key="i">
-                                                        <div class="d-flex align-start mb-4">
-                                                            <v-icon :icon="service.icon" color="primary" size="large"
-                                                                class="mr-3"></v-icon>
-                                                            <div>
-                                                                <div class="font-weight-bold text-grey-darken-2 mb-1">{{
-                                                                    service.title }}</div>
-                                                                <div class="text-body-2 text-medium-emphasis">{{
-                                                                    service.description }}</div>
-                                                            </div>
-                                                        </div>
-                                                    </v-col>
-                                                </v-row>
-                                            </v-card-text>
-                                        </v-card>
-                                    </div>
-                                </v-window-item>
-
-                                <!-- Reviews Tab -->
-                                <v-window-item value="reviews">
+                            <!-- Reviews Tab -->
+                            <v-window-item value="reviews">
+                                <div class="tab-content-inner">
                                     <ProductReviewSection :product-id="product.id" />
-                                </v-window-item>
-                            </v-window>
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
+                                </div>
+                            </v-window-item>
+                        </v-window>
+                    </div>
+                </div>
+            </section>
 
             <!-- Related Products -->
-            <section class="mt-12">
-                <div class="d-flex align-center justify-space-between mb-8">
-                    <h2 class="text-h4 font-weight-bold text-grey-darken-3">Related Products</h2>
-                    <v-tooltip text="Browse all available products" location="top">
-                        <template v-slot:activator="{ props: tooltipProps }">
-                            <v-btn variant="text" color="primary" append-icon="mdi-arrow-right" :to="'/products'"
-                                v-bind="tooltipProps">
-                                View All Products
-                            </v-btn>
-                        </template>
-                    </v-tooltip>
+            <section class="related-products-section">
+                <div class="section-header mb-8">
+                    <div>
+                        <h2 class="section-title">Related Products</h2>
+                        <p class="section-subtitle">Explore similar software solutions</p>
+                    </div>
+                    <v-btn variant="tonal" color="primary" size="large" rounded="lg" :to="'/products'"
+                        append-icon="mdi-arrow-right">
+                        View All
+                    </v-btn>
                 </div>
 
                 <v-row>
-                    <v-col v-for="item in relatedProducts" :key="item.id" cols="12" sm="6" md="3">
-                        <v-card class="h-100 rounded-lg border-thin elevation-0 bg-white group-hover-card"
-                            :to="`/products/${item.slug}`">
-                            <div class="position-relative bg-grey-lighten-5" style="height: 180px; overflow: hidden;">
-                                <v-img :src="getProductImage(item)" height="100%" cover></v-img>
-                            </div>
-                            <div class="pa-4">
-                                <div class="text-caption text-primary font-weight-bold mb-1">{{ getCategoryName(item) }}
+                    <v-col v-for="item in relatedProducts" :key="item.id" cols="12" sm="6" md="4" lg="3">
+                        <div class="related-product-card" @click="$router.push(`/products/${item.slug}`)">
+                            <div class="related-product-image">
+                                <img :src="getProductImage(item)" alt="Product" />
+                                <div class="related-product-overlay">
+                                    <v-btn icon variant="flat" color="white" size="small">
+                                        <v-icon color="primary">mdi-arrow-right</v-icon>
+                                    </v-btn>
                                 </div>
-                                <h4 class="text-subtitle-1 font-weight-bold text-grey-darken-3 mb-2 text-truncate">{{
-                                    item.title
-                                }}</h4>
-                                <div class="font-weight-bold text-body-1">{{ formatPrice(item) }}</div>
                             </div>
-                        </v-card>
+                            <div class="related-product-content">
+                                <div class="related-product-category">{{ getCategoryName(item) }}</div>
+                                <h4 class="related-product-title">{{ item.title }}</h4>
+                                <div class="related-product-price">{{ formatPrice(item) }}</div>
+                            </div>
+                        </div>
                     </v-col>
                 </v-row>
             </section>
         </v-container>
 
         <!-- Image Zoom Dialog -->
-        <v-dialog v-model="showImageZoom" max-width="1200">
-            <v-card class="rounded-xl">
-                <v-card-actions class="pa-2">
-                    <v-spacer></v-spacer>
-                    <v-tooltip text="Close" location="bottom">
-                        <template v-slot:activator="{ props: tooltipProps }">
-                            <v-btn icon="mdi-close" variant="text" v-bind="tooltipProps"
-                                @click="showImageZoom = false"></v-btn>
-                        </template>
-                    </v-tooltip>
-                </v-card-actions>
-                <v-card-text class="pa-0">
-                    <v-img :src="activeImage" max-height="80vh" contain></v-img>
-                </v-card-text>
+        <v-dialog v-model="showImageZoom" max-width="1400" class="zoom-dialog">
+            <v-card class="zoom-card">
+                <v-btn icon variant="flat" color="white" size="large" class="close-zoom-btn"
+                    @click="showImageZoom = false">
+                    <v-icon color="grey-darken-2">mdi-close</v-icon>
+                </v-btn>
+                <div class="zoom-image-wrapper">
+                    <img :src="activeImage" alt="Zoomed Image" class="zoom-image" />
+                </div>
             </v-card>
         </v-dialog>
 
@@ -1060,109 +1001,1673 @@ export default {
 </script>
 
 <style scoped>
+/* ===================================
+   MODERN SOFTWARE PRODUCT DETAIL PAGE
+   =================================== */
+
 .product-detail-page {
-    background: #f8fafc;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Hero Section - common styles moved to app.css */
-/* Common styles (product-hero, hero-price-card, gallery-container, main-image-card, thumbnail-card, specs-table, feature-card, trust-badge, group-hover-card, hide-scrollbar) moved to app.css */
+/* Touch-friendly adjustments */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 
-.faq-panels {
+button,
+a {
+    -webkit-tap-highlight-color: rgba(var(--v-theme-primary), 0.1);
+}
+
+/* ===================================
+   HERO SECTION - MODERN GRADIENT
+   =================================== */
+
+.software-hero {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 60px 0 80px;
+}
+
+.hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgb(var(--v-theme-primary)) 0%,
+            rgb(var(--v-theme-secondary)) 50%,
+            rgb(var(--v-theme-primary)) 100%);
+    opacity: 0.95;
+}
+
+.hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    background-size: 100% 100%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.breadcrumb-modern {
+    opacity: 0.9;
+}
+
+.breadcrumb-modern :deep(.v-breadcrumbs-item) {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.breadcrumb-modern :deep(.v-breadcrumbs-divider) {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-main {
+    margin-top: 24px;
+}
+
+.hero-text {
+    color: white;
+}
+
+.chip-modern {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    height: auto;
+}
+
+.product-title {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-description {
+    font-size: clamp(0.95rem, 2vw, 1.125rem);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 600px;
+}
+
+.quick-info {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.info-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-modern {
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary-gradient {
+    background: linear-gradient(135deg,
+            rgb(var(--v-theme-primary)) 0%,
+            rgb(var(--v-theme-primary-darken-1)) 100%);
+}
+
+.btn-icon-modern {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-icon-modern:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Hero Visual */
+.hero-visual {
+    position: relative;
+}
+
+.floating-card {
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.card-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    filter: blur(40px);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.software-preview-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.software-preview-card:hover .preview-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+.zoom-btn {
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.software-preview-card:hover .zoom-btn {
+    transform: scale(1);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: rgb(var(--v-theme-primary));
+    margin: 6px 0 2px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* ===================================
+   CONTENT CONTAINER
+   =================================== */
+
+.content-container {
+    margin-top: -40px;
+    position: relative;
+    z-index: 3;
+    padding-bottom: 60px;
+}
+
+/* Section Headers */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.section-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+.section-subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 4px 0 0;
+}
+
+/* ===================================
+   GALLERY SECTION
+   =================================== */
+
+.gallery-section {
+    margin-bottom: 60px;
+}
+
+.main-preview-wrapper {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.preview-card-modern {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f1f5f9;
+    aspect-ratio: 16/10;
+}
+
+.main-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.fullscreen-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.preview-card-modern:hover .fullscreen-btn {
+    opacity: 1;
+}
+
+.thumbnails-wrapper {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    overflow-x: auto;
+    padding: 8px 0;
+}
+
+.thumbnails-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.thumbnails-wrapper::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.thumbnails-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* Smooth scrolling for mobile */
+@media (max-width: 960px) {
+    .thumbnails-wrapper {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .modern-tabs {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+.thumbnail-item {
+    position: relative;
+    flex-shrink: 0;
+    width: 100px;
+    height: 70px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail-item:hover .thumbnail-overlay {
+    opacity: 0;
+}
+
+.thumbnail-active {
+    border-color: rgb(var(--v-theme-primary));
+}
+
+.thumbnail-active .thumbnail-overlay {
+    opacity: 0;
+}
+
+/* ===================================
+   PRICING CARD
+   =================================== */
+
+.pricing-card-modern {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.pricing-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.pricing-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.price-current {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: rgb(var(--v-theme-primary));
+    line-height: 1;
+}
+
+.price-old {
+    font-size: 1.25rem;
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.savings-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.pricing-actions {
+    margin-bottom: 24px;
+}
+
+.includes-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 16px;
+}
+
+.includes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.include-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.trust-icons {
+    display: flex;
+    justify-content: space-around;
+    gap: 16px;
+}
+
+.trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* ===================================
+   SYSTEM REQUIREMENTS CARD
+   =================================== */
+
+.system-card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    margin-top: 24px;
+}
+
+.system-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.system-header h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.system-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.system-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.system-label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.system-value {
+    font-size: 0.95rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* ===================================
+   FEATURES GRID
+   =================================== */
+
+.features-grid-section {
+    margin-bottom: 60px;
+}
+
+.feature-card-modern {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    border: 1px solid transparent;
+}
+
+.feature-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    border-color: rgb(var(--v-theme-primary));
+}
+
+.feature-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+            rgba(var(--v-theme-primary), 0.1) 0%,
+            rgba(var(--v-theme-primary), 0.05) 100%);
+    border-radius: 16px;
+}
+
+.feature-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.feature-description {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ===================================
+   TABS SECTION
+   =================================== */
+
+.tabs-section {
+    margin-bottom: 80px;
+}
+
+.tabs-card-modern {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.modern-tabs {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modern-tab {
+    text-transform: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+}
+
+.tab-content-wrapper {
+    padding: 48px;
+}
+
+/* Overview Tab */
+
+.content-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 16px;
+}
+
+.content-text {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.8;
+}
+
+.benefit-card-modern {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.benefit-card-modern:hover {
+    background: white;
+    border-color: rgb(var(--v-theme-primary));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.benefit-icon {
+    flex-shrink: 0;
+}
+
+.benefit-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.benefit-description {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.integration-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 24px;
+}
+
+.integration-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.integration-item:hover {
+    background: white;
+    border-color: rgb(var(--v-theme-primary));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.integration-item span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* Features Tab */
+.feature-detail-card {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 32px 24px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    height: 100%;
+    text-align: center;
+}
+
+.feature-detail-card:hover {
+    background: white;
+    border-color: rgb(var(--v-theme-primary));
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+.feature-detail-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+            rgba(var(--v-theme-primary), 0.1) 0%,
+            rgba(var(--v-theme-primary), 0.05) 100%);
+    border-radius: 20px;
+    color: rgb(var(--v-theme-primary));
+}
+
+.feature-detail-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.feature-detail-description {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Specifications Tab */
+.specs-modern-grid {
+    display: grid;
+    gap: 2px;
+    background: #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.spec-item-modern {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: white;
+}
+
+.spec-label {
+    padding: 20px 24px;
+    background: #f8fafc;
+    font-weight: 700;
+    color: #475569;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+}
+
+.spec-value {
+    padding: 20px 24px;
+    color: #1e293b;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Downloads Tab */
+.download-card-modern {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.download-card-modern:hover {
+    border-color: rgb(var(--v-theme-primary));
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+.download-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+            rgba(var(--v-theme-primary), 0.1) 0%,
+            rgba(var(--v-theme-primary), 0.05) 100%);
+    border-radius: 16px;
+    color: rgb(var(--v-theme-primary));
+}
+
+.download-info {
+    flex: 1;
+}
+
+.download-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.download-meta {
+    display: flex;
+    gap: 8px;
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.download-btn {
+    width: 100%;
+}
+
+/* FAQ Tab */
+.faq-panels-modern {
     background: transparent;
 }
 
-/* Responsive */
-@media (max-width: 960px) {
-    .product-hero {
-        min-height: 300px;
-        padding: 40px 0;
+.faq-panel-modern {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px !important;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.faq-question {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #1e293b;
+    padding: 20px 24px;
+}
+
+.faq-answer {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.7;
+}
+
+/* ===================================
+   RELATED PRODUCTS
+   =================================== */
+
+.related-products-section {
+    margin-bottom: 40px;
+}
+
+.related-product-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    border: 1px solid transparent;
+}
+
+.related-product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    border-color: rgb(var(--v-theme-primary));
+}
+
+.related-product-image {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: #f1f5f9;
+}
+
+.related-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.related-product-card:hover .related-product-image img {
+    transform: scale(1.05);
+}
+
+.related-product-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.related-product-card:hover .related-product-overlay {
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 1;
+}
+
+.related-product-content {
+    padding: 20px;
+}
+
+.related-product-category {
+    font-size: 0.75rem;
+    color: rgb(var(--v-theme-primary));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.related-product-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.related-product-price {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: rgb(var(--v-theme-primary));
+}
+
+/* ===================================
+   ZOOM DIALOG
+   =================================== */
+
+.zoom-dialog :deep(.v-overlay__content) {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+}
+
+.zoom-card {
+    position: relative;
+    background: transparent;
+    box-shadow: none;
+}
+
+.close-zoom-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+}
+
+.zoom-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 90vh;
+}
+
+.zoom-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 1280px) {
+    .software-hero {
+        min-height: 500px;
+        padding: 50px 0 60px;
     }
 
-    .gallery-container {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .pricing-card-modern {
         position: static;
     }
 
-    .main-image-card {
-        height: 400px;
+    .section-title {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 960px) {
+    .software-hero {
+        min-height: auto;
+        padding: 40px 0;
     }
 
-    .hero-price-card {
-        margin-top: 24px;
+    .hero-main {
+        margin-top: 16px;
     }
 
-    .specs-table {
-        font-size: 0.875rem;
+    .product-title {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
     }
 
-    .specs-table td {
-        padding: 12px !important;
+    .product-description {
+        font-size: 0.95rem;
+        margin-bottom: 1rem !important;
     }
 
-    .trust-badges {
-        flex-direction: column;
+    .quick-info {
+        gap: 12px;
     }
 
-    .trust-badge {
+    .cta-buttons {
         width: 100%;
+        gap: 10px;
+    }
+
+    .cta-buttons .v-btn {
+        flex: 1;
+        min-width: 120px;
+        font-size: 0.875rem !important;
+        padding: 0 16px !important;
+    }
+
+    .stats-grid {
+        margin-top: 24px;
+        gap: 8px;
+    }
+
+    .stat-card {
+        padding: 14px 10px;
+        border-radius: 10px;
+    }
+
+    .stat-value {
+        font-size: 1.35rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .content-container {
+        margin-top: -30px;
+        padding-bottom: 40px;
+    }
+
+    .gallery-section {
+        margin-bottom: 40px;
+    }
+
+    .main-preview-wrapper {
+        padding: 12px;
+    }
+
+    .pricing-card-modern {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .system-card-modern {
+        padding: 18px;
+        margin-top: 16px;
+    }
+
+    .features-grid-section {
+        margin-bottom: 40px;
+    }
+
+    .feature-card-modern {
+        padding: 20px 16px;
+    }
+
+    .feature-icon-wrapper {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 16px;
+    }
+
+    .tabs-section {
+        margin-bottom: 40px;
+    }
+
+    .tab-content-wrapper {
+        padding: 24px 20px;
+    }
+
+    .spec-item-modern {
+        grid-template-columns: 1fr;
+    }
+
+    .spec-label {
+        background: #f1f5f9;
+        border-bottom: none;
+        padding: 16px 20px;
+    }
+
+    .spec-value {
+        padding: 16px 20px;
+    }
+
+    .integration-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .benefit-card-modern {
+        padding: 20px;
+    }
+
+    .content-title {
+        font-size: 1.5rem;
     }
 }
 
 @media (max-width: 600px) {
-    .product-hero {
-        min-height: 250px;
-        padding: 30px 0;
+    .software-hero {
+        padding: 32px 0;
+        min-height: auto;
     }
 
-    .main-image-card {
-        height: 300px;
+    .hero-main {
+        margin-top: 12px;
     }
 
-    .hero-price-card {
-        padding: 20px !important;
+    .breadcrumb-modern {
+        margin-bottom: 16px !important;
     }
 
-    .price-block {
-        padding: 20px !important;
+    .chip-modern {
+        font-size: 0.65rem;
+        padding: 3px 8px;
     }
 
-    .specs-table {
-        font-size: 0.8125rem;
+    .product-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
     }
 
-    .specs-table td {
-        padding: 8px !important;
-        display: block;
-        width: 100% !important;
+    .product-description {
+        font-size: 0.875rem;
+        margin-bottom: 1rem !important;
     }
 
-    .specs-table td:first-child {
-        font-weight: bold;
-        background: #f5f5f5;
-        border-bottom: none;
-        padding-bottom: 4px !important;
+    .quick-info {
+        gap: 10px;
     }
 
-    .specs-table td:last-child {
-        padding-top: 4px !important;
+    .info-text {
+        font-size: 0.8rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .cta-buttons .v-btn {
+        width: 100%;
+        min-width: auto !important;
+        height: 44px !important;
+        font-size: 0.875rem !important;
+    }
+
+    .btn-icon-modern {
+        width: 44px !important;
+        height: 44px !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-top: 20px;
+    }
+
+    .stat-card {
+        padding: 12px 8px;
+        border-radius: 8px;
+    }
+
+    .stat-card :deep(.v-icon) {
+        font-size: 24px !important;
+    }
+
+    .stat-value {
+        font-size: 1.15rem;
+        margin: 4px 0 2px;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+
+    .content-container {
+        margin-top: -24px;
+        padding-bottom: 32px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 20px !important;
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .gallery-section {
+        margin-bottom: 32px;
+    }
+
+    .main-preview-wrapper {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .preview-card-modern {
+        border-radius: 12px;
+    }
+
+    .thumbnails-wrapper {
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .thumbnail-item {
+        width: 80px;
+        height: 56px;
+        border-radius: 8px;
+        border-width: 2px;
+    }
+
+    .pricing-card-modern {
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 12px;
+    }
+
+    .pricing-header {
+        margin-bottom: 20px;
+    }
+
+    .price-current {
+        font-size: 1.75rem;
+    }
+
+    .price-old {
+        font-size: 1rem;
+    }
+
+    .savings-badge {
+        font-size: 0.8rem;
+        padding: 4px 12px;
+    }
+
+    .includes-title {
+        font-size: 1rem;
         margin-bottom: 12px;
     }
 
-    .feature-card {
-        margin-bottom: 12px !important;
+    .includes-list {
+        gap: 10px;
     }
 
-    .pl-md-6 {
-        padding-left: 0 !important;
+    .include-item {
+        font-size: 0.875rem;
+        gap: 10px;
     }
 
-    .v-tabs {
+    .include-item :deep(.v-icon) {
+        font-size: 16px !important;
+    }
+
+    .trust-icons {
+        gap: 12px;
+    }
+
+    .trust-item :deep(.v-icon) {
+        font-size: 20px !important;
+    }
+
+    .system-card-modern {
+        padding: 16px;
+        margin-top: 16px;
+        border-radius: 12px;
+    }
+
+    .system-header {
+        margin-bottom: 16px;
+        gap: 10px;
+    }
+
+    .system-header h4 {
+        font-size: 1rem;
+    }
+
+    .system-list {
+        gap: 12px;
+    }
+
+    .system-label {
+        font-size: 0.7rem;
+    }
+
+    .system-value {
+        font-size: 0.875rem;
+    }
+
+    .features-grid-section {
+        margin-bottom: 32px;
+    }
+
+    .feature-card-modern {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .feature-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+    }
+
+    .feature-icon-wrapper :deep(.v-icon) {
+        font-size: 24px !important;
+    }
+
+    .feature-title {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .feature-description {
+        font-size: 0.875rem;
+    }
+
+    .tabs-section {
+        margin-bottom: 32px;
+    }
+
+    .tabs-card-modern {
+        border-radius: 16px;
+    }
+
+    .modern-tabs {
         overflow-x: auto;
     }
 
-    .v-tab {
+    .modern-tabs :deep(.v-tab) {
         min-width: auto;
-        padding: 12px 16px !important;
-        font-size: 0.8125rem !important;
+        padding: 10px 12px !important;
+        font-size: 0.75rem !important;
+        white-space: nowrap;
+    }
+
+    .modern-tabs :deep(.v-icon) {
+        display: none;
+    }
+
+    .tab-content-wrapper {
+        padding: 20px 16px;
+    }
+
+    .content-title {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+    }
+
+    .content-text {
+        font-size: 0.95rem;
+    }
+
+    .benefit-card-modern {
+        padding: 16px;
+        border-radius: 12px;
+        gap: 12px;
+    }
+
+    .benefit-icon :deep(.v-icon) {
+        font-size: 24px !important;
+    }
+
+    .benefit-title {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .benefit-description {
+        font-size: 0.875rem;
+    }
+
+    .integration-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .integration-item {
+        padding: 16px 12px;
+        border-radius: 12px;
+        gap: 8px;
+    }
+
+    .integration-item :deep(.v-icon) {
+        font-size: 32px !important;
+    }
+
+    .integration-item span {
+        font-size: 0.85rem;
+    }
+
+    .feature-detail-card {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .feature-detail-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 16px;
+        border-radius: 14px;
+    }
+
+    .feature-detail-icon :deep(.v-icon) {
+        font-size: 28px !important;
+    }
+
+    .feature-detail-title {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .feature-detail-description {
+        font-size: 0.875rem;
+    }
+
+    .specs-modern-grid {
+        border-radius: 8px;
+    }
+
+    .spec-label {
+        padding: 14px 16px;
+        font-size: 0.875rem;
+    }
+
+    .spec-value {
+        padding: 14px 16px;
+        font-size: 0.875rem;
+    }
+
+    .download-card-modern {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .download-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+    }
+
+    .download-icon :deep(.v-icon) {
+        font-size: 36px !important;
+    }
+
+    .download-title {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .download-meta {
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+
+    .faq-panel-modern {
+        border-radius: 8px !important;
+        margin-bottom: 8px;
+    }
+
+    .faq-question {
+        font-size: 0.95rem;
+        padding: 16px 18px;
+    }
+
+    .faq-question :deep(.v-icon) {
+        font-size: 18px !important;
+        margin-right: 10px !important;
+    }
+
+    .faq-answer {
+        font-size: 0.875rem;
+    }
+
+    .related-products-section {
+        margin-bottom: 20px;
+    }
+
+    .related-product-card {
+        border-radius: 12px;
+    }
+
+    .related-product-content {
+        padding: 16px;
+    }
+
+    .related-product-category {
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+    }
+
+    .related-product-title {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .related-product-price {
+        font-size: 1rem;
+    }
+
+    .zoom-dialog :deep(.v-overlay__content) {
+        max-width: 95vw !important;
+        max-height: 95vh !important;
+    }
+
+    .close-zoom-btn {
+        top: 8px;
+        right: 8px;
+    }
+}
+
+/* Extra small devices (phones < 375px) */
+@media (max-width: 374px) {
+    .product-title {
+        font-size: 1.35rem;
+    }
+
+    .product-description {
+        font-size: 0.85rem;
+    }
+
+    .stat-value {
+        font-size: 1rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .pricing-card-modern {
+        padding: 16px;
+    }
+
+    .price-current {
+        font-size: 1.5rem;
+    }
+
+    .system-card-modern {
+        padding: 14px;
+    }
+
+    .feature-card-modern {
+        padding: 16px 12px;
+    }
+
+    .tab-content-wrapper {
+        padding: 16px 12px;
+    }
+
+    .modern-tabs :deep(.v-tab) {
+        padding: 8px 10px !important;
+        font-size: 0.7rem !important;
+    }
+}
+
+/* Landscape mode for mobile devices */
+@media (max-width: 960px) and (orientation: landscape) {
+    .software-hero {
+        min-height: 400px;
+        padding: 30px 0;
+    }
+
+    .stats-grid {
+        margin-top: 20px;
+    }
+
+    .content-container {
+        margin-top: -20px;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+    .preview-image,
+    .main-preview-img,
+    .zoom-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }
 </style>
