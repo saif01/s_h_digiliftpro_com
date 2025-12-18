@@ -224,11 +224,11 @@ export default {
     border-radius: 50px;
     overflow: visible;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    color: #64748b;
+    color: var(--brand-gray);
 }
 
 .nav-link:hover {
-    color: #475569 !important;
+    color: var(--brand-gray-dark) !important;
     transform: translateY(-2px);
 }
 
@@ -240,7 +240,7 @@ export default {
     left: 50%;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #2563eb, #60a5fa);
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-primary-light));
     transition: all 0.3s ease;
     transform: translateX(-50%);
     border-radius: 2px;
@@ -257,7 +257,7 @@ export default {
    ============================================ */
 
 .active-nav-link {
-    color: #ffffff !important;
+    color: var(--brand-white) !important;
     font-weight: 700 !important;
     position: relative;
     z-index: 10;
@@ -269,12 +269,12 @@ export default {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-light) 50%, var(--brand-secondary) 100%);
     border-radius: 50px;
     z-index: -1;
     box-shadow:
-        0 4px 15px rgba(37, 99, 235, 0.4),
-        0 2px 8px rgba(37, 99, 235, 0.3),
+        0 4px 15px rgba(var(--brand-primary-rgb), 0.4),
+        0 2px 8px rgba(var(--brand-primary-rgb), 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     animation: activeGlow 3s ease-in-out infinite;
 }
@@ -284,15 +284,15 @@ export default {
     0%,
     100% {
         box-shadow:
-            0 4px 15px rgba(37, 99, 235, 0.4),
-            0 2px 8px rgba(37, 99, 235, 0.3),
+            0 4px 15px rgba(var(--brand-primary-rgb), 0.4),
+            0 2px 8px rgba(var(--brand-primary-rgb), 0.3),
             inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
     50% {
         box-shadow:
-            0 6px 25px rgba(37, 99, 235, 0.6),
-            0 3px 12px rgba(37, 99, 235, 0.5),
+            0 6px 25px rgba(var(--brand-primary-rgb), 0.6),
+            0 3px 12px rgba(var(--brand-primary-rgb), 0.5),
             inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 }
@@ -306,7 +306,7 @@ export default {
             rgba(255, 255, 255, 0.3) 0%,
             transparent 40%,
             transparent 60%,
-            rgba(245, 158, 11, 0.2) 100%);
+            rgba(var(--brand-accent-cyan-rgb), 0.2) 100%);
     border-radius: 50px;
     z-index: -1;
     animation: gradientShift 4s ease-in-out infinite;
@@ -320,12 +320,12 @@ export default {
                 rgba(255, 255, 255, 0.3) 0%,
                 transparent 40%,
                 transparent 60%,
-                rgba(245, 158, 11, 0.2) 100%);
+                rgba(var(--brand-accent-cyan-rgb), 0.2) 100%);
     }
 
     50% {
         background: linear-gradient(135deg,
-                rgba(245, 158, 11, 0.2) 0%,
+                rgba(var(--brand-accent-cyan-rgb), 0.2) 0%,
                 transparent 40%,
                 transparent 60%,
                 rgba(255, 255, 255, 0.3) 100%);
@@ -367,11 +367,11 @@ export default {
     transform: translateX(-50%);
     width: 6px;
     height: 6px;
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    background: linear-gradient(135deg, var(--brand-accent-cyan), var(--brand-accent-blue));
     border-radius: 50%;
     box-shadow:
-        0 0 10px rgba(245, 158, 11, 0.8),
-        0 0 20px rgba(245, 158, 11, 0.4);
+        0 0 10px rgba(var(--brand-accent-cyan-rgb), 0.8),
+        0 0 20px rgba(var(--brand-accent-cyan-rgb), 0.4);
     animation: indicatorPulse 2s ease-in-out infinite;
     z-index: 2;
 }
@@ -400,8 +400,8 @@ export default {
     height: 3px;
     background: linear-gradient(90deg,
             transparent,
-            rgba(37, 99, 235, 0.8),
-            rgba(245, 158, 11, 0.8),
+            rgba(var(--brand-primary-rgb), 0.8),
+            rgba(var(--brand-accent-cyan-rgb), 0.8),
             transparent);
     border-radius: 3px;
     filter: blur(2px);
@@ -480,8 +480,8 @@ export default {
 
 .active-nav-link:hover::before {
     box-shadow:
-        0 8px 30px rgba(37, 99, 235, 0.6),
-        0 4px 15px rgba(37, 99, 235, 0.5),
+        0 8px 30px rgba(var(--brand-primary-rgb), 0.6),
+        0 4px 15px rgba(var(--brand-primary-rgb), 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
@@ -495,12 +495,12 @@ export default {
 }
 
 .hover-glow:hover {
-    box-shadow: 0 0 15px rgba(37, 99, 235, 0.4) !important;
+    box-shadow: 0 0 15px rgba(var(--brand-primary-rgb), 0.4) !important;
     transform: translateY(-2px);
 }
 
 .mobile-menu-btn {
-    color: #0f172a !important;
+    color: var(--brand-dark-primary) !important;
     border-radius: 12px;
 }
 
