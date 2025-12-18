@@ -6,96 +6,91 @@
             <div class="hero-pattern"></div>
 
             <v-container class="hero-content">
-                <v-row>
-                    <v-col cols="12">
-                        <!-- Breadcrumbs -->
-                        <v-breadcrumbs :items="breadcrumbs" class="px-0 mb-6 breadcrumb-modern">
-                            <template v-slot:divider>
-                                <v-icon icon="mdi-chevron-right" size="small"></v-icon>
-                            </template>
-                        </v-breadcrumbs>
-                    </v-col>
-                </v-row>
+                <!-- Breadcrumbs -->
+                <v-breadcrumbs :items="breadcrumbs" class="px-0 mb-2 breadcrumb-modern">
+                    <template v-slot:divider>
+                        <v-icon icon="mdi-chevron-right" size="x-small"></v-icon>
+                    </template>
+                </v-breadcrumbs>
 
                 <v-row align="center" class="hero-main">
-                    <v-col cols="12" lg="6" class="hero-text">
+                    <v-col cols="12" lg="7" class="hero-text">
                         <!-- Product Badges -->
-                        <div class="d-flex align-center gap-2 mb-6 flex-wrap">
-                            <v-chip v-if="product.featured" color="gradient-primary" variant="flat" size="small"
+                        <div class="d-flex align-center gap-2 mb-2 flex-wrap">
+                            <v-chip v-if="product.featured" color="gradient-primary" variant="flat" size="x-small"
                                 prepend-icon="mdi-star" class="chip-modern">
                                 FEATURED
                             </v-chip>
-                            <v-chip v-if="product.discount_percent > 0" color="error" variant="flat" size="small"
+                            <v-chip v-if="product.discount_percent > 0" color="error" variant="flat" size="x-small"
                                 prepend-icon="mdi-tag-outline" class="chip-modern">
                                 {{ Math.round(parseFloat(product.discount_percent)) }}% OFF
                             </v-chip>
-                            <v-chip color="primary" variant="outlined" size="small" class="chip-modern">
+                            <v-chip color="primary" variant="outlined" size="x-small" class="chip-modern">
                                 {{ getCategoryName(product) }}
                             </v-chip>
-                            <v-chip v-if="product.version" color="success" variant="tonal" size="small"
+                            <v-chip v-if="product.version" color="success" variant="tonal" size="x-small"
                                 prepend-icon="mdi-information-outline" class="chip-modern">
                                 v{{ product.version || '1.0.0' }}
                             </v-chip>
                         </div>
 
                         <!-- Product Title -->
-                        <h1 class="product-title mb-4">
+                        <h1 class="product-title mb-1">
                             {{ product.title }}
                         </h1>
 
                         <!-- Product Description -->
-                        <p class="product-description mb-6">
+                        <p class="product-description mb-2">
                             {{ product.short_description || product.description }}
                         </p>
 
                         <!-- Quick Info -->
-                        <div class="quick-info mb-8">
+                        <div class="quick-info mb-3">
                             <div class="info-item" v-if="product.rating && product.rating > 0">
                                 <v-rating :model-value="parseFloat(product.rating)" color="amber-darken-1"
-                                    density="compact" half-increments readonly size="small">
+                                    density="compact" half-increments readonly size="x-small">
                                 </v-rating>
-                                <span class="info-text ml-2">
+                                <span class="info-text ml-1">
                                     {{ parseFloat(product.rating).toFixed(1) }}
                                     <span class="text-medium-emphasis">({{ product.rating_count || 0 }})</span>
                                 </span>
                             </div>
                             <div class="info-item" v-if="product.brand">
-                                <v-icon icon="mdi-domain" size="18"></v-icon>
+                                <v-icon icon="mdi-domain" size="16"></v-icon>
                                 <span class="info-text">{{ product.brand }}</span>
                             </div>
                             <div class="info-item">
-                                <v-icon icon="mdi-code-tags" size="18"></v-icon>
+                                <v-icon icon="mdi-code-tags" size="16"></v-icon>
                                 <span class="info-text">SKU: {{ product.sku || 'N/A' }}</span>
                             </div>
                         </div>
 
                         <!-- CTA Buttons -->
                         <div class="cta-buttons">
-                            <v-btn color="primary" size="x-large" rounded="lg" elevation="0"
-                                class="px-8 btn-modern btn-primary-gradient" prepend-icon="mdi-download">
+                            <v-btn color="primary" size="large" rounded="lg" elevation="0"
+                                class="px-6 btn-modern btn-primary-gradient" prepend-icon="mdi-download">
                                 Download Free Trial
                             </v-btn>
-                            <v-btn variant="outlined" color="primary" size="x-large" rounded="lg"
-                                class="px-8 btn-modern" prepend-icon="mdi-play-circle-outline">
+                            <v-btn variant="outlined" color="primary" size="large" rounded="lg" class="px-6 btn-modern"
+                                prepend-icon="mdi-play-circle-outline">
                                 Watch Demo
                             </v-btn>
-                            <v-btn variant="text" color="primary" size="large" icon class="btn-icon-modern"
+                            <v-btn variant="text" color="primary" size="default" icon class="btn-icon-modern"
                                 @click="openShareMenu">
-                                <v-icon>mdi-share-variant</v-icon>
+                                <v-icon size="20">mdi-share-variant</v-icon>
                             </v-btn>
                         </div>
                     </v-col>
 
-                    <v-col cols="12" lg="6" class="hero-visual">
+                    <v-col cols="12" lg="5" class="hero-visual">
                         <!-- Floating Card with 3D Effect -->
                         <div class="floating-card">
-                            <div class="card-glow"></div>
                             <div class="software-preview-card">
                                 <img :src="activeImage" alt="Software Preview" class="preview-image" />
                                 <div class="preview-overlay">
-                                    <v-btn icon variant="flat" color="white" size="large" class="zoom-btn"
+                                    <v-btn icon variant="flat" color="white" size="small" class="zoom-btn"
                                         @click="showImageZoom = true">
-                                        <v-icon color="primary">mdi-magnify-plus</v-icon>
+                                        <v-icon color="primary" size="20">mdi-magnify-plus</v-icon>
                                     </v-btn>
                                 </div>
                             </div>
@@ -104,17 +99,17 @@
                         <!-- Quick Stats -->
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <v-icon color="primary" size="32">mdi-download</v-icon>
+                                <v-icon color="primary" size="24">mdi-download</v-icon>
                                 <div class="stat-value">10K+</div>
                                 <div class="stat-label">Downloads</div>
                             </div>
                             <div class="stat-card">
-                                <v-icon color="success" size="32">mdi-account-group</v-icon>
+                                <v-icon color="success" size="24">mdi-account-group</v-icon>
                                 <div class="stat-value">5K+</div>
                                 <div class="stat-label">Active Users</div>
                             </div>
                             <div class="stat-card">
-                                <v-icon color="amber-darken-1" size="32">mdi-star</v-icon>
+                                <v-icon color="amber-darken-1" size="24">mdi-star</v-icon>
                                 <div class="stat-value">4.8</div>
                                 <div class="stat-label">Rating</div>
                             </div>
@@ -1027,11 +1022,11 @@ a {
 
 .software-hero {
     position: relative;
-    min-height: 600px;
+    min-height: 340px;
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 60px 0 80px;
+    padding: 30px 0 36px;
 }
 
 .hero-gradient {
@@ -1071,41 +1066,50 @@ a {
 }
 
 .hero-main {
-    margin-top: 24px;
+    margin-top: 0;
 }
 
 .hero-text {
     color: white;
 }
 
+.breadcrumb-modern {
+    min-height: auto !important;
+    padding: 4px 0 !important;
+}
+
+.breadcrumb-modern :deep(.v-breadcrumbs-item) {
+    font-size: 0.8rem;
+    padding: 0 4px;
+}
+
 .chip-modern {
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.7rem;
-    padding: 4px 10px;
-    height: auto;
+    letter-spacing: 0.3px;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    height: 22px;
 }
 
 .product-title {
-    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-size: clamp(1.35rem, 4vw, 2rem);
     font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    line-height: 1.15;
     color: white;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .product-description {
-    font-size: clamp(0.95rem, 2vw, 1.125rem);
-    line-height: 1.5;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    line-height: 1.35;
     color: rgba(255, 255, 255, 0.95);
     max-width: 600px;
 }
 
 .quick-info {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
     align-items: center;
 }
@@ -1113,18 +1117,18 @@ a {
 .info-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     color: rgba(255, 255, 255, 0.95);
 }
 
 .info-text {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
 .cta-buttons {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     flex-wrap: wrap;
     align-items: center;
 }
@@ -1176,35 +1180,15 @@ a {
     }
 
     50% {
-        transform: translateY(-20px);
-    }
-}
-
-.card-glow {
-    position: absolute;
-    inset: -20px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    filter: blur(40px);
-    animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 0.5;
-    }
-
-    50% {
-        opacity: 0.8;
+        transform: translateY(-10px);
     }
 }
 
 .software-preview-card {
     position: relative;
-    border-radius: 20px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
     background: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -1243,33 +1227,33 @@ a {
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 32px;
+    gap: 8px;
+    margin-top: 12px;
 }
 
 .stat-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 16px 12px;
+    border-radius: 8px;
+    padding: 10px 6px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 }
 
 .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     font-weight: 800;
     color: rgb(var(--v-theme-primary));
-    margin: 6px 0 2px;
+    margin: 3px 0 1px;
 }
 
 .stat-label {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     color: #64748b;
     font-weight: 600;
 }
@@ -1279,7 +1263,7 @@ a {
    =================================== */
 
 .content-container {
-    margin-top: -40px;
+    margin-top: -24px;
     position: relative;
     z-index: 3;
     padding-bottom: 60px;
@@ -2028,13 +2012,38 @@ a {
 
 @media (max-width: 1280px) {
     .software-hero {
-        min-height: 500px;
-        padding: 50px 0 60px;
+        min-height: 320px;
+        padding: 28px 0 32px;
+    }
+
+    .product-title {
+        font-size: 1.6rem;
+    }
+
+    .product-description {
+        font-size: 0.875rem;
     }
 
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .stat-card {
+        padding: 8px 5px;
+    }
+
+    .stat-card :deep(.v-icon) {
+        font-size: 22px !important;
+    }
+
+    .stat-value {
+        font-size: 1.05rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
     }
 
     .pricing-card-modern {
@@ -2049,55 +2058,75 @@ a {
 @media (max-width: 960px) {
     .software-hero {
         min-height: auto;
-        padding: 40px 0;
+        padding: 24px 0 28px;
     }
 
     .hero-main {
-        margin-top: 16px;
+        margin-top: 4px;
+    }
+
+    .breadcrumb-modern {
+        margin-bottom: 6px !important;
+    }
+
+    .chip-modern {
+        font-size: 0.58rem;
+        padding: 1px 5px;
+        height: 18px;
     }
 
     .product-title {
-        font-size: 1.75rem;
-        margin-bottom: 0.75rem;
+        font-size: 1.35rem;
+        margin-bottom: 6px !important;
     }
 
     .product-description {
-        font-size: 0.95rem;
-        margin-bottom: 1rem !important;
+        font-size: 0.8rem;
+        margin-bottom: 6px !important;
     }
 
     .quick-info {
-        gap: 12px;
+        gap: 8px;
+        margin-bottom: 10px !important;
+    }
+
+    .info-text {
+        font-size: 0.7rem;
     }
 
     .cta-buttons {
         width: 100%;
-        gap: 10px;
+        gap: 6px;
     }
 
     .cta-buttons .v-btn {
         flex: 1;
-        min-width: 120px;
-        font-size: 0.875rem !important;
-        padding: 0 16px !important;
+        min-width: 100px;
+        font-size: 0.75rem !important;
+        padding: 0 10px !important;
+        height: 38px !important;
     }
 
     .stats-grid {
-        margin-top: 24px;
-        gap: 8px;
+        margin-top: 12px;
+        gap: 6px;
     }
 
     .stat-card {
-        padding: 14px 10px;
-        border-radius: 10px;
+        padding: 8px 6px;
+        border-radius: 8px;
+    }
+
+    .stat-card :deep(.v-icon) {
+        font-size: 18px !important;
     }
 
     .stat-value {
-        font-size: 1.35rem;
+        font-size: 1rem;
     }
 
     .stat-label {
-        font-size: 0.75rem;
+        font-size: 0.6rem;
     }
 
     .content-container {
@@ -2175,80 +2204,93 @@ a {
 
 @media (max-width: 600px) {
     .software-hero {
-        padding: 32px 0;
+        padding: 20px 0 24px;
         min-height: auto;
     }
 
     .hero-main {
-        margin-top: 12px;
+        margin-top: 4px;
     }
 
     .breadcrumb-modern {
-        margin-bottom: 16px !important;
+        margin-bottom: 6px !important;
+        padding: 2px 0 !important;
+    }
+
+    .breadcrumb-modern :deep(.v-breadcrumbs-item) {
+        font-size: 0.7rem;
     }
 
     .chip-modern {
-        font-size: 0.65rem;
-        padding: 3px 8px;
+        font-size: 0.55rem;
+        padding: 1px 5px;
+        height: 16px;
     }
 
     .product-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
+        font-size: 1.25rem;
+        margin-bottom: 4px !important;
     }
 
     .product-description {
-        font-size: 0.875rem;
-        margin-bottom: 1rem !important;
+        font-size: 0.75rem;
+        margin-bottom: 6px !important;
+        line-height: 1.3;
     }
 
     .quick-info {
-        gap: 10px;
+        gap: 6px;
+        margin-bottom: 8px !important;
+    }
+
+    .info-item {
+        gap: 2px;
     }
 
     .info-text {
-        font-size: 0.8rem;
+        font-size: 0.65rem;
     }
 
     .cta-buttons {
         flex-direction: column;
-        gap: 8px;
+        gap: 5px;
     }
 
     .cta-buttons .v-btn {
         width: 100%;
         min-width: auto !important;
-        height: 44px !important;
-        font-size: 0.875rem !important;
+        height: 36px !important;
+        font-size: 0.75rem !important;
+        padding: 0 14px !important;
     }
 
     .btn-icon-modern {
-        width: 44px !important;
-        height: 44px !important;
+        width: 36px !important;
+        height: 36px !important;
     }
 
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-        margin-top: 20px;
+        gap: 5px;
+        margin-top: 10px;
     }
 
     .stat-card {
-        padding: 12px 8px;
-        border-radius: 8px;
+        padding: 8px 5px;
+        border-radius: 6px;
     }
 
     .stat-card :deep(.v-icon) {
-        font-size: 24px !important;
+        font-size: 18px !important;
     }
 
     .stat-value {
-        font-size: 1.15rem;
-        margin: 4px 0 2px;
+        font-size: 0.95rem;
+        margin: 2px 0 1px;
     }
 
     .stat-label {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
     }
 
     .content-container {
@@ -2597,20 +2639,59 @@ a {
 
 /* Extra small devices (phones < 375px) */
 @media (max-width: 374px) {
+    .software-hero {
+        padding: 20px 0 24px;
+    }
+
+    .chip-modern {
+        font-size: 0.55rem;
+        padding: 1px 5px;
+        height: 16px;
+    }
+
     .product-title {
-        font-size: 1.35rem;
+        font-size: 1.25rem;
+        margin-bottom: 6px !important;
     }
 
     .product-description {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
+        margin-bottom: 6px !important;
+    }
+
+    .quick-info {
+        gap: 6px;
+        margin-bottom: 8px !important;
+    }
+
+    .info-text {
+        font-size: 0.65rem;
+    }
+
+    .cta-buttons .v-btn {
+        height: 38px !important;
+        font-size: 0.75rem !important;
+    }
+
+    .stats-grid {
+        gap: 4px;
+        margin-top: 12px;
+    }
+
+    .stat-card {
+        padding: 8px 4px;
+    }
+
+    .stat-card :deep(.v-icon) {
+        font-size: 18px !important;
     }
 
     .stat-value {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .stat-label {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
     .section-title {
@@ -2646,12 +2727,35 @@ a {
 /* Landscape mode for mobile devices */
 @media (max-width: 960px) and (orientation: landscape) {
     .software-hero {
-        min-height: 400px;
-        padding: 30px 0;
+        min-height: 260px;
+        padding: 20px 0 24px;
+    }
+
+    .hero-main {
+        margin-top: 2px;
+    }
+
+    .product-title {
+        font-size: 1.25rem;
+        margin-bottom: 4px !important;
+    }
+
+    .product-description {
+        margin-bottom: 6px !important;
+        font-size: 0.8rem;
+    }
+
+    .quick-info {
+        margin-bottom: 8px !important;
     }
 
     .stats-grid {
-        margin-top: 20px;
+        margin-top: 8px;
+        gap: 5px;
+    }
+
+    .stat-card {
+        padding: 6px 5px;
     }
 
     .content-container {
