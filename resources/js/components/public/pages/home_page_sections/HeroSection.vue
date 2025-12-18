@@ -425,9 +425,8 @@ export default {
 
 /* Badge */
 .hero-badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    width: fit-content;
     padding: 10px 24px;
     background: rgba(var(--brand-primary-rgb), 0.25);
     border: 1.5px solid rgba(var(--brand-primary-rgb), 0.6);
@@ -438,13 +437,13 @@ export default {
     position: relative;
     overflow: hidden;
     animation: fadeInScale 0.6s ease-out 0.2s both;
+    width: fit-content;
     color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(var(--brand-primary-rgb), 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    margin: 0;
 }
 
 .hero-badge:hover {
@@ -508,8 +507,6 @@ export default {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: fadeInUp 0.8s ease-out 0.4s both;
-    margin: 0;
-    padding: 0;
 }
 
 /* Subtitle */
