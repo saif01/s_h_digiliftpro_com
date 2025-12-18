@@ -13,10 +13,10 @@
                         <div class="hero-content">
                             <div
                                 class="glass-pill d-inline-flex align-center px-3 px-md-4 py-2 rounded-pill mb-4 mb-md-6">
-                                <v-icon icon="mdi-flash" color="amber-accent-3" size="small" class="mr-2"></v-icon>
-                                <span class="text-caption text-md-subtitle-2 font-weight-bold tracking-wide">POWERING
-                                    YOUR
-                                    SUCCESS</span>
+                                <v-icon icon="mdi-rocket-launch" color="purple-accent-2" size="small"
+                                    class="mr-2"></v-icon>
+                                <span class="text-caption text-md-subtitle-2 font-weight-bold tracking-wide">DIGITAL
+                                    EXCELLENCE</span>
                             </div>
                             <h1
                                 class="text-h5 text-md-h4 text-lg-h3 font-weight-black mb-4 mb-md-6 lh-tight text-shadow-sm">
@@ -27,10 +27,10 @@
                                 {{ heroSubtitle }}
                             </p>
                             <div class="hero-actions d-flex flex-column flex-sm-row gap-3 gap-md-4 flex-wrap">
-                                <v-btn size="large" color="amber-accent-4" variant="flat" rounded="pill"
-                                    class="px-6 px-md-8 text-black font-weight-bold elevation-4 hero-btn hero-btn-primary"
+                                <v-btn size="large" color="purple-accent-3" variant="flat" rounded="pill"
+                                    class="px-6 px-md-8 text-white font-weight-bold elevation-4 hero-btn hero-btn-primary"
                                     :to="{ name: 'Contact' }">
-                                    <span class="btn-text">Get a Quote</span>
+                                    <span class="btn-text">Request a Quote</span>
                                     <span class="btn-shine"></span>
                                     <span class="btn-particles">
                                         <span class="particle"></span>
@@ -41,8 +41,8 @@
                                 </v-btn>
                                 <v-btn size="large" variant="outlined" color="white" rounded="pill"
                                     class="px-6 px-md-8 font-weight-bold border-2 hero-btn hero-btn-secondary"
-                                    to="/services">
-                                    <span class="btn-text">Our Solutions</span>
+                                    to="/projects">
+                                    <span class="btn-text">View Our Projects</span>
                                     <span class="btn-glow"></span>
                                 </v-btn>
                             </div>
@@ -53,20 +53,19 @@
                 <v-col cols="12" md="5" class="d-flex justify-center align-center hero-visual-col">
                     <div class="hero-visual-3d">
                         <div class="glass-card card-main">
-                            <v-icon icon="mdi-battery-charging-high" size="48" color="amber-accent-3"
-                                class="mb-4 icon-pulse"></v-icon>
-                            <div class="text-h5 font-weight-bold text-white mb-2">Always On</div>
-                            <div class="text-body-2 text-white opacity-80">Uninterrupted power supply for critical
-                                operations.</div>
+                            <v-icon icon="mdi-web" size="48" color="purple-accent-2" class="mb-4 icon-pulse"></v-icon>
+                            <div class="text-h5 font-weight-bold text-white mb-2">Web Solutions</div>
+                            <div class="text-body-2 text-white opacity-80">Custom websites & apps built for your
+                                business growth.</div>
                         </div>
                         <div class="glass-card card-float-1">
-                            <v-icon icon="mdi-shield-check" size="32" color="success" class="icon-bounce"></v-icon>
-                            <div class="text-subtitle-2 font-weight-bold text-white mt-2">Protected</div>
+                            <v-icon icon="mdi-chart-line" size="32" color="success" class="icon-bounce"></v-icon>
+                            <div class="text-subtitle-2 font-weight-bold text-white mt-2">SEO Growth</div>
                         </div>
                         <div class="glass-card card-float-2">
-                            <v-icon icon="mdi-lightning-bolt" size="32" color="amber-accent-3"
+                            <v-icon icon="mdi-shield-check-outline" size="32" color="blue-accent-2"
                                 class="icon-shake"></v-icon>
-                            <div class="text-subtitle-2 font-weight-bold text-white mt-2">Efficient</div>
+                            <div class="text-subtitle-2 font-weight-bold text-white mt-2">Secure & Fast</div>
                         </div>
                     </div>
                 </v-col>
@@ -91,11 +90,11 @@ export default {
     props: {
         heroTitle: {
             type: String,
-            default: 'Uninterrupted Power for Your Business & Home'
+            default: 'Build, Manage, and Grow Your Digital Business'
         },
         heroSubtitle: {
             type: String,
-            default: 'Reliable technical power support solutions, including UPS systems, industrial backup, batteries, and professional maintenance services.'
+            default: 'Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.'
         }
     }
 };
@@ -129,7 +128,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(-45deg, #1e3a8a, #2563eb, #d97706, #1e3a8a);
+    background: linear-gradient(-45deg, #1e3a8a, #7c3aed, #2563eb, #06b6d4);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
 }
@@ -159,7 +158,7 @@ export default {
 .shape-1 {
     width: 400px;
     height: 400px;
-    background: #3b82f6;
+    background: #7c3aed;
     top: -100px;
     left: -100px;
 }
@@ -167,7 +166,7 @@ export default {
 .shape-2 {
     width: 300px;
     height: 300px;
-    background: #f59e0b;
+    background: #06b6d4;
     bottom: 10%;
     right: 10%;
     animation-delay: -5s;
@@ -176,7 +175,7 @@ export default {
 .shape-3 {
     width: 200px;
     height: 200px;
-    background: #60a5fa;
+    background: #8b5cf6;
     top: 20%;
     right: 30%;
     animation-delay: -10s;
@@ -212,13 +211,13 @@ export default {
 /* Primary Button Animations */
 .hero-btn-primary {
     animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s both;
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
-    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4) !important;
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4) !important;
 }
 
 .hero-btn-primary:hover {
     transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 15px 40px rgba(245, 158, 11, 0.6) !important;
+    box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6) !important;
 }
 
 .hero-btn-primary:active {
