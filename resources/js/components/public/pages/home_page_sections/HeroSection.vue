@@ -22,11 +22,11 @@
                 <v-col cols="12" lg="6" class="hero-content-col">
                     <div class="hero-content">
                         <!-- Badge -->
-                        <div class="hero-badge mb-4">
+                        <!-- <div class="hero-badge mb-4">
                             <div class="badge-glow"></div>
                             <v-icon icon="mdi-lightning-bolt" size="16" class="mr-2"></v-icon>
                             <span>Transforming Ideas into Digital Reality</span>
-                        </div>
+                        </div> -->
 
                         <!-- Main Heading -->
                         <h1 class="hero-title mb-4">
@@ -409,6 +409,12 @@ export default {
     color: white;
     animation: fadeInUp 1s ease-out;
     will-change: transform, opacity;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
 @keyframes fadeInUp {
@@ -427,6 +433,8 @@ export default {
 .hero-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    align-self: center;
     padding: 10px 24px;
     background: rgba(var(--brand-primary-rgb), 0.25);
     border: 1.5px solid rgba(var(--brand-primary-rgb), 0.6);
@@ -1419,6 +1427,8 @@ export default {
     .hero-content {
         text-align: left;
         max-width: 100%;
+        align-items: flex-start;
+        margin: 0;
     }
 
     .hero-subtitle {
@@ -1479,6 +1489,7 @@ export default {
         margin-bottom: 16px !important;
         padding: 8px 18px;
         font-size: 12px;
+        align-self: flex-start;
     }
 
     .hero-actions {
