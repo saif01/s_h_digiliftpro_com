@@ -91,7 +91,6 @@ export function useProducts() {
             id: i + 1,
             title: `Industrial Power Unit ${i + 100}`,
             slug: `product-${i + 1}`,
-            sku: `MCT-${String(i + 1).padStart(4, '0')}`,
             short_description: 'High-performance power solution designed for reliability and efficiency.',
             price: (Math.random() * 1000 + 200).toFixed(2),
             featured: i % 3 === 0,

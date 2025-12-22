@@ -179,9 +179,16 @@ class AnnouncementSeeder extends Seeder
             ],
         ];
 
+        // Check if announcements table has created_by and updated_by columns
+        $hasAuditColumns = \Illuminate\Support\Facades\Schema::hasColumns('announcements', ['created_by', 'updated_by']);
+
         foreach ($announcements as $announcement) {
-            $announcement['created_by'] = $author->id;
-            $announcement['updated_by'] = $author->id;
+            // Only set audit columns if they exist in the table
+            if ($hasAuditColumns) {
+                $announcement['created_by'] = $author->id;
+                $announcement['updated_by'] = $author->id;
+            }
+            
             Announcement::updateOrCreate(
                 ['slug' => $announcement['slug']],
                 $announcement

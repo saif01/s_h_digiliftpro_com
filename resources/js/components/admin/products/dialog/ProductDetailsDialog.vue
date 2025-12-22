@@ -83,10 +83,6 @@
                                     <div class="text-subtitle-1 text-medium-emphasis mb-2">Slug</div>
                                     <div class="text-body-1 mb-4">{{ productDetails.slug || '-' }}</div>
                                 </v-col>
-                                <v-col cols="12" md="6">
-                                    <div class="text-subtitle-1 text-medium-emphasis mb-2">SKU</div>
-                                    <div class="text-body-1 mb-4">{{ productDetails.sku || '-' }}</div>
-                                </v-col>
                                 <v-col cols="12">
                                     <div class="text-subtitle-1 text-medium-emphasis mb-2">Short Description</div>
                                     <div class="text-body-1 mb-4">{{ productDetails.short_description || '-' }}

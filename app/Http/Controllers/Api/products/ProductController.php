@@ -20,7 +20,6 @@ class ProductController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255',
-            'sku' => 'nullable|string|max:255',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|string|max:255',
@@ -53,7 +52,6 @@ class ProductController extends Controller
         $data = $request->validate([
             'title' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255',
-            'sku' => 'nullable|string|max:255',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|string|max:255',
@@ -82,8 +80,8 @@ class ProductController extends Controller
 
     public function importTemplate()
     {
-        $csv = "title,slug,sku,short_description,price,price_range,published,featured\n";
-        $csv .= "Example Product,example-product,SKU-001,Short description,,Contact for pricing,1,0\n";
+        $csv = "title,slug,short_description,price,price_range,published,featured\n";
+        $csv .= "Example Product,example-product,Short description,,Contact for pricing,1,0\n";
 
         return response($csv, 200, [
             'Content-Type' => 'text/csv',

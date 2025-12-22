@@ -65,14 +65,6 @@
                                 </td>
                             </tr>
 
-                            <!-- SKU Row -->
-                            <tr>
-                                <td class="font-weight-bold bg-grey-lighten-4">SKU</td>
-                                <td v-for="product in products" :key="product.id" class="text-center">
-                                    <span class="font-weight-medium">{{ product.sku || 'N/A' }}</span>
-                                </td>
-                            </tr>
-
                             <!-- Model Row -->
                             <tr v-if="hasAnyModel">
                                 <td class="font-weight-bold bg-grey-lighten-4">Model</td>

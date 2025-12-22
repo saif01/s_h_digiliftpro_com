@@ -92,16 +92,6 @@
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field v-model="localForm.sku" label="SKU" variant="outlined"
-                                        hint="Stock Keeping Unit" :error-messages="getFieldErrors('sku')"
-                                        @update:model-value="$emit('update:form', localForm)">
-                                        <template v-slot:append>
-                                            <v-btn icon="mdi-refresh" size="small" variant="text" @click="generateSKU"
-                                                title="Auto-generate SKU"></v-btn>
-                                        </template>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" md="6">
                                     <v-text-field v-model="localForm.brand" label="Brand" variant="outlined"
                                         hint="Product manufacturer or brand name" prepend-inner-icon="mdi-tag"
                                         :error-messages="getFieldErrors('brand')"
@@ -1144,48 +1134,6 @@ export default {
                 return errors;
             }
             return [errors];
-        },
-        generateSKU() {
-            // Generate SKU based on product title and brand
-            let sku = '';
-
-            // Get first 3-4 uppercase letters from title
-            if (this.localForm.title) {
-                const titleWords = this.localForm.title.trim().split(/\s+/);
-                if (titleWords.length > 0) {
-                    // Use first word, up to 4 characters
-                    const firstWord = titleWords[0].replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-                    sku += firstWord.substring(0, 4);
-                }
-                if (titleWords.length > 1 && sku.length < 4) {
-                    // Add second word if needed
-                    const secondWord = titleWords[1].replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-                    sku += secondWord.substring(0, 4 - sku.length);
-                }
-            }
-
-            // Add brand prefix if available
-            if (this.localForm.brand) {
-                const brandCode = this.localForm.brand.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 3);
-                if (brandCode) {
-                    sku = brandCode + '-' + sku;
-                }
-            }
-
-            // Add timestamp suffix for uniqueness (last 6 digits)
-            const timestamp = Date.now().toString();
-            const suffix = timestamp.substring(timestamp.length - 6);
-
-            // If no title, use generic prefix
-            if (!sku) {
-                sku = 'PRD';
-            }
-
-            sku += '-' + suffix;
-
-            // Update the form
-            this.localForm.sku = sku;
-            this.$emit('update:form', this.localForm);
         }
     }
 };

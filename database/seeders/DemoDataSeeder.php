@@ -25,6 +25,17 @@ class DemoDataSeeder extends Seeder
 {
     protected $defaultUserId = null;
 
+    /**
+     * Helper method to conditionally set audit columns if they exist in the table
+     */
+    protected function setAuditColumns(array &$data, string $table): void
+    {
+        if (\Illuminate\Support\Facades\Schema::hasColumns($table, ['created_by', 'updated_by'])) {
+            $data['created_by'] = $this->defaultUserId;
+            $data['updated_by'] = $this->defaultUserId;
+        }
+    }
+
     public function run(): void
     {
         // Get first admin user or first user for created_by/updated_by
@@ -141,8 +152,7 @@ class DemoDataSeeder extends Seeder
                 $setting['value'] = json_encode($setting['value']);
             }
 
-            $setting['created_by'] = $this->defaultUserId;
-            $setting['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($setting, 'settings');
             Setting::updateOrCreate(['key' => $setting['key']], $setting);
         }
     }
@@ -198,8 +208,7 @@ class DemoDataSeeder extends Seeder
 
         $createdPages = [];
         foreach ($pages as $page) {
-            $page['created_by'] = $this->defaultUserId;
-            $page['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($page, 'pages');
             $createdPages[$page['slug']] = Page::updateOrCreate(
                 ['slug' => $page['slug']],
                 $page
@@ -231,8 +240,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($menus as $menu) {
-            $menu['created_by'] = $this->defaultUserId;
-            $menu['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($menu, 'menus');
             Menu::updateOrCreate(
                 ['name' => $menu['name'], 'label' => $menu['label']],
                 $menu
@@ -245,60 +253,54 @@ class DemoDataSeeder extends Seeder
         $categories = [];
 
         // Service Categories
-        $categories['service'] = [
-            Category::updateOrCreate(
-                ['slug' => 'website-web-app-development', 'type' => 'service'],
-                ['name' => 'Website & Web App Development', 'slug' => 'website-web-app-development', 'type' => 'service', 'published' => true, 'order' => 1, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'seo-growth-optimization', 'type' => 'service'],
-                ['name' => 'SEO & Growth Optimization', 'slug' => 'seo-growth-optimization', 'type' => 'service', 'published' => true, 'order' => 2, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'maintenance-support', 'type' => 'service'],
-                ['name' => 'Maintenance & Support', 'slug' => 'maintenance-support', 'type' => 'service', 'published' => true, 'order' => 3, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
+        $categories['service'] = [];
+        $serviceCatData = [
+            ['slug' => 'website-web-app-development', 'name' => 'Website & Web App Development', 'order' => 1],
+            ['slug' => 'seo-growth-optimization', 'name' => 'SEO & Growth Optimization', 'order' => 2],
+            ['slug' => 'maintenance-support', 'name' => 'Maintenance & Support', 'order' => 3],
         ];
+        foreach ($serviceCatData as $cat) {
+            $data = ['name' => $cat['name'], 'slug' => $cat['slug'], 'type' => 'service', 'published' => true, 'order' => $cat['order']];
+            $this->setAuditColumns($data, 'categories');
+            $categories['service'][] = Category::updateOrCreate(
+                ['slug' => $cat['slug'], 'type' => 'service'],
+                $data
+            );
+        }
 
         // Product Categories
-        $categories['product'] = [
-            Category::updateOrCreate(
-                ['slug' => 'website', 'type' => 'product'],
-                ['name' => 'Website', 'slug' => 'website', 'type' => 'product', 'published' => true, 'order' => 1, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'web-app', 'type' => 'product'],
-                ['name' => 'Web App', 'slug' => 'web-app', 'type' => 'product', 'published' => true, 'order' => 2, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'seo', 'type' => 'product'],
-                ['name' => 'SEO', 'slug' => 'seo', 'type' => 'product', 'published' => true, 'order' => 3, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'email', 'type' => 'product'],
-                ['name' => 'Email', 'slug' => 'email', 'type' => 'product', 'published' => true, 'order' => 4, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'asset-management', 'type' => 'product'],
-                ['name' => 'Asset Management', 'slug' => 'asset-management', 'type' => 'product', 'published' => true, 'order' => 5, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
+        $categories['product'] = [];
+        $productCatData = [
+            ['slug' => 'website', 'name' => 'Website', 'order' => 1],
+            ['slug' => 'web-app', 'name' => 'Web App', 'order' => 2],
+            ['slug' => 'seo', 'name' => 'SEO', 'order' => 3],
+            ['slug' => 'email', 'name' => 'Email', 'order' => 4],
+            ['slug' => 'asset-management', 'name' => 'Asset Management', 'order' => 5],
         ];
+        foreach ($productCatData as $cat) {
+            $data = ['name' => $cat['name'], 'slug' => $cat['slug'], 'type' => 'product', 'published' => true, 'order' => $cat['order']];
+            $this->setAuditColumns($data, 'categories');
+            $categories['product'][] = Category::updateOrCreate(
+                ['slug' => $cat['slug'], 'type' => 'product'],
+                $data
+            );
+        }
 
         // Post Categories
-        $categories['post'] = [
-            Category::updateOrCreate(
-                ['slug' => 'news', 'type' => 'post'],
-                ['name' => 'News', 'slug' => 'news', 'type' => 'post', 'published' => true, 'order' => 1, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'tips', 'type' => 'post'],
-                ['name' => 'Tips & Tricks', 'slug' => 'tips', 'type' => 'post', 'published' => true, 'order' => 2, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
-            Category::updateOrCreate(
-                ['slug' => 'case-studies', 'type' => 'post'],
-                ['name' => 'Case Studies', 'slug' => 'case-studies', 'type' => 'post', 'published' => true, 'order' => 3, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
-            ),
+        $categories['post'] = [];
+        $postCatData = [
+            ['slug' => 'news', 'name' => 'News', 'order' => 1],
+            ['slug' => 'tips', 'name' => 'Tips & Tricks', 'order' => 2],
+            ['slug' => 'case-studies', 'name' => 'Case Studies', 'order' => 3],
         ];
+        foreach ($postCatData as $cat) {
+            $data = ['name' => $cat['name'], 'slug' => $cat['slug'], 'type' => 'post', 'published' => true, 'order' => $cat['order']];
+            $this->setAuditColumns($data, 'categories');
+            $categories['post'][] = Category::updateOrCreate(
+                ['slug' => $cat['slug'], 'type' => 'post'],
+                $data
+            );
+        }
 
         return $categories;
     }
@@ -313,20 +315,24 @@ class DemoDataSeeder extends Seeder
         $tags['service'] = [];
         foreach ($tagNames as $name) {
             $slug = $name . '-service';
+            $data = ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'service'];
+            $this->setAuditColumns($data, 'tags');
             $tags['service'][] = Tag::updateOrCreate(
                 ['slug' => $slug],
-                ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'service', 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
+                $data
             );
         }
 
         // Product Tags
         $tags['product'] = [];
-        $productTechTags = ['Laravel', 'Vue', 'React', 'WordPress', 'Node', 'MySQL', 'PostgreSQL'];
+        $productTechTags = ['Laravel', 'Vue', 'React', 'WordPress', 'Node', 'MySQL', 'PostgreSQL', 'Inventory Management', 'POS', 'Retail', 'Business Management', 'ERP'];
         foreach ($productTechTags as $name) {
-            $slug = strtolower($name) . '-product';
+            $slug = strtolower(str_replace(' ', '-', $name)) . '-product';
+            $data = ['name' => $name, 'slug' => $slug, 'type' => 'product'];
+            $this->setAuditColumns($data, 'tags');
             $tags['product'][] = Tag::updateOrCreate(
                 ['slug' => $slug],
-                ['name' => $name, 'slug' => $slug, 'type' => 'product', 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
+                $data
             );
         }
 
@@ -334,9 +340,11 @@ class DemoDataSeeder extends Seeder
         $tags['post'] = [];
         foreach ($tagNames as $name) {
             $slug = $name . '-post';
+            $data = ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'post'];
+            $this->setAuditColumns($data, 'tags');
             $tags['post'][] = Tag::updateOrCreate(
                 ['slug' => $slug],
-                ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'post', 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
+                $data
             );
         }
 
@@ -410,8 +418,7 @@ class DemoDataSeeder extends Seeder
 
         $createdServices = [];
         foreach ($services as $index => $service) {
-            $service['created_by'] = $this->defaultUserId;
-            $service['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($service, 'services');
             $createdService = Service::updateOrCreate(
                 ['slug' => $service['slug']],
                 $service
@@ -530,8 +537,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($portfolio as $item) {
-            $item['created_by'] = $this->defaultUserId;
-            $item['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($item, 'portfolios');
             Portfolio::updateOrCreate(
                 ['slug' => $item['slug']],
                 $item
@@ -542,7 +548,8 @@ class DemoDataSeeder extends Seeder
     private function seedProducts($categories, $tags): void
     {
         // Clear existing demo products first so "migrate:fresh --seed" is consistent
-        Product::query()->delete();
+        // Use forceDelete to bypass soft deletes if they exist
+        Product::withTrashed()->forceDelete();
 
         // Map tech tags by name for quick attaching
         $tagByName = [];
@@ -618,6 +625,58 @@ class DemoDataSeeder extends Seeder
                 ],
             ],
             [
+                'title' => 'Shop Management System',
+                'slug' => 'shop-management-system',
+                'short_description' => 'Complete business management solution with inventory, POS, purchase management, customer/supplier tracking, and comprehensive reporting.',
+                'description' => 'Business goal: streamline shop operations and improve efficiency. Delivered: comprehensive shop management system with inventory, POS, purchase management, customer/supplier tracking, financial tracking, and AI-powered analytics. Results: reduced manual work, improved inventory accuracy, faster sales processing, and better business insights.',
+                'thumbnail' => 'assets/img/default.jpg',
+                'images' => ['assets/img/default.jpg'],
+                'price' => null,
+                'price_range' => 'Custom Quote',
+                'show_price' => false,
+                'published' => true,
+                'featured' => true,
+                'order' => 3,
+                'specifications' => [
+                    'client_company' => null,
+                    'industry' => 'Retail',
+                    'type' => 'Web App',
+                    'platform' => 'Web / Mobile Responsive',
+                    'technology_stack' => ['frontend' => 'Vue', 'backend' => 'Laravel', 'db' => 'MySQL'],
+                    'hosting' => 'VPS / Cloud',
+                    'security' => ['ssl' => true, 'roles_permissions' => true, 'backups' => true, 'notes' => 'Role-based access control with Administrator, Cashier, and Storekeeper roles'],
+                    'integrations' => ['Email', 'Analytics', 'Payment Gateways'],
+                    'pages_modules' => [
+                        'Dashboard with AI-powered insights',
+                        'Inventory Management',
+                        'Sales/POS System',
+                        'Purchase Management',
+                        'Customer & Supplier Management',
+                        'Stock Management & Warehouses',
+                        'Financial Tracking (Customer/Supplier Dues)',
+                        'Reports & Analytics (Sales, Purchase, Stock, Profit, Due Reports)',
+                        'User Management & Permissions',
+                        'Settings & Configuration'
+                    ],
+                    'timeline' => '8–12 weeks',
+                    'support_plan' => 'Monthly maintenance + updates',
+                    '_key_features' => [
+                        'Inventory Management - Track products, stock levels, categories, and units',
+                        'Sales/POS - Quick sales processing with barcode scanning support',
+                        'Purchase Management - Supplier invoices, stock receiving, payment tracking',
+                        'Customer & Supplier Management - Contact info and payment records',
+                        'Financial Tracking - Monitor money owed by customers and to suppliers',
+                        'Stock Management - Multi-warehouse support with stock ledger',
+                        'AI-Powered Dashboard - Sales forecasts, anomaly detection, performance scores',
+                        'Comprehensive Reports - Sales, Purchase, Stock, Profit, and Due reports with PDF/Excel export',
+                        'Role-Based Access Control - Administrator, Cashier, and Storekeeper roles',
+                        'Stock Adjustments - Set quantity, add, or subtract stock with audit trail',
+                        'Low Stock Alerts - Automatic notifications for items below minimum levels',
+                        'Profit Analysis - Revenue, cost, and profit margin calculations',
+                    ],
+                ],
+            ],
+            [
                 'title' => 'Web Assets Management Setup',
                 'slug' => 'web-assets-management-setup',
                 'short_description' => 'DNS, SSL, monitoring, and backups for reliable web operations.',
@@ -629,7 +688,7 @@ class DemoDataSeeder extends Seeder
                 'show_price' => false,
                 'published' => true,
                 'featured' => false,
-                'order' => 3,
+                'order' => 4,
                 'specifications' => [
                     'industry' => 'Healthcare',
                     'type' => 'System',
@@ -652,22 +711,54 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($products as $idx => $p) {
-            $p['created_by'] = $this->defaultUserId;
-            $p['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($p, 'products');
             $product = Product::updateOrCreate(['slug' => $p['slug']], $p);
 
-            // Attach category (round-robin) so category filters work
-            if (!empty($categories) && isset($categories[$idx % count($categories)])) {
-                $product->categories()->syncWithoutDetaching([$categories[$idx % count($categories)]->id]);
+            // Attach category - specific assignment for Shop Management System, round-robin for others
+            if (!empty($categories)) {
+                $categoryId = null;
+                
+                // Shop Management System should be in Web App category
+                if ($p['slug'] === 'shop-management-system') {
+                    // Find Web App category
+                    foreach ($categories as $cat) {
+                        if ($cat->slug === 'web-app') {
+                            $categoryId = $cat->id;
+                            break;
+                        }
+                    }
+                }
+                
+                // If no specific category found, use round-robin
+                if (!$categoryId && isset($categories[$idx % count($categories)])) {
+                    $categoryId = $categories[$idx % count($categories)]->id;
+                }
+                
+                if ($categoryId) {
+                    $product->categories()->syncWithoutDetaching([$categoryId]);
+                }
             }
 
-            // Attach a couple tech tags where possible
+            // Attach relevant tech tags based on product
             $attach = [];
+            
+            // For Shop Management System, attach specific tags
+            if ($p['slug'] === 'shop-management-system') {
+                $shopTags = ['laravel', 'vue', 'mysql', 'inventory-management', 'pos', 'retail', 'business-management'];
+                foreach ($shopTags as $tech) {
+                    if (isset($tagByName[$tech])) {
+                        $attach[] = $tagByName[$tech]->id;
+                    }
+                }
+            } else {
+                // For other products, attach default tech tags
             foreach (['laravel', 'vue', 'mysql'] as $tech) {
                 if (isset($tagByName[$tech])) {
                     $attach[] = $tagByName[$tech]->id;
                 }
             }
+            }
+            
             if (!empty($attach)) {
                 $product->tags()->syncWithoutDetaching($attach);
             }
@@ -722,8 +813,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($posts as $index => $post) {
-            $post['created_by'] = $this->defaultUserId;
-            $post['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($post, 'blog_posts');
             $createdPost = BlogPost::updateOrCreate(
                 ['slug' => $post['slug']],
                 $post
@@ -782,8 +872,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($faqs as $faq) {
-            $faq['created_by'] = $this->defaultUserId;
-            $faq['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($faq, 'faqs');
             Faq::updateOrCreate(
                 ['question' => $faq['question']],
                 $faq
@@ -819,8 +908,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($branches as $branch) {
-            $branch['created_by'] = $this->defaultUserId;
-            $branch['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($branch, 'branches');
             Branch::updateOrCreate(
                 ['slug' => $branch['slug']],
                 $branch
@@ -860,8 +948,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($careers as $career) {
-            $career['created_by'] = $this->defaultUserId;
-            $career['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($career, 'careers');
             Career::updateOrCreate(
                 ['slug' => $career['slug']],
                 $career
@@ -908,8 +995,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($events as $event) {
-            $event['created_by'] = $this->defaultUserId;
-            $event['updated_by'] = $this->defaultUserId;
+            $this->setAuditColumns($event, 'events');
             Event::updateOrCreate(
                 ['slug' => $event['slug']],
                 $event

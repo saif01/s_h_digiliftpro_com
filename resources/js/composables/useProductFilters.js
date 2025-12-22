@@ -55,7 +55,6 @@ export function useProductFilters(products) {
         return productsList.filter(p =>
             p.title?.toLowerCase().includes(query) ||
             p.short_description?.toLowerCase().includes(query) ||
-            p.sku?.toLowerCase().includes(query) ||
             p.description?.toLowerCase().includes(query)
         );
     };

@@ -31,7 +31,7 @@
                 <div class="panel search-panel">
                     <div class="panel-header">
                         <span class="panel-title">Search</span>
-                        <span class="panel-hint">Names, tags or SKU</span>
+                        <span class="panel-hint">Names or tags</span>
                     </div>
                     <v-text-field :model-value="searchQuery" density="compact" variant="solo-filled"
                         placeholder="Search products..." prepend-inner-icon="mdi-magnify" hide-details="auto"

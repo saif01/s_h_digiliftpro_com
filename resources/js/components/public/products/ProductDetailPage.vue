@@ -59,10 +59,6 @@
                                 <v-icon icon="mdi-domain" size="16"></v-icon>
                                 <span class="info-text">{{ product.brand }}</span>
                             </div>
-                            <div class="info-item">
-                                <v-icon icon="mdi-code-tags" size="16"></v-icon>
-                                <span class="info-text">SKU: {{ product.sku || 'N/A' }}</span>
-                            </div>
                         </div>
 
                         <!-- CTA Buttons -->
@@ -796,7 +792,6 @@ export default {
                 const title = slug ? slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Product Title';
                 this.product = {
                     title: title,
-                    sku: 'MCT-UPS-2000X',
                     price: '499.00',
                     oldPrice: '599.00',
                     rating: 4.5,

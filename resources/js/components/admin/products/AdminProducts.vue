@@ -80,12 +80,6 @@
                                     <v-icon :icon="getSortIcon('title')" size="small" class="ml-1"></v-icon>
                                 </div>
                             </th>
-                            <th class="sortable" @click="onSort('sku')">
-                                <div class="d-flex align-center">
-                                    SKU
-                                    <v-icon :icon="getSortIcon('sku')" size="small" class="ml-1"></v-icon>
-                                </div>
-                            </th>
                             <th>Categories</th>
                             <th class="sortable" @click="onSort('price')">
                                 <div class="d-flex align-center">
@@ -163,9 +157,6 @@
                                     <div class="font-weight-medium">{{ product.title }}</div>
                                     <v-chip v-if="product.featured" color="amber" size="x-small"
                                         class="mt-1">Featured</v-chip>
-                                </td>
-                                <td>
-                                    <v-chip size="small" variant="outlined">{{ product.sku || '-' }}</v-chip>
                                 </td>
                                 <td>
                                     <div class="d-flex flex-wrap gap-1">
@@ -299,7 +290,6 @@ export default {
             form: {
                 title: '',
                 slug: '',
-                sku: '',
                 brand: '',
                 short_description: '',
                 description: '',
@@ -612,7 +602,6 @@ export default {
             this.form = {
                 title: '',
                 slug: '',
-                sku: '',
                 brand: '',
                 short_description: '',
                 description: '',
@@ -1131,7 +1120,6 @@ export default {
                 const formData = {
                     title: this.form.title,
                     slug: this.form.slug,
-                    sku: this.form.sku || null,
                     brand: this.form.brand || null,
                     short_description: this.form.short_description || null,
                     description: this.form.description || null,
@@ -1468,7 +1456,6 @@ export default {
             this.form = {
                 title: data.title || '',
                 slug: data.slug || '',
-                sku: data.sku || '',
                 brand: data.brand || '',
                 short_description: data.short_description || '',
                 description: data.description || '',

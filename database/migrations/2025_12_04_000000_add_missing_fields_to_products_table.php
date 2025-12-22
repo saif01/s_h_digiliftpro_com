@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            // Add brand field after sku
+            // Add brand field after slug
             if (!Schema::hasColumn('products', 'brand')) {
-                $table->string('brand')->nullable()->after('sku');
+                $table->string('brand')->nullable()->after('slug');
             }
 
             // Add discount fields after price
