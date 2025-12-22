@@ -27,13 +27,17 @@
                         <div class="glass-pill d-inline-flex align-center px-5 py-3 rounded-pill mb-4 animate-float">
                             <div class="pulse-dot mr-2"></div>
                             <v-icon icon="mdi-shield-check" color="amber-accent-4" size="small" class="mr-2"></v-icon>
-                            <span class="text-subtitle-2 font-weight-bold tracking-wide text-white">PREMIUM
-                                QUALITY</span>
+                            <span class="text-subtitle-2 font-weight-bold tracking-wide text-white">PROFESSIONAL
+                                SOLUTIONS</span>
                         </div>
                         <h1
                             class="text-h4 text-lg-h2 font-weight-black text-white mb-3 lh-tight text-shadow-sm animate-slide-up">
-                            Explore Our <span class="text-amber-accent-3">Product Range</span>
+                            Our <span class="text-amber-accent-3">Product Catalog</span>
                         </h1>
+                        <p class="text-body-1 text-white text-opacity-90 mb-0 max-width-700 mx-auto">
+                            Discover our comprehensive range of professional-grade products designed for business and
+                            industrial applications
+                        </p>
                     </div>
                 </v-fade-transition>
             </v-container>
@@ -161,24 +165,26 @@
                         <!-- Loading State -->
                         <div v-if="loading" class="text-center py-16">
                             <v-progress-circular indeterminate color="primary" size="64" />
-                            <p class="text-body-1 text-medium-emphasis mt-4">Loading products...</p>
+                            <p class="text-body-1 text-medium-emphasis mt-4">Loading product catalog...</p>
                         </div>
 
                         <!-- Empty State -->
                         <div v-else-if="advancedFilteredProducts.length === 0" class="text-center py-16">
                             <v-icon icon="mdi-package-variant" size="64" color="grey-lighten-1" class="mb-4" />
-                            <h3 class="text-h6 font-weight-bold text-grey-darken-2 mb-2">No products found</h3>
+                            <h3 class="text-h6 font-weight-bold text-grey-darken-2 mb-2">No Products Match Your Criteria
+                            </h3>
                             <p class="text-body-2 text-medium-emphasis mb-6">
-                                Try adjusting your filters or search terms.
+                                Please adjust your search filters or contact us for assistance finding the right
+                                solution.
                             </p>
                             <v-btn variant="outlined" color="primary" @click="clearAllFilters">
-                                Clear Filters
+                                Reset Filters
                             </v-btn>
                         </div>
 
                         <!-- Products Grid -->
                         <v-row v-else>
-                            <v-col v-for="product in displayedProducts" :key="product.id" cols="12" sm="6" md="3">
+                            <v-col v-for="product in displayedProducts" :key="product.id" cols="12" sm="6" md="4">
                                 <ProductCard :product="product"
                                     :comparison-disabled="!canAddMore && !isInComparison(product)"
                                     @toggle-comparison="handleToggleComparison" />
@@ -189,7 +195,7 @@
                         <div v-if="displayedProducts.length > 0 && hasMoreProducts" class="text-center mt-12">
                             <v-btn variant="outlined" color="primary" size="large" rounded="pill"
                                 class="px-10 font-weight-bold" @click="loadMore" :loading="loadingMore">
-                                Load More Products
+                                View More Products
                             </v-btn>
                         </div>
                     </v-col>
