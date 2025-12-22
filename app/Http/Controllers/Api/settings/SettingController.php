@@ -58,15 +58,15 @@ class SettingController extends Controller
             $type = $value['type'] ?? 'text';
             $val = $value['value'] ?? '';
 
-            Setting::updateOrCreate(
-                ['key' => $key],
-                [
-                    'key' => $key,
-                    'value' => is_string($val) ? $val : json_encode($val),
-                    'type' => $type,
-                    'group' => $group,
-                ]
-            );
+            $setting = Setting::firstOrNew(['key' => $key]);
+            if (!$setting->exists) {
+                $setting->created_by = $request->user()?->id;
+            }
+            $setting->value = is_string($val) ? $val : json_encode($val);
+            $setting->type = $type;
+            $setting->group = $group;
+            $setting->updated_by = $request->user()?->id;
+            $setting->save();
         }
 
         return response()->json(['success' => true]);

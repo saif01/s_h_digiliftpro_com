@@ -26,6 +26,16 @@ class Service extends Model
     {
         return $this->belongsToMany(Tag::class, 'tag_service')->withTimestamps();
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
 
 

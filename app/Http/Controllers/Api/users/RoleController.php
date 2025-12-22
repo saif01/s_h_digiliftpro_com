@@ -26,6 +26,7 @@ class RoleController extends Controller
             'order' => 'nullable|integer',
         ]);
         $data['slug'] = $data['slug'] ?? Str::slug($data['name']);
+        $data['created_by'] = $request->user()?->id;
         $role = Role::create($data);
         return response()->json($role, 201);
     }
@@ -45,6 +46,7 @@ class RoleController extends Controller
             'is_active' => 'nullable|boolean',
             'order' => 'nullable|integer',
         ]);
+        $data['updated_by'] = $request->user()?->id;
         $role->update($data);
         return response()->json($role);
     }

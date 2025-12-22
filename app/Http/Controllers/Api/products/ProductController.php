@@ -37,6 +37,7 @@ class ProductController extends Controller
         ]);
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+        $data['created_by'] = $request->user()?->id;
         $product = Product::create($data);
 
         return response()->json($product, 201);
@@ -68,6 +69,7 @@ class ProductController extends Controller
             'order' => 'nullable|integer',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $product->update($data);
         return response()->json($product);
     }

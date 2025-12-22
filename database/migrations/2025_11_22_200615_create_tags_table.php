@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('type')->default('general'); // service, product, post, portfolio
             $table->text('description')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

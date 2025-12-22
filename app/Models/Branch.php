@@ -17,6 +17,16 @@ class Branch extends Model
         'longitude' => 'decimal:8',
         'published' => 'boolean',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
 
 

@@ -23,8 +23,15 @@ use Carbon\Carbon;
 
 class DemoDataSeeder extends Seeder
 {
+    protected $defaultUserId = null;
+
     public function run(): void
     {
+        // Get first admin user or first user for created_by/updated_by
+        $admin = \App\Models\User::whereHas('roles', function ($q) {
+            $q->where('slug', 'administrator');
+        })->first();
+        $this->defaultUserId = $admin?->id ?? \App\Models\User::first()?->id;
         // Seed Settings
         $this->seedSettings();
 
@@ -134,6 +141,8 @@ class DemoDataSeeder extends Seeder
                 $setting['value'] = json_encode($setting['value']);
             }
 
+            $setting['created_by'] = $this->defaultUserId;
+            $setting['updated_by'] = $this->defaultUserId;
             Setting::updateOrCreate(['key' => $setting['key']], $setting);
         }
     }
@@ -189,6 +198,8 @@ class DemoDataSeeder extends Seeder
 
         $createdPages = [];
         foreach ($pages as $page) {
+            $page['created_by'] = $this->defaultUserId;
+            $page['updated_by'] = $this->defaultUserId;
             $createdPages[$page['slug']] = Page::updateOrCreate(
                 ['slug' => $page['slug']],
                 $page
@@ -220,6 +231,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($menus as $menu) {
+            $menu['created_by'] = $this->defaultUserId;
+            $menu['updated_by'] = $this->defaultUserId;
             Menu::updateOrCreate(
                 ['name' => $menu['name'], 'label' => $menu['label']],
                 $menu
@@ -235,15 +248,15 @@ class DemoDataSeeder extends Seeder
         $categories['service'] = [
             Category::updateOrCreate(
                 ['slug' => 'website-web-app-development', 'type' => 'service'],
-                ['name' => 'Website & Web App Development', 'slug' => 'website-web-app-development', 'type' => 'service', 'published' => true, 'order' => 1]
+                ['name' => 'Website & Web App Development', 'slug' => 'website-web-app-development', 'type' => 'service', 'published' => true, 'order' => 1, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'seo-growth-optimization', 'type' => 'service'],
-                ['name' => 'SEO & Growth Optimization', 'slug' => 'seo-growth-optimization', 'type' => 'service', 'published' => true, 'order' => 2]
+                ['name' => 'SEO & Growth Optimization', 'slug' => 'seo-growth-optimization', 'type' => 'service', 'published' => true, 'order' => 2, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'maintenance-support', 'type' => 'service'],
-                ['name' => 'Maintenance & Support', 'slug' => 'maintenance-support', 'type' => 'service', 'published' => true, 'order' => 3]
+                ['name' => 'Maintenance & Support', 'slug' => 'maintenance-support', 'type' => 'service', 'published' => true, 'order' => 3, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
         ];
 
@@ -251,23 +264,23 @@ class DemoDataSeeder extends Seeder
         $categories['product'] = [
             Category::updateOrCreate(
                 ['slug' => 'website', 'type' => 'product'],
-                ['name' => 'Website', 'slug' => 'website', 'type' => 'product', 'published' => true, 'order' => 1]
+                ['name' => 'Website', 'slug' => 'website', 'type' => 'product', 'published' => true, 'order' => 1, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'web-app', 'type' => 'product'],
-                ['name' => 'Web App', 'slug' => 'web-app', 'type' => 'product', 'published' => true, 'order' => 2]
+                ['name' => 'Web App', 'slug' => 'web-app', 'type' => 'product', 'published' => true, 'order' => 2, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'seo', 'type' => 'product'],
-                ['name' => 'SEO', 'slug' => 'seo', 'type' => 'product', 'published' => true, 'order' => 3]
+                ['name' => 'SEO', 'slug' => 'seo', 'type' => 'product', 'published' => true, 'order' => 3, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'email', 'type' => 'product'],
-                ['name' => 'Email', 'slug' => 'email', 'type' => 'product', 'published' => true, 'order' => 4]
+                ['name' => 'Email', 'slug' => 'email', 'type' => 'product', 'published' => true, 'order' => 4, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'asset-management', 'type' => 'product'],
-                ['name' => 'Asset Management', 'slug' => 'asset-management', 'type' => 'product', 'published' => true, 'order' => 5]
+                ['name' => 'Asset Management', 'slug' => 'asset-management', 'type' => 'product', 'published' => true, 'order' => 5, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
         ];
 
@@ -275,15 +288,15 @@ class DemoDataSeeder extends Seeder
         $categories['post'] = [
             Category::updateOrCreate(
                 ['slug' => 'news', 'type' => 'post'],
-                ['name' => 'News', 'slug' => 'news', 'type' => 'post', 'published' => true, 'order' => 1]
+                ['name' => 'News', 'slug' => 'news', 'type' => 'post', 'published' => true, 'order' => 1, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'tips', 'type' => 'post'],
-                ['name' => 'Tips & Tricks', 'slug' => 'tips', 'type' => 'post', 'published' => true, 'order' => 2]
+                ['name' => 'Tips & Tricks', 'slug' => 'tips', 'type' => 'post', 'published' => true, 'order' => 2, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
             Category::updateOrCreate(
                 ['slug' => 'case-studies', 'type' => 'post'],
-                ['name' => 'Case Studies', 'slug' => 'case-studies', 'type' => 'post', 'published' => true, 'order' => 3]
+                ['name' => 'Case Studies', 'slug' => 'case-studies', 'type' => 'post', 'published' => true, 'order' => 3, 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             ),
         ];
 
@@ -302,7 +315,7 @@ class DemoDataSeeder extends Seeder
             $slug = $name . '-service';
             $tags['service'][] = Tag::updateOrCreate(
                 ['slug' => $slug],
-                ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'service']
+                ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'service', 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             );
         }
 
@@ -313,7 +326,7 @@ class DemoDataSeeder extends Seeder
             $slug = strtolower($name) . '-product';
             $tags['product'][] = Tag::updateOrCreate(
                 ['slug' => $slug],
-                ['name' => $name, 'slug' => $slug, 'type' => 'product']
+                ['name' => $name, 'slug' => $slug, 'type' => 'product', 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             );
         }
 
@@ -323,7 +336,7 @@ class DemoDataSeeder extends Seeder
             $slug = $name . '-post';
             $tags['post'][] = Tag::updateOrCreate(
                 ['slug' => $slug],
-                ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'post']
+                ['name' => ucfirst($name), 'slug' => $slug, 'type' => 'post', 'created_by' => $this->defaultUserId, 'updated_by' => $this->defaultUserId]
             );
         }
 
@@ -397,6 +410,8 @@ class DemoDataSeeder extends Seeder
 
         $createdServices = [];
         foreach ($services as $index => $service) {
+            $service['created_by'] = $this->defaultUserId;
+            $service['updated_by'] = $this->defaultUserId;
             $createdService = Service::updateOrCreate(
                 ['slug' => $service['slug']],
                 $service
@@ -515,6 +530,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($portfolio as $item) {
+            $item['created_by'] = $this->defaultUserId;
+            $item['updated_by'] = $this->defaultUserId;
             Portfolio::updateOrCreate(
                 ['slug' => $item['slug']],
                 $item
@@ -635,6 +652,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($products as $idx => $p) {
+            $p['created_by'] = $this->defaultUserId;
+            $p['updated_by'] = $this->defaultUserId;
             $product = Product::updateOrCreate(['slug' => $p['slug']], $p);
 
             // Attach category (round-robin) so category filters work
@@ -703,6 +722,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($posts as $index => $post) {
+            $post['created_by'] = $this->defaultUserId;
+            $post['updated_by'] = $this->defaultUserId;
             $createdPost = BlogPost::updateOrCreate(
                 ['slug' => $post['slug']],
                 $post
@@ -761,6 +782,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($faqs as $faq) {
+            $faq['created_by'] = $this->defaultUserId;
+            $faq['updated_by'] = $this->defaultUserId;
             Faq::updateOrCreate(
                 ['question' => $faq['question']],
                 $faq
@@ -796,6 +819,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($branches as $branch) {
+            $branch['created_by'] = $this->defaultUserId;
+            $branch['updated_by'] = $this->defaultUserId;
             Branch::updateOrCreate(
                 ['slug' => $branch['slug']],
                 $branch
@@ -835,6 +860,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($careers as $career) {
+            $career['created_by'] = $this->defaultUserId;
+            $career['updated_by'] = $this->defaultUserId;
             Career::updateOrCreate(
                 ['slug' => $career['slug']],
                 $career
@@ -881,6 +908,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($events as $event) {
+            $event['created_by'] = $this->defaultUserId;
+            $event['updated_by'] = $this->defaultUserId;
             Event::updateOrCreate(
                 ['slug' => $event['slug']],
                 $event
@@ -924,6 +953,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($leads as $lead) {
+            // Leads are public submissions, so created_by should be null
             Lead::create($lead);
         }
     }

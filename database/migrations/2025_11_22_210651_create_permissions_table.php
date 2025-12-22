@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('group')->default('general'); // general, content, users, settings, etc.
             $table->text('description')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

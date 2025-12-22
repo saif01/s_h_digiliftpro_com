@@ -24,6 +24,7 @@ class ModuleSeeder extends Seeder
         ];
 
         foreach ($modules as $module) {
+            // Modules are system records, created before users exist, so leave created_by/updated_by as null
             Module::updateOrCreate(
                 ['name' => $module['name']],
                 $module

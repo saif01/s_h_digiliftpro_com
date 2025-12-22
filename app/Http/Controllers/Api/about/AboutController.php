@@ -32,8 +32,10 @@ class AboutController extends Controller
 
         $about = About::first();
         if ($about) {
+            $data['updated_by'] = $request->user()?->id;
             $about->update($data);
         } else {
+            $data['created_by'] = $request->user()?->id;
             $about = About::create($data);
         }
 
@@ -62,6 +64,7 @@ class AboutController extends Controller
             'og_image' => 'nullable|string|max:255',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $about->update($data);
         return response()->json($about);
     }

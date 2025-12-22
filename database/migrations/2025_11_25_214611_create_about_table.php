@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('team_overline')->nullable();
             $table->string('team_title')->nullable();
             $table->json('team')->nullable(); // [{name, role, image, linkedin, twitter}]
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

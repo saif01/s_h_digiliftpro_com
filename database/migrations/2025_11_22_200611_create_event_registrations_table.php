@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('organization')->nullable();
             $table->text('notes')->nullable();
             $table->string('status')->default('registered'); // registered, confirmed, cancelled
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

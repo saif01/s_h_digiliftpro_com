@@ -55,6 +55,16 @@ class Product extends Model
             'rating_count' => $count,
         ])->save();
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
 
 

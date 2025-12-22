@@ -41,6 +41,16 @@ class Category extends Model
     {
         return $this->belongsToMany(Portfolio::class, 'category_portfolio')->withTimestamps();
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
 
 

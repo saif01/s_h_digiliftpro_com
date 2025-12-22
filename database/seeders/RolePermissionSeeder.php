@@ -49,6 +49,7 @@ class RolePermissionSeeder extends Seeder
 
         $createdPermissions = [];
         foreach ($permissions as $permission) {
+            // Permissions are system records, created before users exist, so leave created_by/updated_by as null
             $createdPermissions[$permission['slug']] = Permission::updateOrCreate(
                 ['slug' => $permission['slug']],
                 $permission
@@ -132,6 +133,7 @@ class RolePermissionSeeder extends Seeder
             $permissions = $roleData['permissions'];
             unset($roleData['permissions']);
 
+            // Roles are system records, created before users exist, so leave created_by/updated_by as null
             $role = Role::updateOrCreate(
                 ['slug' => $roleData['slug']],
                 $roleData

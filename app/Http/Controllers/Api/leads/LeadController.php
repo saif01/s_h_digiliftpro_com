@@ -79,6 +79,7 @@ class LeadController extends Controller
         if (array_key_exists('is_read', $data) && $data['is_read'] === true) {
             $data['read_at'] = now();
         }
+        $data['updated_by'] = $request->user()?->id;
         $lead->update($data);
         return response()->json($lead);
     }

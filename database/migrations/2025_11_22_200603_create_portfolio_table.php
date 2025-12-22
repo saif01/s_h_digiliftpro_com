@@ -32,6 +32,8 @@ return new class extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
             $table->integer('order')->default(0);
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
         });

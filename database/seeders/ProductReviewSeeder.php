@@ -109,7 +109,9 @@ class ProductReviewSeeder extends Seeder
                 $template = $reviewTemplates[($index + $i) % count($reviewTemplates)];
                 $reviewerName = $reviewerNames[($index + $i) % count($reviewerNames)];
                 
-                $review = ProductReview::create([
+                // Reviews are public submissions, so created_by should be null
+                // updated_by set only if admin approved it
+                $reviewData = [
                     'product_id' => $product->id,
                     'user_id' => null, // Guest review
                     'reviewer_name' => $reviewerName,
@@ -124,7 +126,10 @@ class ProductReviewSeeder extends Seeder
                     'approved_by' => $template['status'] === 'approved' ? $admin?->id : null,
                     'approved_at' => $template['status'] === 'approved' ? now()->subDays(rand(1, 30)) : null,
                     'created_at' => now()->subDays(rand(1, 60)),
-                ]);
+                    'created_by' => null, // Public submission
+                    'updated_by' => $template['status'] === 'approved' && $admin ? $admin->id : null,
+                ];
+                $review = ProductReview::create($reviewData);
             }
 
             // Update product rating from reviews

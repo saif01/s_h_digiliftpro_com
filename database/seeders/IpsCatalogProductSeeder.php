@@ -14,6 +14,12 @@ class IpsCatalogProductSeeder extends Seeder
      */
     public function run(): void
     {
+        // Get first admin user or first user for created_by/updated_by
+        $admin = \App\Models\User::whereHas('roles', function ($q) {
+            $q->where('slug', 'administrator');
+        })->first();
+        $defaultUserId = $admin?->id ?? \App\Models\User::first()?->id;
+        
         // Get or create the IPS Systems category
         $ipsCategory = Category::firstOrCreate(
             ['slug' => 'ips-systems', 'type' => 'product'],
@@ -92,6 +98,8 @@ class IpsCatalogProductSeeder extends Seeder
                     'published' => true,
                     'featured' => $index < 3,
                     'order' => $index + 1,
+                    'created_by' => $defaultUserId,
+                    'updated_by' => $defaultUserId,
                 ]
             );
 

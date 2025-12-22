@@ -121,6 +121,7 @@ class ProductReviewController extends Controller
             'status' => 'nullable|in:pending,approved,rejected',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $review->update($data);
         $product->updateRatingFromReviews();
 

@@ -31,6 +31,7 @@ class BlogCategoryController extends Controller
 
         $data['type'] = 'post';
         $data['slug'] = $data['slug'] ?? Str::slug($data['name']);
+        $data['created_by'] = $request->user()?->id;
 
         $cat = Category::create($data);
         return response()->json($cat, 201);
@@ -51,6 +52,7 @@ class BlogCategoryController extends Controller
             'published' => 'nullable|boolean',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $blog_category->update($data);
         return response()->json($blog_category);
     }

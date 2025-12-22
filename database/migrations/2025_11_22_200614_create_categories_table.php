@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->integer('order')->default(0);
             $table->boolean('published')->default(true);
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

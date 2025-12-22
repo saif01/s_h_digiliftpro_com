@@ -23,6 +23,7 @@ class NewsletterController extends Controller
         $data = $request->validate([
             'status' => 'nullable|string|max:50',
         ]);
+        $data['updated_by'] = $request->user()?->id;
         $newsletterSubscription->update($data);
         return response()->json($newsletterSubscription);
     }

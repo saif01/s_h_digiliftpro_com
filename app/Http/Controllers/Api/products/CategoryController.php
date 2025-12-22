@@ -33,6 +33,7 @@ class CategoryController extends Controller
         ]);
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['name']);
+        $data['created_by'] = $request->user()?->id;
         $category = Category::create($data);
 
         return response()->json($category, 201);
@@ -56,6 +57,7 @@ class CategoryController extends Controller
             'published' => 'nullable|boolean',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $category->update($data);
         return response()->json($category);
     }

@@ -14,7 +14,15 @@ class AboutSeeder extends Seeder
     {
         // Only create if it doesn't exist (singleton pattern)
         if (About::count() === 0) {
+            // Get first admin user or first user for created_by/updated_by
+            $admin = \App\Models\User::whereHas('roles', function ($q) {
+                $q->where('slug', 'administrator');
+            })->first();
+            $defaultUserId = $admin?->id ?? \App\Models\User::first()?->id;
+            
             About::create([
+                'created_by' => $defaultUserId,
+                'updated_by' => $defaultUserId,
                 'hero' => [
                     'overline' => 'WHO WE ARE',
                     'title' => 'Build Better Digital Systems',

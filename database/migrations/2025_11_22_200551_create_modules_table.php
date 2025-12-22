@@ -19,6 +19,8 @@ return new class extends Migration
             $table->boolean('enabled')->default(false);
             $table->integer('order')->default(0);
             $table->json('config')->nullable(); // module-specific configuration
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

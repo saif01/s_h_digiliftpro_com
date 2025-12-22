@@ -14,6 +14,16 @@ class Page extends Model
     protected $casts = [
         'published' => 'boolean',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
 
 

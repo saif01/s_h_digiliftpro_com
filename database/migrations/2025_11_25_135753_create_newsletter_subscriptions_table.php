@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('status')->default('active'); // active, unsubscribed
             $table->timestamp('subscribed_at')->useCurrent();
             $table->timestamp('unsubscribed_at')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

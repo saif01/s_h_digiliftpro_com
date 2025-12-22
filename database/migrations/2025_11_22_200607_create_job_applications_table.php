@@ -22,6 +22,8 @@ return new class extends Migration
             $table->json('additional_data')->nullable();
             $table->string('status')->default('new'); // new, reviewed, shortlisted, rejected, hired
             $table->text('notes')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

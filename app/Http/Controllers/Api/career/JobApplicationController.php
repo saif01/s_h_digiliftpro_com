@@ -32,6 +32,7 @@ class JobApplicationController extends Controller
             'status' => 'nullable|string|max:50',
             'notes' => 'nullable|string',
         ]);
+        $data['updated_by'] = $request->user()?->id;
         $jobApplication->update($data);
         return response()->json($jobApplication);
     }

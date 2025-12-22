@@ -29,6 +29,7 @@ class TagController extends Controller
         ]);
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['name']);
+        $data['created_by'] = $request->user()?->id;
         $tag = Tag::create($data);
 
         return response()->json($tag, 201);
@@ -48,6 +49,7 @@ class TagController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $tag->update($data);
         return response()->json($tag);
     }

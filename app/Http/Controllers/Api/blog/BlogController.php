@@ -28,6 +28,7 @@ class BlogController extends Controller
         ]);
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+        $data['created_by'] = $request->user()?->id;
         $post = BlogPost::create($data);
 
         return response()->json($post, 201);
@@ -51,6 +52,7 @@ class BlogController extends Controller
             'published' => 'nullable|boolean',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $blog_post->update($data);
         return response()->json($blog_post);
     }

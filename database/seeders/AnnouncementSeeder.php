@@ -180,6 +180,8 @@ class AnnouncementSeeder extends Seeder
         ];
 
         foreach ($announcements as $announcement) {
+            $announcement['created_by'] = $author->id;
+            $announcement['updated_by'] = $author->id;
             Announcement::updateOrCreate(
                 ['slug' => $announcement['slug']],
                 $announcement

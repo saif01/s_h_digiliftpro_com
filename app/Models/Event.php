@@ -19,6 +19,16 @@ class Event extends Model
         'allow_registration' => 'boolean',
         'published' => 'boolean',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
 
 

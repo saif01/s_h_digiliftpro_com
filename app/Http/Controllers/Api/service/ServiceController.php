@@ -31,6 +31,7 @@ class ServiceController extends Controller
         ]);
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+        $data['created_by'] = $request->user()?->id;
         $service = Service::create($data);
 
         return response()->json($service, 201);
@@ -57,6 +58,7 @@ class ServiceController extends Controller
             'order' => 'nullable|integer',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $service->update($data);
         return response()->json($service);
     }

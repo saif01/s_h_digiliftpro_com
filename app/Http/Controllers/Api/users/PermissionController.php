@@ -21,6 +21,7 @@ class PermissionController extends Controller
             'group' => 'nullable|string|max:50',
             'description' => 'nullable|string',
         ]);
+        $data['created_by'] = $request->user()?->id;
         $perm = Permission::create($data);
         return response()->json($perm, 201);
     }
@@ -38,6 +39,7 @@ class PermissionController extends Controller
             'group' => 'nullable|string|max:50',
             'description' => 'nullable|string',
         ]);
+        $data['updated_by'] = $request->user()?->id;
         $permission->update($data);
         return response()->json($permission);
     }

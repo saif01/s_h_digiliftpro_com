@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('status')->default('new'); // new, in_progress, completed, closed
             $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
             $table->text('notes')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

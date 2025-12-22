@@ -40,6 +40,7 @@ class AnnouncementController extends Controller
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
         $data['author_id'] = $request->user()?->id;
+        $data['created_by'] = $request->user()?->id;
 
         $a = Announcement::create($data);
         return response()->json($a, 201);
@@ -74,6 +75,7 @@ class AnnouncementController extends Controller
             'og_image' => 'nullable|string|max:255',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $announcement->update($data);
         return response()->json($announcement);
     }

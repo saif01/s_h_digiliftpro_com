@@ -32,6 +32,7 @@ class CareerController extends Controller
         ]);
 
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+        $data['created_by'] = $request->user()?->id;
         $career = Career::create($data);
         return response()->json($career, 201);
     }
@@ -58,6 +59,7 @@ class CareerController extends Controller
             'order' => 'nullable|integer',
         ]);
 
+        $data['updated_by'] = $request->user()?->id;
         $career->update($data);
         return response()->json($career);
     }

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->json('metadata')->nullable();
             $table->foreignId('uploaded_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }
