@@ -22,11 +22,11 @@
                 <v-col cols="12" lg="6" class="hero-content-col">
                     <div class="hero-content">
                         <!-- Badge -->
-                        <!-- <div class="hero-badge mb-4">
+                        <div class="hero-badge mb-4">
                             <div class="badge-glow"></div>
                             <v-icon icon="mdi-lightning-bolt" size="16" class="mr-2"></v-icon>
                             <span>Transforming Ideas into Digital Reality</span>
-                        </div> -->
+                        </div>
 
                         <!-- Main Heading -->
                         <h1 class="hero-title mb-4">
@@ -452,6 +452,7 @@ export default {
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    left: 20%;
 }
 
 .hero-badge:hover {
@@ -1078,8 +1079,8 @@ export default {
 /* Code Window */
 .code-window {
     position: absolute;
-    bottom: 10%;
-    left: 10%;
+    top: 0%;
+    left: -5%;
     width: 240px;
     background: rgba(15, 23, 42, 0.98);
     border: 1px solid rgba(124, 58, 237, 0.3);
@@ -1459,7 +1460,6 @@ export default {
     .code-window {
         width: 240px;
         left: 5%;
-        bottom: 5%;
     }
 }
 
@@ -1550,7 +1550,6 @@ export default {
     .code-window {
         width: 180px;
         left: 0;
-        bottom: 0;
     }
 
     .code-content {
@@ -1575,6 +1574,7 @@ export default {
         font-size: 11px;
         padding: 7px 16px;
         margin-bottom: 12px !important;
+        left: 50%;
     }
 
     .hero-title {
@@ -1666,7 +1666,6 @@ export default {
     .code-window {
         width: 160px;
         left: 0;
-        bottom: 0;
     }
 
     .code-header {

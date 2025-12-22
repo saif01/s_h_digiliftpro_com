@@ -16,7 +16,7 @@
                     <div class="overline-badge d-inline-flex align-center px-5 py-2 rounded-pill mb-5">
                         <v-icon icon="mdi-diamond-stone" size="18" class="mr-2 sparkle-icon"></v-icon>
                         <span class="text-caption font-weight-bold letter-spacing">{{ overline || 'WHY CHOOSE US'
-                        }}</span>
+                            }}</span>
                         <v-icon icon="mdi-diamond-stone" size="18" class="ml-2 sparkle-icon"></v-icon>
                     </div>
                     <h2 class="display-title text-h3 text-md-h2 font-weight-black mb-5 gradient-text">
@@ -65,10 +65,10 @@
 
                             <!-- Animated border -->
                             <div class="animated-border"></div>
-
-                            <v-img
-                                :src="imageUrl ? resolveImageUrl(imageUrl) : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
-                                class="showcase-image rounded-lg" :cover="true" height="550">
+                            <!-- :src="imageUrl ? resolveImageUrl(imageUrl) :
+                            resolveImageUrl('/assets/img/why_choose_us.jpg')" -->
+                            <v-img :src="'/assets/img/why_choose_us.jpg'" class="showcase-image rounded-lg"
+                                :cover="true" height="550">
                                 <template v-slot:placeholder>
                                     <div class="d-flex align-center justify-center fill-height">
                                         <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -139,7 +139,7 @@ export default {
         },
         imageUrl: {
             type: String,
-            default: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            default: '/assets/img/why_choose_us.jpg'
         },
         features: {
             type: Array,
