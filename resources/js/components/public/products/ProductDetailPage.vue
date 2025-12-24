@@ -82,7 +82,8 @@
                         <!-- Floating Card with 3D Effect -->
                         <div class="floating-card">
                             <div class="software-preview-card">
-                                <img :src="activeImage" alt="Software Preview" class="preview-image" />
+                                <img :src="activeImage" alt="Software Preview" class="preview-image"
+                                    @error="handleImageError($event)" />
                                 <div class="preview-overlay">
                                     <v-btn icon variant="flat" color="white" size="small" class="zoom-btn"
                                         @click="showImageZoom = true">
@@ -129,7 +130,8 @@
                         <!-- Main Preview -->
                         <div class="main-preview-wrapper">
                             <div class="preview-card-modern">
-                                <img :src="activeImage" alt="Product Screenshot" class="main-preview-img" />
+                                <img :src="activeImage" alt="Product Screenshot" class="main-preview-img"
+                                    @error="handleImageError($event)" />
                                 <v-btn icon variant="flat" color="white" size="small" class="fullscreen-btn"
                                     @click="showImageZoom = true">
                                     <v-icon size="20" color="primary">mdi-fullscreen</v-icon>
@@ -140,7 +142,7 @@
                             <div class="thumbnails-wrapper">
                                 <div v-for="(img, i) in productImages" :key="i" class="thumbnail-item"
                                     :class="{ 'thumbnail-active': activeImage === img }" @click="activeImage = img">
-                                    <img :src="img" alt="Thumbnail" />
+                                    <img :src="img" alt="Thumbnail" @error="handleImageError($event)" />
                                     <div class="thumbnail-overlay"></div>
                                 </div>
                             </div>
@@ -503,7 +505,7 @@
                     <v-icon color="grey-darken-2">mdi-close</v-icon>
                 </v-btn>
                 <div class="zoom-image-wrapper">
-                    <img :src="activeImage" alt="Zoomed Image" class="zoom-image" />
+                    <img :src="activeImage" alt="Zoomed Image" class="zoom-image" @error="handleImageError($event)" />
                 </div>
             </v-card>
         </v-dialog>
@@ -581,13 +583,49 @@ export default {
     },
     computed: {
         productImages() {
-            if (this.product.images && Array.isArray(this.product.images) && this.product.images.length > 0) {
-                return this.product.images;
+            const defaultImage = '/assets/img/default.jpg';
+
+            // Helper to get images array
+            const getImagesArray = () => {
+                if (!this.product.images) return null;
+
+                // If it's already an array
+                if (Array.isArray(this.product.images)) {
+                    return this.product.images.length > 0 ? this.product.images : null;
+                }
+
+                // If it's a string, try to parse as JSON
+                if (typeof this.product.images === 'string') {
+                    try {
+                        const parsed = JSON.parse(this.product.images);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            return parsed;
+                        }
+                    } catch (e) {
+                        // If parsing fails, treat the string itself as a single image URL
+                        return [this.product.images];
+                    }
+                }
+
+                return null;
+            };
+
+            const images = getImagesArray();
+            if (images) {
+                // Resolve all image URLs
+                return images.map(img => {
+                    if (!img) return defaultImage;
+                    const resolved = resolveUploadUrl(img);
+                    return resolved || defaultImage;
+                });
             }
+
             if (this.product.thumbnail) {
-                return [this.product.thumbnail];
+                const resolved = resolveUploadUrl(this.product.thumbnail);
+                return [resolved || defaultImage];
             }
-            return ['/assets/img/default.jpg'];
+
+            return [defaultImage];
         },
         keyFeatures() {
             if (this.product.key_features && Array.isArray(this.product.key_features)) {
@@ -985,6 +1023,13 @@ export default {
                 'coming_soon': 'mdi-new-box'
             };
             return iconMap[availability] || 'mdi-help-circle';
+        },
+        // Handle image loading errors - set to default image
+        handleImageError(event) {
+            const defaultImage = '/assets/img/default.jpg';
+            if (event.target.src !== defaultImage && !event.target.src.includes('default.jpg')) {
+                event.target.src = defaultImage;
+            }
         }
     }
 };
