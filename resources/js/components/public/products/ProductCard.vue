@@ -36,14 +36,6 @@
                                 aria-label="View product details" />
                         </template>
                     </v-tooltip>
-                    <v-tooltip text="Add to comparison" location="top">
-                        <template v-slot:activator="{ props: tooltipProps }">
-                            <v-btn icon="mdi-scale-balance" variant="flat" color="primary" size="x-small"
-                                class="hover-scale" v-bind="tooltipProps" :disabled="comparisonDisabled"
-                                @click.stop.prevent="$emit('toggle-comparison', product)"
-                                aria-label="Add to comparison" />
-                        </template>
-                    </v-tooltip>
                     <v-tooltip text="Share product" location="top">
                         <template v-slot:activator="{ props: tooltipProps }">
                             <v-btn icon="mdi-share-variant" variant="flat" color="success" size="x-small"
@@ -162,14 +154,8 @@ const props = defineProps({
     product: {
         type: Object,
         required: true
-    },
-    comparisonDisabled: {
-        type: Boolean,
-        default: false
     }
 });
-
-defineEmits(['toggle-comparison']);
 
 // Share menu state
 const showShareMenu = ref(false);
