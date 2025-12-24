@@ -29,8 +29,8 @@
                     <v-card class="case-study-card h-100" elevation="2" hover>
                         <v-img v-if="study.image" :src="study.image" height="240" cover
                             class="case-study-image"></v-img>
-                        <v-img v-else src="/images/placeholder-case-study.jpg" height="240" cover
-                            class="case-study-image bg-grey-lighten-2"></v-img>
+                        <v-img v-else src="/assets/img/default.jpg" height="240" cover
+                            class="case-study-image case-study-image-default bg-grey-lighten-2"></v-img>
 
                         <v-card-title class="text-h6 font-weight-bold">
                             {{ study.title }}
@@ -171,6 +171,11 @@ export default {
     border-bottom: 1px solid #e0e0e0;
 }
 
+.case-study-image-default :deep(img) {
+    transform: scale(1.1);
+    transform-origin: center center;
+}
+
 .results-section {
     margin-top: 8px;
 }
@@ -179,4 +184,3 @@ export default {
     gap: 8px;
 }
 </style>
-
