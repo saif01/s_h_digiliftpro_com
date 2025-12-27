@@ -126,9 +126,8 @@
                                 <td>
                                     <div class="d-flex align-center gap-2">
                                         <v-avatar size="32" color="primary">
-                                            <v-img v-if="user.avatar" :src="user.avatar" :alt="user.name"></v-img>
-                                            <span v-else class="text-white">{{ user.name.charAt(0).toUpperCase()
-                                            }}</span>
+                                            <v-img :src="getAvatarUrl(user.avatar)" :alt="user.name"
+                                                @error="handleImageError"></v-img>
                                         </v-avatar>
                                         {{ user.name }}
                                     </div>
@@ -274,8 +273,8 @@
                                         <!-- Avatar Preview -->
                                         <div v-if="form.avatar" class="mb-3 text-center">
                                             <v-avatar size="80" class="mb-2">
-                                                <v-img :src="form.avatar ? resolveImageUrl(form.avatar) : ''"
-                                                    alt="Avatar Preview"></v-img>
+                                                <v-img :src="getAvatarUrl(form.avatar)" alt="Avatar Preview"
+                                                    @error="handleImageError"></v-img>
                                             </v-avatar>
                                             <div>
                                                 <v-btn size="small" variant="text" color="error"
@@ -490,7 +489,7 @@ export default {
                 });
 
                 const users = response.data.data || [];
-                // Backend already returns full URLs via transformUserAvatar, so we keep them as-is
+                // Backend returns avatar paths, we resolve them to full URLs in the template using resolveImageUrl
                 this.users = users;
                 this.updatePagination(response.data);
             } catch (error) {
@@ -504,7 +503,17 @@ export default {
                 const response = await this.$axios.get('/api/v1/users/roles', {
                     headers: this.getAuthHeaders()
                 });
-                this.roles = response.data.roles;
+                // API returns roles directly as an array, not wrapped in 'roles' key
+                const rolesData = response.data.data || response.data || [];
+
+                // Transform roles to have label and value properties for v-select
+                this.roles = rolesData.map(role => ({
+                    label: role.name || role.slug || 'Unknown',
+                    value: role.id,
+                    description: role.description || '',
+                    is_system: role.is_system || false,
+                    slug: role.slug || ''
+                }));
 
                 // Populate roleOptions for filter
                 this.roleOptions = this.roles.map(role => ({
@@ -513,6 +522,7 @@ export default {
                 }));
             } catch (error) {
                 console.error('Error loading roles:', error);
+                this.showError('Failed to load roles');
             }
         },
         loadCurrentUser() {
@@ -830,6 +840,16 @@ export default {
         },
         resolveImageUrl(value) {
             return resolveUploadUrl(value);
+        },
+        getAvatarUrl(avatar) {
+            if (avatar) {
+                return this.resolveImageUrl(avatar);
+            }
+            return '/assets/logo/default.png';
+        },
+        handleImageError(event) {
+            // If image fails to load, set it to default
+            event.target.src = '/assets/logo/default.png';
         },
         /**
          * View user profile
