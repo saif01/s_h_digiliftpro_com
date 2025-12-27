@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\leads;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Services\TelegramNotify;
 use Illuminate\Http\Request;
 
 class LeadController extends Controller
@@ -58,6 +59,14 @@ class LeadController extends Controller
             'is_read' => false,
             'read_at' => null,
         ]);
+
+        // Send Telegram notification
+        try {
+            TelegramNotify::notifyNewLead($lead);
+        } catch (\Exception $e) {
+            // Log error but don't fail the request
+            \Log::error('Failed to send Telegram notification for lead: ' . $e->getMessage());
+        }
 
         return response()->json($lead, 201);
     }

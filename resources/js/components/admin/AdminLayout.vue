@@ -529,7 +529,7 @@ export default {
                     }
                 });
 
-                this.unreadCount = response.data.count || 0;
+                this.unreadCount = response.data.unread || 0;
             } catch (error) {
                 console.error('Error loading unread count:', error);
             }

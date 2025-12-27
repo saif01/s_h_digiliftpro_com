@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public\pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Services\TelegramNotify;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -29,6 +30,14 @@ class ContactController extends Controller
             'status' => 'new',
             'data' => null,
         ]);
+
+        // Send Telegram notification
+        try {
+            TelegramNotify::notifyNewLead($lead);
+        } catch (\Exception $e) {
+            // Log error but don't fail the request
+            \Log::error('Failed to send Telegram notification for lead: ' . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
