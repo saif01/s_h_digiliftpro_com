@@ -73,13 +73,19 @@
                 <span class="text-caption text-grey">
                     Total Records: <strong>{{ pagination.total || 0 }}</strong>
                     <span v-if="permissions.length > 0 && viewMode === 'flat'">
-                        | Showing {{ ((currentPage - 1) * perPage) + 1 }} to {{ Math.min(currentPage * perPage, pagination.total) }} of {{ pagination.total }}
+                        | Showing {{ ((currentPage - 1) * perPage) + 1 }} to {{ Math.min(currentPage * perPage,
+                            pagination.total) }} of {{ pagination.total }}
                     </span>
                 </span>
             </v-card-title>
             <v-card-text>
                 <!-- Grouped View -->
                 <div v-if="viewMode === 'grouped'">
+                    <div v-if="!loading && Object.keys(groupedPermissions).length === 0" class="text-center py-8">
+                        <v-icon size="64" color="grey-lighten-1" class="mb-4">mdi-shield-off</v-icon>
+                        <div class="text-h6 text-grey mb-2">No permissions found</div>
+                        <div class="text-caption text-grey">Try adjusting your search or filter criteria</div>
+                    </div>
                     <div v-for="(permissions, group) in groupedPermissions" :key="group" class="mb-6">
                         <h3 class="text-h6 mb-3">
                             {{ group.charAt(0).toUpperCase() + group.slice(1) }}
@@ -125,8 +131,10 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <v-skeleton-loader type="button" width="32" height="32" class="mr-1"></v-skeleton-loader>
-                                                <v-skeleton-loader type="button" width="32" height="32"></v-skeleton-loader>
+                                                <v-skeleton-loader type="button" width="32" height="32"
+                                                    class="mr-1"></v-skeleton-loader>
+                                                <v-skeleton-loader type="button" width="32"
+                                                    height="32"></v-skeleton-loader>
                                             </div>
                                         </td>
                                     </tr>
@@ -147,7 +155,8 @@
                                         </td>
                                         <td>
                                             <v-chip size="small" color="info" variant="text">
-                                                {{ permission.roles_count || 0 }} role{{ (permission.roles_count || 0) !== 1
+                                                {{ permission.roles_count || 0 }} role{{ (permission.roles_count || 0)
+                                                    !== 1
                                                     ? 's' : '' }}
                                             </v-chip>
                                         </td>
@@ -212,7 +221,8 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <v-skeleton-loader type="button" width="32" height="32" class="mr-1"></v-skeleton-loader>
+                                    <v-skeleton-loader type="button" width="32" height="32"
+                                        class="mr-1"></v-skeleton-loader>
                                     <v-skeleton-loader type="button" width="32" height="32"></v-skeleton-loader>
                                 </div>
                             </td>
@@ -238,7 +248,8 @@
                                 </td>
                                 <td>
                                     <v-chip size="small" color="info" variant="text">
-                                        {{ permission.roles_count || 0 }} role{{ (permission.roles_count || 0) !== 1 ? 's' :
+                                        {{ permission.roles_count || 0 }} role{{ (permission.roles_count || 0) !== 1 ?
+                                            's' :
                                             '' }}
                                     </v-chip>
                                 </td>
@@ -246,7 +257,8 @@
                                     <v-btn size="small" icon="mdi-pencil" @click="openDialog(permission)"
                                         variant="text"></v-btn>
                                     <v-btn size="small" icon="mdi-delete" @click="deletePermission(permission)"
-                                        variant="text" color="error" :disabled="(permission.roles_count || 0) > 0"></v-btn>
+                                        variant="text" color="error"
+                                        :disabled="(permission.roles_count || 0) > 0"></v-btn>
                                 </td>
                             </tr>
                             <tr v-if="permissions.length === 0">
@@ -257,11 +269,12 @@
                 </v-table>
 
                 <!-- Pagination and Records Info (only for flat view) -->
-                <div v-if="viewMode === 'flat'" class="d-flex flex-column flex-md-row justify-space-between align-center align-md-start gap-3 mt-4">
+                <div v-if="viewMode === 'flat'"
+                    class="d-flex flex-column flex-md-row justify-space-between align-center align-md-start gap-3 mt-4">
                     <div class="text-caption text-grey">
                         <span v-if="permissions.length > 0 && pagination.total > 0">
-                            Showing <strong>{{ ((currentPage - 1) * perPage) + 1 }}</strong> to 
-                            <strong>{{ Math.min(currentPage * perPage, pagination.total) }}</strong> of 
+                            Showing <strong>{{ ((currentPage - 1) * perPage) + 1 }}</strong> to
+                            <strong>{{ Math.min(currentPage * perPage, pagination.total) }}</strong> of
                             <strong>{{ pagination.total.toLocaleString() }}</strong> records
                             <span v-if="pagination.last_page > 1" class="ml-2">
                                 (Page {{ currentPage }} of {{ pagination.last_page }})
@@ -272,12 +285,8 @@
                         </span>
                     </div>
                     <div v-if="pagination.last_page > 1" class="d-flex align-center gap-2">
-                        <v-pagination 
-                            v-model="currentPage"
-                            :length="pagination.last_page" 
-                            :total-visible="7"
-                            density="comfortable"
-                            @update:model-value="loadPermissions">
+                        <v-pagination v-model="currentPage" :length="pagination.last_page" :total-visible="7"
+                            density="comfortable" @update:model-value="loadPermissions">
                         </v-pagination>
                     </div>
                 </div>
@@ -395,12 +404,56 @@ export default {
                 });
 
                 if (this.viewMode === 'grouped') {
-                    this.groupedPermissions = response.data;
+                    // Handle different response structures
+                    let permissionsData = response.data;
+
+                    // If response has a data property, use it (shouldn't happen with grouped=true, but just in case)
+                    if (response.data && response.data.data) {
+                        permissionsData = response.data.data;
+                    }
+
+                    // Initialize as empty object if not valid
+                    if (!permissionsData || typeof permissionsData !== 'object') {
+                        console.warn('Invalid permissions response structure:', permissionsData);
+                        this.groupedPermissions = {};
+                        this.permissions = [];
+                        this.pagination = {
+                            current_page: 1,
+                            last_page: 1,
+                            per_page: 0,
+                            total: 0
+                        };
+                        return;
+                    }
+
+                    // Check if it's an array (ungrouped format from API)
+                    if (Array.isArray(permissionsData)) {
+                        // Group by group property if available, otherwise use 'general' as default
+                        this.groupedPermissions = {};
+                        permissionsData.forEach(permission => {
+                            // Get group name from permission object, fallback to 'general'
+                            const group = permission.group || permission.group_name || 'general';
+                            if (!this.groupedPermissions[group]) {
+                                this.groupedPermissions[group] = [];
+                            }
+                            this.groupedPermissions[group].push(permission);
+                        });
+                    } else {
+                        // It's already an object (grouped format from API)
+                        this.groupedPermissions = permissionsData;
+                    }
+
                     // Flatten for easier access
                     this.permissions = [];
-                    Object.values(response.data).forEach(group => {
-                        this.permissions.push(...group);
+                    Object.values(this.groupedPermissions).forEach(group => {
+                        // Ensure group is an array before spreading (safety check)
+                        if (Array.isArray(group)) {
+                            this.permissions.push(...group);
+                        } else {
+                            console.warn('Invalid group structure:', group);
+                        }
                     });
+
                     // Reset pagination for grouped view
                     this.pagination = {
                         current_page: 1,

@@ -8,9 +8,38 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Permission::query()->orderBy('group')->orderBy('name')->paginate(100));
+        $query = Permission::query()
+            ->withCount('roles')
+            ->orderBy('group')
+            ->orderBy('name');
+        
+        // Handle search parameter
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('slug', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        
+        // Handle group filter
+        if ($request->has('group') && $request->group) {
+            $query->where('group', $request->group);
+        }
+        
+        // Handle grouped parameter - return grouped by group name
+        if ($request->has('grouped') && $request->grouped) {
+            $permissions = $query->get();
+            $grouped = $permissions->groupBy('group')->toArray();
+            return response()->json($grouped);
+        }
+        
+        // Handle pagination
+        $perPage = $request->get('per_page', 15);
+        return response()->json($query->paginate($perPage));
     }
 
     public function store(Request $request)
@@ -53,11 +82,16 @@ class PermissionController extends Controller
     public function groups()
     {
         $groups = Permission::query()
-            ->select('group')
-            ->distinct()
+            ->selectRaw('`group`, COUNT(*) as permissions_count')
+            ->groupBy('group')
             ->orderBy('group')
-            ->pluck('group')
-            ->values();
+            ->get()
+            ->map(function($item) {
+                return [
+                    'name' => $item->group,
+                    'permissions_count' => (int) $item->permissions_count
+                ];
+            });
 
         return response()->json($groups);
     }
