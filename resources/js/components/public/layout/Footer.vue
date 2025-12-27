@@ -15,7 +15,7 @@
                         </div>
 
                         <span class="text-h5 font-weight-black text-white tracking-tight">{{ siteName.toUpperCase()
-                            }}</span>
+                        }}</span>
                     </div>
                     <p class="text-body-2 text-grey-lighten-1 mb-8 lh-relaxed opacity-80">
                         {{ footerDescription }}
@@ -106,31 +106,35 @@
                     <v-menu open-on-hover location="top">
                         <template v-slot:activator="{ props }">
                             <span class="powered-by-text-footer" v-bind="props" style="cursor: pointer;">
-                                Powered By MCT-IT
+                                Powered By DigiLiftPro <a href="https://digiliftpro.com" target="_blank"
+                                    style="text-decoration: none; color: inherit; opacity: 0.9;">https://digiliftpro.com</a>
                                 <v-icon size="x-small" class="ml-1">mdi-information-outline</v-icon>
                             </span>
                         </template>
                         <v-card class="powered-by-card" min-width="280">
                             <v-card-title class="text-h6 pb-2">
                                 <v-icon class="mr-2">mdi-code-tags</v-icon>
-                                Powered By MCT-IT
+                                Powered By DigiLiftPro
                             </v-card-title>
                             <v-divider></v-divider>
                             <v-card-text class="pt-3">
                                 <div class="powered-by-info">
                                     <div class="info-item mb-3">
                                         <div class="info-label">
-                                            <v-icon size="small" class="mr-1">mdi-account-circle</v-icon>
-                                            Author & Credit
+                                            <v-icon size="small" class="mr-1">mdi-web</v-icon>
+                                            Website
                                         </div>
-                                        <div class="info-value">MCT-IT Development Team</div>
+                                        <div class="info-value">
+                                            <a href="https://digiliftpro.com" target="_blank"
+                                                style="color: #6366f1; text-decoration: none;">https://digiliftpro.com</a>
+                                        </div>
                                     </div>
                                     <div class="info-item mb-3">
                                         <div class="info-label">
-                                            <v-icon size="small" class="mr-1">mdi-cog</v-icon>
-                                            Managed By
+                                            <v-icon size="small" class="mr-1">mdi-account-circle</v-icon>
+                                            Powered By
                                         </div>
-                                        <div class="info-value">MCT-IT Solutions</div>
+                                        <div class="info-value">DigiLiftPro</div>
                                     </div>
                                     <div class="info-item mb-2">
                                         <div class="info-label">
@@ -414,6 +418,18 @@ export default {
 .powered-by-text-footer:hover {
     color: rgba(255, 255, 255, 0.9);
     background: rgba(255, 255, 255, 0.1);
+}
+
+.powered-by-text-footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-left: 4px;
+}
+
+.powered-by-text-footer a:hover {
+    color: rgba(255, 255, 255, 1);
+    text-decoration: underline;
 }
 
 .powered-by-card {

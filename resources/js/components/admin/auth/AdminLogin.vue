@@ -61,33 +61,36 @@
                                     <v-menu open-on-hover location="top">
                                         <template v-slot:activator="{ props }">
                                             <p class="text-caption text-grey" v-bind="props" style="cursor: pointer;">
-                                                Protected by <span class="font-weight-bold text-primary">MCT-IT
-                                                    Security</span>
+                                                Powered By DigiLiftPro <a href="https://digiliftpro.com" target="_blank"
+                                                    style="text-decoration: none; color: inherit; opacity: 0.9;">https://digiliftpro.com</a>
                                                 <v-icon size="x-small" class="ml-1">mdi-information-outline</v-icon>
                                             </p>
                                         </template>
                                         <v-card class="powered-by-card" min-width="280">
                                             <v-card-title class="text-h6 pb-2">
-                                                <v-icon class="mr-2">mdi-shield-check</v-icon>
-                                                Powered By MCT-IT
+                                                <v-icon class="mr-2">mdi-code-tags</v-icon>
+                                                Powered By DigiLiftPro
                                             </v-card-title>
                                             <v-divider></v-divider>
                                             <v-card-text class="pt-3">
                                                 <div class="powered-by-info">
                                                     <div class="info-item mb-3">
                                                         <div class="info-label">
-                                                            <v-icon size="small"
-                                                                class="mr-1">mdi-account-circle</v-icon>
-                                                            Author & Credit
+                                                            <v-icon size="small" class="mr-1">mdi-web</v-icon>
+                                                            Website
                                                         </div>
-                                                        <div class="info-value">MCT-IT Development Team</div>
+                                                        <div class="info-value">
+                                                            <a href="https://digiliftpro.com" target="_blank"
+                                                                style="color: #6366f1; text-decoration: none;">https://digiliftpro.com</a>
+                                                        </div>
                                                     </div>
                                                     <div class="info-item mb-3">
                                                         <div class="info-label">
-                                                            <v-icon size="small" class="mr-1">mdi-cog</v-icon>
-                                                            Managed By
+                                                            <v-icon size="small"
+                                                                class="mr-1">mdi-account-circle</v-icon>
+                                                            Powered By
                                                         </div>
-                                                        <div class="info-value">MCT-IT Solutions</div>
+                                                        <div class="info-value">DigiLiftPro</div>
                                                     </div>
                                                     <div class="info-item mb-2">
                                                         <div class="info-label">
@@ -361,5 +364,18 @@ export default {
     color: #334155;
     font-weight: 500;
     padding-left: 20px;
+}
+
+.text-caption a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-left: 4px;
+    opacity: 0.9;
+}
+
+.text-caption a:hover {
+    opacity: 1;
+    text-decoration: underline;
 }
 </style>
