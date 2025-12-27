@@ -66,8 +66,7 @@
                                     <!-- Service Image or Icon -->
                                     <div
                                         class="service-icon-side bg-primary-darken-1 d-flex align-center justify-center pa-6 position-relative overflow-hidden">
-                                        <v-img
-                                            :src="service.image ? resolveImageUrl(service.image) : '/assets/img/default.jpg'"
+                                        <v-img :src="service.image ? resolveImageUrl(service.image) : defaultImage"
                                             cover class="service-image position-absolute w-100 h-100">
                                             <template v-slot:placeholder>
                                                 <div class="d-flex align-center justify-center fill-height">
@@ -150,6 +149,7 @@ export default {
             services: [],
             loading: true,
             error: null,
+            defaultImage: '/assets/img/services-default.jpg', // Services/Digital placeholder
             process: [
                 {
                     title: 'Consultation',

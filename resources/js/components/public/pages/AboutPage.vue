@@ -78,7 +78,7 @@
                             <div class="position-relative pl-md-8">
                                 <div class="image-border-effect"></div>
                                 <v-img
-                                    :src="aboutData.story.image ? resolveImageUrl(aboutData.story.image) : '/assets/img/default.jpg'"
+                                    :src="aboutData.story.image ? resolveImageUrl(aboutData.story.image) : defaultImage"
                                     class="rounded-xl elevation-10 position-relative z-index-2" cover
                                     height="500"></v-img>
                             </div>
@@ -111,7 +111,7 @@
                                 <h3 class="text-h5 font-weight-bold mb-4 text-grey-darken-3">{{ value.title }}</h3>
                                 <p class="text-body-1 text-medium-emphasis lh-relaxed">{{ value.description ||
                                     value.desc
-                                }}</p>
+                                    }}</p>
                             </v-card>
                         </v-col>
                     </v-row>
@@ -119,7 +119,7 @@
             </section>
 
             <!-- Team Section -->
-            <section v-if="aboutData?.team && aboutData.team.length > 0" class="py-20 bg-surface">
+            <!-- <section v-if="aboutData?.team && aboutData.team.length > 0" class="py-20 bg-surface">
                 <v-container>
                     <div class="text-center mb-16">
                         <div class="text-overline text-primary font-weight-bold mb-2 tracking-widest">{{
@@ -133,9 +133,8 @@
                             <v-card class="team-card text-center elevation-0 bg-transparent">
                                 <div
                                     class="team-img-wrapper mb-6 mx-auto rounded-circle overflow-hidden elevation-6 position-relative">
-                                    <v-img
-                                        :src="member.image ? resolveImageUrl(member.image) : '/assets/img/default.jpg'"
-                                        cover height="100%"></v-img>
+                                    <v-img :src="member.image ? resolveImageUrl(member.image) : defaultImage" cover
+                                        height="100%"></v-img>
                                     <div v-if="member.linkedin || member.twitter"
                                         class="team-socials d-flex align-center justify-center gap-2">
                                         <v-btn v-if="member.linkedin" :href="member.linkedin" target="_blank"
@@ -152,7 +151,7 @@
                         </v-col>
                     </v-row>
                 </v-container>
-            </section>
+            </section> -->
         </template>
     </div>
 </template>
@@ -167,7 +166,8 @@ export default {
             defaultSubtitle: 'We are dedicated to providing reliable, efficient, and sustainable power solutions for businesses and homes across the globe.',
             aboutData: null,
             loading: true,
-            error: null
+            error: null,
+            defaultImage: '/assets/img/about-team-office.jpg' // Team/Office placeholder
         };
     },
     async mounted() {

@@ -27,10 +27,8 @@
             <v-row v-else-if="caseStudies.length > 0">
                 <v-col v-for="study in caseStudies" :key="study.id" cols="12" md="6" lg="4">
                     <v-card class="case-study-card h-100" elevation="2" hover>
-                        <v-img v-if="study.image" :src="study.image" height="240" cover
+                        <v-img :src="study.image ? resolveImageUrl(study.image) : defaultImage" height="240" cover
                             class="case-study-image"></v-img>
-                        <v-img v-else src="/assets/img/default.jpg" height="240" cover
-                            class="case-study-image case-study-image-default bg-grey-lighten-2"></v-img>
 
                         <v-card-title class="text-h6 font-weight-bold">
                             {{ study.title }}
@@ -97,11 +95,14 @@
 </template>
 
 <script>
+import { resolveUploadUrl } from '../../../utils/uploads';
+
 export default {
     name: 'CaseStudiesPage',
     data() {
         return {
             loading: false,
+            defaultImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&auto=format', // Business/Project placeholder
             caseStudies: [
                 // Placeholder data - replace with API call
                 {
@@ -109,7 +110,7 @@ export default {
                     title: 'E-commerce Platform Redesign',
                     slug: 'ecommerce-platform-redesign',
                     client: 'Retail Client',
-                    image: null,
+                    image: '/assets/img/case-study-ecommerce.jpg', // E-commerce/Shopping
                     summary: 'Complete redesign and performance optimization of an e-commerce platform, resulting in improved conversion rates and user experience.',
                     results: ['40% faster load time', '25% increase in conversions', 'SEO rank improved']
                 },
@@ -118,7 +119,7 @@ export default {
                     title: 'CRM System Development',
                     slug: 'crm-system-development',
                     client: 'Manufacturing Company',
-                    image: null,
+                    image: '/assets/img/case-study-crm.jpg', // Business Dashboard/CRM
                     summary: 'Custom CRM solution built to streamline operations, automate workflows, and improve customer relationship management.',
                     results: ['50% time saved', 'Automated reporting', 'Real-time analytics']
                 },
@@ -127,7 +128,7 @@ export default {
                     title: 'SEO & Digital Marketing Campaign',
                     slug: 'seo-digital-marketing-campaign',
                     client: 'Education Sector',
-                    image: null,
+                    image: '/assets/img/case-study-seo.jpg', // Analytics/Marketing
                     summary: 'Comprehensive SEO strategy and implementation that increased organic traffic and improved search engine rankings.',
                     results: ['200% traffic increase', 'Top 3 rankings', '10x lead generation']
                 }
@@ -139,6 +140,9 @@ export default {
         // this.loadCaseStudies();
     },
     methods: {
+        resolveImageUrl(imageValue) {
+            return resolveUploadUrl(imageValue);
+        },
         async loadCaseStudies() {
             this.loading = true;
             try {
