@@ -98,12 +98,12 @@ class DemoDataSeeder extends Seeder
     {
         $settings = [
             // General (from the Project Report)
-            ['key' => 'site_name', 'value' => 'digiliftpro', 'type' => 'text', 'group' => 'general'],
+            ['key' => 'site_name', 'value' => 'DigiLiftPro', 'type' => 'text', 'group' => 'general'],
             ['key' => 'site_tagline', 'value' => 'Digital Business Services', 'type' => 'text', 'group' => 'general'],
             ['key' => 'contact_email', 'value' => 'info@digiliftpro.com', 'type' => 'email', 'group' => 'general'],
-            ['key' => 'contact_phone', 'value' => '', 'type' => 'text', 'group' => 'general'],
+            ['key' => 'contact_phone', 'value' => '01707080401 and 01719030242', 'type' => 'text', 'group' => 'general'],
             ['key' => 'whatsapp_number', 'value' => '', 'type' => 'text', 'group' => 'general'],
-            ['key' => 'address', 'value' => '', 'type' => 'textarea', 'group' => 'general'],
+            ['key' => 'address', 'value' => 'Holding No: E-236, Ward No: 07, Chandra, Kaliakair, Gazipur, Bangladesh.', 'type' => 'textarea', 'group' => 'general'],
             ['key' => 'owner_name', 'value' => '', 'type' => 'text', 'group' => 'general'],
             ['key' => 'footer_description', 'value' => 'Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.', 'type' => 'textarea', 'group' => 'general'],
             ['key' => 'newsletter_description', 'value' => 'Get practical growth tips, updates, and launch notes—no spam.', 'type' => 'text', 'group' => 'general'],
@@ -112,7 +112,7 @@ class DemoDataSeeder extends Seeder
             ['key' => 'linkedin_url', 'value' => '', 'type' => 'url', 'group' => 'social'],
             ['key' => 'instagram_url', 'value' => '', 'type' => 'url', 'group' => 'social'],
             // SEO (aligned with the report copy)
-            ['key' => 'meta_title', 'value' => 'digiliftpro — Build, Manage, and Grow Your Digital Business', 'type' => 'text', 'group' => 'seo'],
+            ['key' => 'meta_title', 'value' => 'DigiLiftPro — Build, Manage, and Grow Your Digital Business', 'type' => 'text', 'group' => 'seo'],
             ['key' => 'meta_description', 'value' => 'Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.', 'type' => 'textarea', 'group' => 'seo'],
             ['key' => 'meta_keywords', 'value' => 'web development, web app development, seo, performance optimization, email setup, domain hosting ssl management, maintenance support', 'type' => 'text', 'group' => 'seo'],
         ];
@@ -167,17 +167,17 @@ class DemoDataSeeder extends Seeder
                 'page_type' => 'home',
                 'published' => true,
                 'order' => 0,
-                'meta_title' => 'digiliftpro — Build, Manage, and Grow Your Digital Business',
+                'meta_title' => 'DigiLiftPro — Build, Manage, and Grow Your Digital Business',
                 'meta_description' => 'Websites, SEO, email services, and web asset management—delivered with clear planning, measurable results, and long-term support.',
             ],
             [
-                'title' => 'About digiliftpro',
+                'title' => 'About DigiLiftPro',
                 'slug' => 'about',
-                'content' => '<h1>About digiliftpro</h1><p>We help businesses plan, build, and run fast, secure, and scalable digital products—websites, web apps, SEO, email services, and web operations.</p><h2>How we work</h2><p>Discovery → Design → Build → Test → Deploy → Support</p><h2>What you get</h2><ul><li>Transparent scope & timelines</li><li>Production-ready delivery</li><li>Documentation + handover training</li><li>Dedicated support plans</li></ul>',
+                'content' => '<h1>About DigiLiftPro</h1><p>We help businesses plan, build, and run fast, secure, and scalable digital products—websites, web apps, SEO, email services, and web operations.</p><h2>How we work</h2><p>Discovery → Design → Build → Test → Deploy → Support</p><h2>What you get</h2><ul><li>Transparent scope & timelines</li><li>Production-ready delivery</li><li>Documentation + handover training</li><li>Dedicated support plans</li></ul>',
                 'page_type' => 'about',
                 'published' => true,
                 'order' => 1,
-                'meta_title' => 'About — digiliftpro',
+                'meta_title' => 'About — DigiLiftPro',
                 'meta_description' => 'Learn about our mission, values, and delivery process.',
             ],
             [
@@ -191,7 +191,7 @@ class DemoDataSeeder extends Seeder
             [
                 'title' => 'Privacy Policy',
                 'slug' => 'privacy-policy',
-                'content' => '<h1>Privacy Policy</h1><p>Last updated: ' . date('F d, Y') . '</p><p>At digiliftpro, we take your privacy seriously. This policy describes how we collect, use, and protect your personal information.</p><h2>Information We Collect</h2><p>We collect information you provide directly to us, including name, email address, phone number, and project details.</p><h2>How We Use Your Information</h2><p>We use your information to respond to inquiries, provide services, and improve our offerings.</p>',
+                'content' => '<h1>Privacy Policy</h1><p>Last updated: ' . date('F d, Y') . '</p><p>At DigiLiftPro, we take your privacy seriously. This policy describes how we collect, use, and protect your personal information.</p><h2>Information We Collect</h2><p>We collect information you provide directly to us, including name, email address, phone number, and project details.</p><h2>How We Use Your Information</h2><p>We use your information to respond to inquiries, provide services, and improve our offerings.</p>',
                 'page_type' => 'page',
                 'published' => true,
                 'order' => 10,
@@ -886,12 +886,12 @@ class DemoDataSeeder extends Seeder
             [
                 'name' => 'Head Office',
                 'slug' => 'head-office',
-                'address' => '',
-                'city' => '',
-                'state' => '',
+                'address' => 'Holding No: E-236, Ward No: 07, Chandra, Kaliakair',
+                'city' => 'Kaliakair',
+                'state' => 'Gazipur',
                 'postal_code' => '',
-                'country' => '',
-                'phone' => '',
+                'country' => 'Bangladesh',
+                'phone' => '01707080401 and 01719030242',
                 'email' => 'info@digiliftpro.com',
                 'opening_hours' => [
                     'monday' => '9:00 AM - 7:00 PM',
@@ -969,7 +969,7 @@ class DemoDataSeeder extends Seeder
                 'venue' => 'Grand Conference Center',
                 'address' => '789 Event Avenue, New York, NY 10001',
                 'speakers' => [
-                    ['name' => 'Project Lead', 'title' => 'Delivery & Planning, digiliftpro'],
+                    ['name' => 'Project Lead', 'title' => 'Delivery & Planning, DigiLiftPro'],
                     ['name' => 'SEO Specialist', 'title' => 'Growth & Performance'],
                 ],
                 'allow_registration' => true,
