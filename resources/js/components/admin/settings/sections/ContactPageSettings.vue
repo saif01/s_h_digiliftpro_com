@@ -43,10 +43,10 @@
                     density="comfortable" color="primary" prepend-inner-icon="mdi-map"
                     hint="Paste the 'src' URL from the Google Maps embed code" persistent-hint rows="3"></v-textarea>
 
-                <div v-if="settings.contact_map_url.value" class="mt-4">
+                <div v-if="mapUrl" class="mt-4">
                     <div class="text-subtitle-2 mb-2">Map Preview:</div>
-                    <iframe :src="settings.contact_map_url.value" width="100%" height="300" style="border:0;"
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe :src="mapUrl" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </v-col>
         </v-row>
@@ -82,6 +82,24 @@ export default {
                     return 'Please enter a valid Bangladeshi phone number (e.g., 01712345678 or +8801712345678)';
                 }
             ];
+        },
+        mapUrl() {
+            if (!this.settings.contact_map_url.value) {
+                return null;
+            }
+
+            const value = this.settings.contact_map_url.value.trim();
+
+            // If it contains iframe tag, extract the src URL
+            if (value.includes('<iframe')) {
+                const match = value.match(/src=["']([^"']+)["']/);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+
+            // Return as is if it's already a URL
+            return value;
         }
     }
 };
